@@ -1,14 +1,13 @@
 {
-  "name": "MilLoto",
-  "short_name": "MilLoto",
-  "description": "MilLoto -- Статистике и архива -- Лото 7/39 - Народна лутрија Србије",
+  "name": "МилЛото 7/39",
+  "short_name": "МилЛото",
+  "description": "Српски Лото 7/39 - резултати, статистика и архива свих кола",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#0f1923",
   "theme_color": "#c8972a",
   "orientation": "portrait-primary",
   "lang": "sr",
-  "version": "B version",
   "icons": [
     {
       "src": "icons/icon-192.png",
@@ -27,12 +26,6 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
-    },
-    {
-      "src": "icons/icon-1024.png",
-      "sizes": "1024x1024",
-      "type": "image/png",
-      "purpose": "any"
     }
   ],
   "categories": ["entertainment", "utilities"],
