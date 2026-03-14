@@ -1,6 +1,6 @@
 <!-- MilLoto -->
 <!-- Статистика и архива -- Лото 7/39 - Народна лутрија Србије -->
-<!-- Main - Version B -->
+<!-- Version A -->
 <!-- © 2026 Mil Stamenković -->
 <!-- Created with help of Free Claude AI -->
 <!-- Created: 14.03.2026. - Ćuprija, Serbia -->
@@ -14,14 +14,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="MilLoto - Лото 7/39 резултати, статистика и архива">
+<meta name="description" content="МилЛото - Српски Лото 7/39 резултати, статистика и архива">
 <meta name="theme-color" content="#c8972a">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="MilLoto">
+<meta name="apple-mobile-web-app-title" content="МилЛото">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icons/icon-192.png">
-<title>MilLoto</title>
+<title>МилЛото 7/39</title>
 <style>
 /* ===== CSS VARIABLES ===== */
 :root {
@@ -41,9 +41,8 @@
   --bg4: #243448;
   --border: #2a3f58;
   --text: #dce8f5;
-  --text2: #728497;
-  --text3: #7a8a9b;
-  --text4: #00263f;
+  --text2: #8ca8c4;
+  --text3: #5a7a9a;
   --shadow: 0 4px 20px rgba(0,0,0,0.5);
   --ball-shadow: 0 3px 10px rgba(0,0,0,0.6);
 }
@@ -55,8 +54,7 @@
   --border: #c0d0e0;
   --text: #1a2840;
   --text2: #4a6080;
-  --text3: #313f53;
-  --text4: #003457;
+  --text3: #8090a8;
   --shadow: 0 4px 20px rgba(0,0,0,0.12);
   --ball-shadow: 0 3px 10px rgba(0,0,0,0.2);
 }
@@ -72,10 +70,6 @@ body {
   transition: background var(--transition), color var(--transition);
   font-size: 15px;
   line-height: 1.5;
-}
-
-a {
-  color: var(--gold);
 }
 
 /* ===== TITLE BAR ===== */
@@ -383,7 +377,7 @@ a {
 .freq-bar-wrap:hover .freq-bar { filter: brightness(1.3); }
 .freq-bar-num {
   font-size: 0.6rem;
-  color: var(--text4);
+  color: var(--text3);
   margin-top: 3px;
   font-weight: 600;
   position: absolute;
@@ -681,13 +675,12 @@ footer a { color: var(--gold-dim); text-decoration: none; }
         <span class="logo-ball" style="background:#e91e63"></span>
       </div>
       <div>
-        <div class="app-title"><a href="#">MilLoto</a></div>
-        <div class="app-subtitle">Статистика и архива</div>
-        <div class="app-subtitle">Лото 7/39 - Народна лутрија Србије</div>
+        <div class="app-title">МилЛото</div>
+        <div class="app-subtitle">Лото 7/39 · Србија</div>
       </div>
     </div>
     <div class="titlebar-controls">
-      <button class="btn-icon theme-toggle" onclick="toggleTheme()" title="Промени тему">Активирај светлу тему</button>
+      <button class="btn-icon theme-toggle" onclick="toggleTheme()" title="Промени тему">🌙</button>
       <button class="btn-icon" onclick="toggleInfo()" title="Информације">ℹ️ <span style="font-size:0.75rem">Инфо</span></button>
     </div>
   </div>
@@ -702,7 +695,7 @@ footer a { color: var(--gold-dim); text-decoration: none; }
         <li>Бира се 7 бројева од 1 до 39</li>
         <li>Извлачење: уторак и петак</li>
         <li>Оператер: Државна лутрија Србије</li>
-        <li>Најстарије коло у архиви: 30.07.1985.</li>
+        <li>Прво коло: 30.07.1985.</li>
       </ul>
     </div>
     <div class="info-card">
@@ -716,7 +709,7 @@ footer a { color: var(--gold-dim); text-decoration: none; }
       </ul>
     </div>
     <div class="info-card">
-      <h4>Историјски рекорди (1985-данас)</h4>
+      <h4>Историјски рекорди</h4>
       <p>Укупно одиграно кола: <strong>2913+</strong></p>
       <p>Нај. извучен број: <strong>#8</strong> (584×)</p>
       <p>Нај. ређи број: <strong>#20</strong> (473×)</p>
@@ -724,7 +717,7 @@ footer a { color: var(--gold-dim); text-decoration: none; }
     </div>
     <div class="info-card">
       <h4>О апликацији</h4>
-      <p>"MilLoto" ради онлајн и офлајн. Подаци се аутоматски ажурирају приликом посете. Статистика обухвата свe доступне архивске податке.</p>
+      <p>МилЛото ради онлајн и офлајн. Подаци се аутоматски ажурирају приликом посете. Статистика обухвата свe доступне архивске податке.</p>
       <p style="margin-top:6px">Извор података: <a href="https://stats247.com/lotto/serbia-loto" target="_blank">stats247.com</a></p>
     </div>
   </div>
@@ -809,7 +802,7 @@ footer a { color: var(--gold-dim); text-decoration: none; }
   <!-- COUNTDOWN CARD -->
   <div class="section-card">
     <div class="section-header">
-      <div class="section-title">Одбројавање до следећег извлачења</div>
+      <div class="section-title">Одбројавање</div>
     </div>
     <div class="countdown-big">
       <div class="countdown-next-info" id="cd-next-info">Следеће извлачење</div>
@@ -821,9 +814,8 @@ footer a { color: var(--gold-dim); text-decoration: none; }
 </main>
 
 <footer>
-    <p><a href="https://milstamenkovic.github.io">MilLoto<br>© 2026 Милан Стаменковић</a></p>
-
-    <p style="margin-top:4px">Подаци: <a href="https://stats247.com/lotto/serbia-loto" target="_blank">stats247.com</a> - <a href="https://lotostatistika.rs" target="_blank">lotostatistika.rs</a> - <a href="https://www.lutrija.rs" target="_blank">lutrija.rs</a></p>
+  <p>МилЛото © 2026 · Државна лутрија Србије · <a href="https://www.lutrija.rs" target="_blank">lutrija.rs</a></p>
+  <p style="margin-top:4px">Подаци: <a href="https://stats247.com/lotto/serbia-loto" target="_blank">stats247.com</a> · <a href="https://lotostatistika.rs" target="_blank">lotostatistika.rs</a></p>
 </footer>
 
 <div id="update-toast">✓ Подаци ажурирани</div>
@@ -1646,7 +1638,7 @@ function renderStats() {
     <div class="stat-block">
       <h4>Опште информације</h4>
       <div class="sum-info">
-        <div class="sum-row"><span>Најстарије коло у архиви:</span><span class="sum-val">30.07.1985.</span></div>
+        <div class="sum-row"><span>Прво коло:</span><span class="sum-val">30.07.1985.</span></div>
         <div class="sum-row"><span>Укупно кола:</span><span class="sum-val">2913+</span></div>
         <div class="sum-row"><span>Нај. број (историја):</span><span class="sum-val">#8 (584×)</span></div>
         <div class="sum-row"><span>Нај. ређи (историја):</span><span class="sum-val">#20 (473×)</span></div>
@@ -1785,7 +1777,7 @@ function toggleTheme() {
   const current = html.getAttribute('data-theme');
   const next = current === 'dark' ? 'light' : 'dark';
   html.setAttribute('data-theme', next);
-  document.querySelector('.theme-toggle').textContent = next === 'dark' ? 'Активирај светлу тему' : 'Активирај тамну тему';
+  document.querySelector('.theme-toggle').textContent = next === 'dark' ? '🌙' : '☀️';
   localStorage.setItem('milloto_theme', next);
 }
 
@@ -1837,7 +1829,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Load saved theme
   const savedTheme = localStorage.getItem('milloto_theme') || 'dark';
   document.documentElement.setAttribute('data-theme', savedTheme);
-  document.querySelector('.theme-toggle').textContent = savedTheme === 'dark' ? 'Активирај светлу тему' : 'Активирај тамну тему';
+  document.querySelector('.theme-toggle').textContent = savedTheme === 'dark' ? '🌙' : '☀️';
 
   // Load cached extra data
   loadCachedExtra();

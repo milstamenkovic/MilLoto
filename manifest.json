@@ -1,7 +1,7 @@
 {
-  "name": "МилЛото 7/39",
-  "short_name": "МилЛото",
-  "description": "Српски Лото 7/39 - резултати, статистика и архива свих кола",
+  "name": "MilLoto",
+  "short_name": "MilLoto",
+  "description": "MilLoto -- Статистике и архива -- Лото 7/39 - Народна лутрија Србије",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#0f1923",
