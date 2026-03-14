@@ -1,6 +1,6 @@
-// МилЛото Service Worker v1.0
-const CACHE_NAME = 'milloto-v1';
-const DATA_CACHE_NAME = 'milloto-data-v1';
+// MilLoto Service Worker v1.0
+const CACHE_NAME = 'MilLoto_vA';
+const DATA_CACHE_NAME = 'MilLoto_data_vA';
 
 const STATIC_ASSETS = [
   './index.html',
