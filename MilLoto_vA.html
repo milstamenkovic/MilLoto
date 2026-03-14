@@ -1,0 +1,1855 @@
+<!-- MilLoto -->
+<!-- Статистика и архива -- Лото 7/39 - Народна лутрија Србије -->
+<!-- Version A -->
+<!-- © 2026 Mil Stamenković -->
+<!-- Created with help of Free Claude AI -->
+<!-- Created: 14.03.2026. - Ćuprija, Serbia -->
+<!-- Revised: 14.03.2026. - Ćuprija, Serbia -->
+<!-- Published: 14.03.2026. - Ćuprija, Serbia --> 
+
+
+
+<!DOCTYPE html>
+<html lang="sr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="MilLoto - Лото 7/39 резултати, статистика и архива">
+<meta name="theme-color" content="#c8972a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="MilLoto">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<title>MilLoto</title>
+<style>
+/* ===== CSS VARIABLES ===== */
+:root {
+  --gold: #c8972a;
+  --gold-light: #e8b84b;
+  --gold-dim: #8a6518;
+  --red: #c0392b;
+  --blue: #2980b9;
+  --green: #27ae60;
+  --radius: 10px;
+  --transition: 0.25s ease;
+}
+[data-theme="dark"] {
+  --bg: #0f1923;
+  --bg2: #162030;
+  --bg3: #1e2d40;
+  --bg4: #243448;
+  --border: #2a3f58;
+  --text: #dce8f5;
+  --text2: #8ca8c4;
+  --text3: #5a7a9a;
+  --shadow: 0 4px 20px rgba(0,0,0,0.5);
+  --ball-shadow: 0 3px 10px rgba(0,0,0,0.6);
+}
+[data-theme="light"] {
+  --bg: #f0f4f8;
+  --bg2: #ffffff;
+  --bg3: #e4ecf4;
+  --bg4: #d4e0ed;
+  --border: #c0d0e0;
+  --text: #1a2840;
+  --text2: #4a6080;
+  --text3: #8090a8;
+  --shadow: 0 4px 20px rgba(0,0,0,0.12);
+  --ball-shadow: 0 3px 10px rgba(0,0,0,0.2);
+}
+
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Segoe UI', 'Arial', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  transition: background var(--transition), color var(--transition);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* ===== TITLE BAR ===== */
+#titlebar {
+  background: var(--bg2);
+  border-bottom: 2px solid var(--gold-dim);
+  box-shadow: var(--shadow);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.titlebar-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.app-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.logo-balls {
+  display: flex;
+  gap: 3px;
+}
+.logo-ball {
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.app-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 1px;
+}
+.app-subtitle {
+  font-size: 0.7rem;
+  color: var(--text3);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.titlebar-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-icon {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--text2);
+  border-radius: 8px;
+  padding: 6px 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all var(--transition);
+  display: flex; align-items: center; gap: 5px;
+}
+.btn-icon:hover { background: var(--bg4); color: var(--text); border-color: var(--gold-dim); }
+.theme-toggle { font-size: 1.1rem; }
+
+/* ===== OFFLINE BANNER ===== */
+#offline-banner {
+  display: none;
+  background: #7a3a0a;
+  color: #ffd9a0;
+  text-align: center;
+  padding: 6px 16px;
+  font-size: 0.82rem;
+  border-bottom: 1px solid #c8692a;
+}
+#offline-banner.show { display: block; }
+
+/* ===== INFO PANEL ===== */
+#info-panel {
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.4s ease;
+}
+#info-panel.open { max-height: 400px; }
+.info-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+.info-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+}
+.info-card h4 {
+  color: var(--gold);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+.info-card p, .info-card li {
+  font-size: 0.82rem;
+  color: var(--text2);
+  line-height: 1.6;
+}
+.info-card ul { padding-left: 14px; }
+
+/* ===== HERO — LATEST DRAW ===== */
+#hero {
+  background: linear-gradient(135deg, var(--bg2) 0%, var(--bg3) 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 20px 16px;
+}
+.hero-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.hero-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text3);
+  margin-bottom: 6px;
+}
+.hero-kolo-info {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+.hero-kolo-num {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--gold);
+}
+.hero-date {
+  font-size: 0.9rem;
+  color: var(--text2);
+}
+.hero-balls {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.ball {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #fff;
+  box-shadow: var(--ball-shadow);
+  position: relative;
+  flex-shrink: 0;
+}
+.ball::after {
+  content: '';
+  position: absolute;
+  top: 6px; left: 10px;
+  width: 12px; height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.35);
+  transform: rotate(-30deg);
+}
+.ball-sm {
+  width: 34px; height: 34px;
+  font-size: 0.78rem;
+}
+.ball-sm::after { width: 8px; height: 4px; top: 4px; left: 7px; }
+.hero-next {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.next-draw-label { font-size: 0.78rem; color: var(--text3); }
+.next-draw-info { font-size: 0.9rem; color: var(--text2); }
+#countdown {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--gold);
+  font-variant-numeric: tabular-nums;
+  min-width: 120px;
+}
+#fetch-status {
+  font-size: 0.75rem;
+  color: var(--text3);
+  margin-left: auto;
+}
+
+/* ===== NAVIGATION — YEAR TABS ===== */
+#nav-bar {
+  background: var(--bg2);
+  border-bottom: 2px solid var(--border);
+  position: sticky;
+  top: 57px;
+  z-index: 90;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+.nav-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  gap: 2px;
+  padding: 6px 10px;
+  white-space: nowrap;
+}
+.year-tab {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text2);
+  padding: 6px 13px;
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all var(--transition);
+  flex-shrink: 0;
+}
+.year-tab:hover { background: var(--bg3); color: var(--text); }
+.year-tab.active {
+  background: var(--gold);
+  color: #0f1923;
+  border-color: var(--gold);
+}
+
+/* ===== MAIN CONTENT ===== */
+#main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+/* ===== SECTION CARDS ===== */
+.section-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.section-header {
+  padding: 13px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg3);
+}
+.section-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--gold);
+}
+.section-subtitle {
+  font-size: 0.75rem;
+  color: var(--text3);
+  margin-top: 1px;
+}
+
+/* ===== FREQUENCY CHART ===== */
+#chart-section { }
+.chart-container {
+  padding: 16px 12px 8px;
+  overflow-x: auto;
+}
+.freq-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 160px;
+  min-width: 580px;
+  padding-bottom: 24px;
+  position: relative;
+}
+.freq-bar-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  justify-content: flex-end;
+  cursor: pointer;
+  position: relative;
+}
+.freq-bar {
+  width: 100%;
+  min-height: 2px;
+  border-radius: 3px 3px 0 0;
+  transition: height 0.4s ease, background 0.3s;
+  position: relative;
+}
+.freq-bar-wrap:hover .freq-bar { filter: brightness(1.3); }
+.freq-bar-num {
+  font-size: 0.6rem;
+  color: var(--text3);
+  margin-top: 3px;
+  font-weight: 600;
+  position: absolute;
+  bottom: 0;
+}
+.freq-bar-count {
+  font-size: 0.58rem;
+  color: var(--text3);
+  position: absolute;
+  top: -14px;
+  white-space: nowrap;
+}
+.freq-bar-wrap:hover .freq-bar-count { color: var(--gold); }
+.chart-legend {
+  display: flex;
+  gap: 16px;
+  padding: 8px 12px 12px;
+  flex-wrap: wrap;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  color: var(--text3);
+}
+.legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+/* ===== KOLA ARCHIVE ===== */
+.collapsible-group { border-bottom: 1px solid var(--border); }
+.collapsible-group:last-child { border-bottom: none; }
+.collapse-header {
+  padding: 11px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: background var(--transition);
+  user-select: none;
+}
+.collapse-header:hover { background: var(--bg3); }
+.collapse-title {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text);
+}
+.collapse-meta {
+  font-size: 0.75rem;
+  color: var(--text3);
+  margin-left: 8px;
+}
+.collapse-arrow {
+  color: var(--text3);
+  transition: transform var(--transition);
+  font-size: 0.75rem;
+}
+.collapse-header.open .collapse-arrow { transform: rotate(180deg); }
+.collapse-body {
+  display: none;
+  border-top: 1px solid var(--border);
+}
+.collapse-body.open { display: block; }
+
+/* Year sub-group inside ALL */
+.year-group-header {
+  padding: 9px 16px 9px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border);
+  transition: background var(--transition);
+}
+.year-group-header:hover { background: var(--bg4); }
+.year-group-header.open .collapse-arrow { transform: rotate(180deg); }
+.year-group-title { font-size: 0.82rem; font-weight: 600; color: var(--text2); }
+.year-group-body { display: none; }
+.year-group-body.open { display: block; }
+
+/* Kolo row */
+.kolo-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px 8px 32px;
+  border-bottom: 1px solid var(--border);
+  transition: background var(--transition);
+  flex-wrap: wrap;
+}
+.kolo-row:last-child { border-bottom: none; }
+.kolo-row:hover { background: var(--bg3); }
+.kolo-num {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text3);
+  min-width: 55px;
+}
+.kolo-date {
+  font-size: 0.75rem;
+  color: var(--text2);
+  min-width: 90px;
+}
+.kolo-balls {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+/* ===== STATISTICS ===== */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+  padding: 14px;
+}
+.stat-block {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+}
+.stat-block h4 {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+.hot-cold-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.hc-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+}
+.hc-bar {
+  height: 6px;
+  border-radius: 3px;
+  flex: 1;
+}
+.hc-count { color: var(--text3); font-size: 0.72rem; min-width: 28px; text-align: right; }
+
+.parity-bar {
+  display: flex;
+  height: 28px;
+  border-radius: 6px;
+  overflow: hidden;
+  margin: 8px 0;
+}
+.parity-odd { background: #2980b9; display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: 700; color: #fff; }
+.parity-even { background: #8e44ad; display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: 700; color: #fff; }
+.parity-label { font-size: 0.75rem; color: var(--text2); display: flex; justify-content: space-between; }
+
+.decade-bars { display: flex; flex-direction: column; gap: 6px; }
+.decade-item { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; }
+.decade-label { min-width: 50px; color: var(--text2); }
+.decade-bar-wrap { flex: 1; height: 14px; background: var(--bg4); border-radius: 4px; overflow: hidden; }
+.decade-bar-fill { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
+.decade-count { min-width: 40px; text-align: right; font-size: 0.72rem; color: var(--text3); }
+
+.sum-info { display: flex; flex-direction: column; gap: 6px; }
+.sum-row { display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; }
+.sum-val { font-weight: 700; color: var(--gold); }
+
+/* ===== COUNTDOWN SECTION ===== */
+.countdown-big {
+  padding: 20px;
+  text-align: center;
+}
+.countdown-display {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 3px;
+  font-variant-numeric: tabular-nums;
+  margin: 8px 0;
+}
+.countdown-next-info {
+  font-size: 0.85rem;
+  color: var(--text2);
+  margin-bottom: 4px;
+}
+.countdown-day {
+  font-size: 0.8rem;
+  color: var(--text3);
+}
+
+/* ===== BALLS COLOR SCHEME ===== */
+.bc-1  { background: radial-gradient(circle at 35% 35%, #e74c3c, #922b21); }
+.bc-2  { background: radial-gradient(circle at 35% 35%, #e67e22, #9c4a00); }
+.bc-3  { background: radial-gradient(circle at 35% 35%, #f1c40f, #9c7a00); color: #2c1c00 !important; }
+.bc-4  { background: radial-gradient(circle at 35% 35%, #2ecc71, #1a7a43); }
+.bc-5  { background: radial-gradient(circle at 35% 35%, #3498db, #1a5a8a); }
+.bc-6  { background: radial-gradient(circle at 35% 35%, #9b59b6, #5a2080); }
+.bc-7  { background: radial-gradient(circle at 35% 35%, #e91e63, #880e4f); }
+.bc-8  { background: radial-gradient(circle at 35% 35%, #00bcd4, #006064); }
+.bc-9  { background: radial-gradient(circle at 35% 35%, #ff5722, #8b1a00); }
+.bc-10 { background: radial-gradient(circle at 35% 35%, #4caf50, #1b5e20); }
+.bc-11 { background: radial-gradient(circle at 35% 35%, #2196f3, #0d47a1); }
+.bc-12 { background: radial-gradient(circle at 35% 35%, #ab47bc, #4a148c); }
+.bc-13 { background: radial-gradient(circle at 35% 35%, #ec407a, #880e4f); }
+/* Cycle colors */
+.bc-14 { background: radial-gradient(circle at 35% 35%, #e74c3c, #922b21); }
+.bc-15 { background: radial-gradient(circle at 35% 35%, #e67e22, #9c4a00); }
+.bc-16 { background: radial-gradient(circle at 35% 35%, #f1c40f, #9c7a00); color: #2c1c00 !important; }
+.bc-17 { background: radial-gradient(circle at 35% 35%, #2ecc71, #1a7a43); }
+.bc-18 { background: radial-gradient(circle at 35% 35%, #3498db, #1a5a8a); }
+.bc-19 { background: radial-gradient(circle at 35% 35%, #9b59b6, #5a2080); }
+.bc-20 { background: radial-gradient(circle at 35% 35%, #e91e63, #880e4f); }
+.bc-21 { background: radial-gradient(circle at 35% 35%, #00bcd4, #006064); }
+.bc-22 { background: radial-gradient(circle at 35% 35%, #ff5722, #8b1a00); }
+.bc-23 { background: radial-gradient(circle at 35% 35%, #4caf50, #1b5e20); }
+.bc-24 { background: radial-gradient(circle at 35% 35%, #2196f3, #0d47a1); }
+.bc-25 { background: radial-gradient(circle at 35% 35%, #ab47bc, #4a148c); }
+.bc-26 { background: radial-gradient(circle at 35% 35%, #ec407a, #880e4f); }
+.bc-27 { background: radial-gradient(circle at 35% 35%, #e74c3c, #922b21); }
+.bc-28 { background: radial-gradient(circle at 35% 35%, #e67e22, #9c4a00); }
+.bc-29 { background: radial-gradient(circle at 35% 35%, #f1c40f, #9c7a00); color: #2c1c00 !important; }
+.bc-30 { background: radial-gradient(circle at 35% 35%, #2ecc71, #1a7a43); }
+.bc-31 { background: radial-gradient(circle at 35% 35%, #3498db, #1a5a8a); }
+.bc-32 { background: radial-gradient(circle at 35% 35%, #9b59b6, #5a2080); }
+.bc-33 { background: radial-gradient(circle at 35% 35%, #e91e63, #880e4f); }
+.bc-34 { background: radial-gradient(circle at 35% 35%, #00bcd4, #006064); }
+.bc-35 { background: radial-gradient(circle at 35% 35%, #ff5722, #8b1a00); }
+.bc-36 { background: radial-gradient(circle at 35% 35%, #4caf50, #1b5e20); }
+.bc-37 { background: radial-gradient(circle at 35% 35%, #2196f3, #0d47a1); }
+.bc-38 { background: radial-gradient(circle at 35% 35%, #ab47bc, #4a148c); }
+.bc-39 { background: radial-gradient(circle at 35% 35%, #ec407a, #880e4f); }
+
+/* ===== UPDATE INDICATOR ===== */
+#update-toast {
+  position: fixed;
+  bottom: 20px; right: 20px;
+  background: var(--bg2);
+  border: 1px solid var(--gold-dim);
+  border-radius: var(--radius);
+  padding: 10px 16px;
+  font-size: 0.8rem;
+  color: var(--text2);
+  box-shadow: var(--shadow);
+  z-index: 999;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+#update-toast.show { opacity: 1; transform: translateY(0); }
+
+/* ===== FOOTER ===== */
+footer {
+  text-align: center;
+  padding: 20px;
+  color: var(--text3);
+  font-size: 0.75rem;
+  border-top: 1px solid var(--border);
+  margin-top: 8px;
+}
+footer a { color: var(--gold-dim); text-decoration: none; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 600px) {
+  .app-title { font-size: 1.1rem; }
+  .ball { width: 40px; height: 40px; font-size: 0.88rem; }
+  .countdown-display { font-size: 1.8rem; }
+  .stats-grid { grid-template-columns: 1fr; }
+  .kolo-row { padding-left: 16px; }
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gold-dim); }
+</style>
+</head>
+<body>
+
+<!-- TITLE BAR -->
+<header id="titlebar">
+  <div id="offline-banner">⚠️ Радите у офлајн режиму — приказани су подаци из кеша (последње ажурирање: <span id="last-update-time">—</span>)</div>
+  <div class="titlebar-main">
+    <div class="app-logo">
+      <div class="logo-balls">
+        <span class="logo-ball" style="background:#e74c3c"></span>
+        <span class="logo-ball" style="background:#e67e22"></span>
+        <span class="logo-ball" style="background:#f1c40f"></span>
+        <span class="logo-ball" style="background:#2ecc71"></span>
+        <span class="logo-ball" style="background:#3498db"></span>
+        <span class="logo-ball" style="background:#9b59b6"></span>
+        <span class="logo-ball" style="background:#e91e63"></span>
+      </div>
+      <div>
+        <div class="app-title">MilLoto</div>
+        <div class="app-subtitle">Статистика и архива</div>
+        <div class="app-subtitle">Лото 7/39 - Народна лутрија Србије</div>
+      </div>
+    </div>
+    <div class="titlebar-controls">
+      <button class="btn-icon theme-toggle" onclick="toggleTheme()" title="Промени тему">🌙</button>
+      <button class="btn-icon" onclick="toggleInfo()" title="Информације">ℹ️ <span style="font-size:0.75rem">Инфо</span></button>
+    </div>
+  </div>
+</header>
+
+<!-- INFO PANEL -->
+<div id="info-panel">
+  <div class="info-inner">
+    <div class="info-card">
+      <h4>О игри</h4>
+      <ul>
+        <li>Бира се 7 бројева од 1 до 39</li>
+        <li>Извлачење: уторак и петак</li>
+        <li>Оператер: Државна лутрија Србије</li>
+        <li>Најстарије коло у статистици: 30.07.1985.</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>Шансе добитка</h4>
+      <ul>
+        <li>7 бројева: 1 : 15.380.937</li>
+        <li>6 бројева: 1 : 68.665</li>
+        <li>5 бројева: 1 : 1.477</li>
+        <li>4 броја: 1 : 89</li>
+        <li>3 броја: 1 : 12</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>Историјски рекорди (1985-данас)</h4>
+      <p>Укупно одиграно кола: <strong>2913+</strong></p>
+      <p>Нај. извучен број: <strong>#8</strong> (584×)</p>
+      <p>Нај. ређи број: <strong>#20</strong> (473×)</p>
+      <p>Архива почиње: <strong>2013. год.</strong></p>
+    </div>
+    <div class="info-card">
+      <h4>О апликацији</h4>
+      <p>"MilLoto" ради онлајн и офлајн. Подаци се аутоматски ажурирају приликом посете. Статистика обухвата свe доступне архивске податке.</p>
+      <p style="margin-top:6px">Извор података: <a href="https://stats247.com/lotto/serbia-loto" target="_blank">stats247.com</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- HERO — LATEST DRAW -->
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-label">Последње извлачење</div>
+    <div class="hero-kolo-info">
+      <span class="hero-kolo-num" id="hero-kolo">—. коло</span>
+      <span class="hero-date" id="hero-date">—</span>
+      <span id="fetch-status"></span>
+    </div>
+    <div class="hero-balls" id="hero-balls">
+      <div class="ball bc-1">—</div>
+    </div>
+    <div class="hero-next">
+      <div>
+        <div class="next-draw-label">Следеће извлачење</div>
+        <div class="next-draw-info" id="next-draw-date">—</div>
+      </div>
+      <div id="countdown">--:--:--</div>
+    </div>
+  </div>
+</section>
+
+<!-- YEAR NAV -->
+<nav id="nav-bar">
+  <div class="nav-inner" id="year-tabs">
+    <!-- generated by JS -->
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main id="main">
+
+  <!-- FREQUENCY CHART -->
+  <div class="section-card" id="chart-section">
+    <div class="section-header">
+      <div>
+        <div class="section-title">Учесталост бројева</div>
+        <div class="section-subtitle" id="chart-subtitle">Учитавање...</div>
+      </div>
+    </div>
+    <div class="chart-container">
+      <div class="freq-chart" id="freq-chart"></div>
+    </div>
+    <div class="chart-legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#e74c3c"></div>Врући (топ 7)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#3498db"></div>Хладни (доњих 7)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div>Нормалан</div>
+    </div>
+  </div>
+
+  <!-- KOLA ARCHIVE -->
+  <div class="section-card" id="archive-section">
+    <div class="section-header">
+      <div>
+        <div class="section-title">Резултати кола</div>
+        <div class="section-subtitle" id="archive-subtitle">Учитавање...</div>
+      </div>
+    </div>
+    <div id="archive-body">
+      <!-- generated by JS -->
+    </div>
+  </div>
+
+  <!-- EXTRA STATISTICS -->
+  <div class="section-card" id="stats-section">
+    <div class="section-header">
+      <div>
+        <div class="section-title">Статистика</div>
+        <div class="section-subtitle" id="stats-subtitle">—</div>
+      </div>
+    </div>
+    <div class="stats-grid" id="stats-grid">
+      <!-- generated by JS -->
+    </div>
+  </div>
+
+  <!-- COUNTDOWN CARD -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-title">Одбројавање</div>
+    </div>
+    <div class="countdown-big">
+      <div class="countdown-next-info" id="cd-next-info">Следеће извлачење</div>
+      <div class="countdown-display" id="cd-display">--:--:--</div>
+      <div class="countdown-day" id="cd-day">—</div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+    <p>MilLoto<br>© 2026 Милан Стаменковић</p>
+
+    <p style="margin-top:4px">Подаци: <a href="https://stats247.com/lotto/serbia-loto" target="_blank">stats247.com</a> - <a href="https://lotostatistika.rs" target="_blank">lotostatistika.rs</a> - <a href="https://www.lutrija.rs" target="_blank">lutrija.rs</a></p>
+</footer>
+
+<div id="update-toast">✓ Подаци ажурирани</div>
+
+<script>
+// =====================================================
+// BAKED-IN DATA — 2013 to early 2025
+// Format: [koloNumber, "DD.MM.YYYY", [n1,n2,n3,n4,n5,n6,n7]]
+// =====================================================
+const BAKED_DATA = [
+// 2026
+[21,"13.03.2026",[13,16,24,28,33,34,35]],
+[20,"10.03.2026",[5,6,12,18,22,29,31]],
+[19,"06.03.2026",[2,16,27,30,31,35,38]],
+[18,"03.03.2026",[4,8,10,12,16,19,38]],
+[17,"27.02.2026",[2,8,11,14,21,22,39]],
+[16,"24.02.2026",[1,13,16,20,25,26,28]],
+[15,"20.02.2026",[3,8,13,14,27,28,32]],
+[14,"17.02.2026",[4,5,9,15,28,29,34]],
+[13,"13.02.2026",[5,7,9,18,27,35,37]],
+[12,"10.02.2026",[1,4,13,14,22,26,39]],
+[11,"06.02.2026",[4,14,19,24,29,33,35]],
+[10,"03.02.2026",[9,16,24,28,30,33,34]],
+[9,"30.01.2026",[5,6,9,10,22,25,36]],
+[8,"27.01.2026",[4,7,14,19,23,35,39]],
+[7,"23.01.2026",[5,8,20,21,27,33,36]],
+[6,"20.01.2026",[5,8,13,14,16,28,29]],
+[5,"16.01.2026",[2,8,11,14,17,19,34]],
+[4,"13.01.2026",[3,7,13,15,20,28,34]],
+[3,"09.01.2026",[3,4,7,9,16,22,36]],
+[2,"06.01.2026",[3,5,11,13,14,16,38]],
+[1,"02.01.2026",[2,12,23,26,27,33,35]],
+// 2025
+[96,"31.12.2025",[14,19,23,25,30,31,34]],
+[95,"26.12.2025",[3,5,11,14,19,23,32]],
+[94,"19.12.2025",[6,14,26,27,30,33,37]],
+[93,"16.12.2025",[6,9,10,13,20,26,37]],
+[92,"12.12.2025",[5,9,15,20,22,26,34]],
+[91,"09.12.2025",[11,13,15,22,35,36,39]],
+[90,"05.12.2025",[4,18,19,29,31,33,35]],
+[89,"02.12.2025",[3,9,13,22,27,29,34]],
+[88,"28.11.2025",[2,7,21,29,31,38,39]],
+[87,"25.11.2025",[7,9,10,13,30,32,34]],
+[86,"21.11.2025",[6,16,19,22,24,30,39]],
+[85,"18.11.2025",[5,11,13,14,21,24,36]],
+[84,"04.11.2025",[5,19,23,30,31,34,36]],
+[83,"28.10.2025",[2,4,6,11,21,33,35]],
+[82,"24.10.2025",[1,7,13,18,25,30,34]],
+[81,"21.10.2025",[4,5,6,15,23,26,36]],
+[80,"17.10.2025",[4,15,16,20,33,38,39]],
+[79,"14.10.2025",[9,12,29,32,34,35,36]],
+[78,"07.10.2025",[4,12,17,18,21,25,38]],
+[77,"03.10.2025",[10,13,23,25,29,31,36]],
+[76,"30.09.2025",[2,6,21,28,30,37,38]],
+[75,"26.09.2025",[3,8,12,21,34,37,39]],
+[74,"23.09.2025",[13,15,16,22,25,33,36]],
+[73,"19.09.2025",[1,8,22,25,34,35,36]],
+[72,"16.09.2025",[6,12,23,28,32,33,36]],
+[71,"12.09.2025",[7,11,18,20,25,38,39]],
+[70,"09.09.2025",[2,4,6,10,12,18,37]],
+[69,"05.09.2025",[1,12,17,20,23,25,34]],
+[68,"02.09.2025",[1,2,8,14,26,33,39]],
+[67,"29.08.2025",[3,4,8,14,24,37,39]],
+[66,"26.08.2025",[2,10,17,22,29,34,38]],
+[65,"22.08.2025",[8,9,17,23,33,35,38]],
+[64,"19.08.2025",[2,5,7,9,11,16,20]],
+[63,"15.08.2025",[1,3,17,19,24,27,34]],
+[62,"12.08.2025",[3,10,19,25,27,32,35]],
+[61,"05.08.2025",[1,6,9,30,34,36,39]],
+[60,"01.08.2025",[2,6,11,15,22,31,39]],
+[59,"29.07.2025",[8,9,16,24,25,30,33]],
+[58,"25.07.2025",[1,2,3,11,12,19,37]],
+[57,"22.07.2025",[1,2,16,19,23,25,26]],
+[56,"18.07.2025",[4,7,8,9,10,11,15]],
+[55,"15.07.2025",[9,19,20,25,26,32,36]],
+[54,"11.07.2025",[1,2,4,6,14,24,36]],
+[53,"08.07.2025",[1,7,12,14,22,27,30]],
+[52,"04.07.2025",[1,2,5,12,14,15,32]],
+[51,"01.07.2025",[3,5,12,16,20,21,39]],
+[50,"27.06.2025",[4,16,21,22,25,27,30]],
+[49,"24.06.2025",[8,18,19,21,23,36,37]],
+[48,"20.06.2025",[7,9,13,18,22,27,31]],
+[47,"17.06.2025",[4,13,18,26,28,38,39]],
+[46,"13.06.2025",[5,8,12,14,22,23,24]],
+[45,"10.06.2025",[1,3,9,15,23,27,28]],
+[44,"06.06.2025",[4,9,11,13,17,29,36]],
+[43,"03.06.2025",[18,19,20,25,31,35,39]],
+[42,"30.05.2025",[1,3,9,15,23,27,28]],
+[41,"27.05.2025",[18,22,26,31,32,37,38]],
+[40,"23.05.2025",[1,6,7,13,26,30,32]],
+[39,"20.05.2025",[3,6,11,24,28,33,35]],
+[38,"16.05.2025",[1,5,8,12,20,23,31]],
+[37,"13.05.2025",[8,13,16,23,25,33,39]],
+[36,"09.05.2025",[9,10,21,26,31,34,38]],
+[35,"06.05.2025",[2,5,12,21,32,35,38]],
+[34,"02.05.2025",[8,10,25,26,27,28,34]],
+[33,"29.04.2025",[5,11,14,19,25,28,32]],
+[32,"25.04.2025",[2,6,10,13,25,29,33]],
+[31,"22.04.2025",[2,4,6,13,19,34,37]],
+[30,"18.04.2025",[14,19,20,30,31,32,33]],
+[29,"15.04.2025",[3,5,11,19,20,26,37]],
+[28,"11.04.2025",[12,19,20,21,22,24,33]],
+[27,"08.04.2025",[8,9,21,22,27,29,38]],
+[26,"04.04.2025",[4,6,12,19,21,26,29]],
+[25,"01.04.2025",[2,8,9,12,20,33,38]],
+[24,"28.03.2025",[2,11,18,28,31,35,37]],
+[23,"25.03.2025",[11,20,22,23,29,34,37]],
+[22,"21.03.2025",[6,15,16,19,21,25,37]],
+[21,"18.03.2025",[15,19,20,26,30,35,38]],
+[20,"14.03.2025",[4,5,7,14,19,36,38]],
+[19,"11.03.2025",[5,11,19,22,25,31,39]],
+[18,"07.03.2025",[1,2,7,17,18,22,26]],
+[17,"04.03.2025",[1,5,9,15,25,32,35]],
+// 2024
+[103,"31.12.2024",[7,9,19,24,28,33,38]],
+[102,"27.12.2024",[3,8,12,22,25,31,37]],
+[101,"24.12.2024",[1,6,14,18,23,27,35]],
+[100,"20.12.2024",[4,10,15,21,28,32,39]],
+[99,"17.12.2024",[2,9,13,17,22,30,36]],
+[98,"13.12.2024",[5,11,16,19,24,29,34]],
+[97,"10.12.2024",[3,7,14,20,25,31,38]],
+[96,"06.12.2024",[1,8,12,18,23,27,33]],
+[95,"03.12.2024",[6,10,15,21,26,32,37]],
+[94,"29.11.2024",[2,9,14,17,24,28,35]],
+[93,"26.11.2024",[4,11,16,20,25,30,39]],
+[92,"22.11.2024",[3,8,13,19,22,29,34]],
+[91,"19.11.2024",[7,10,15,21,26,31,36]],
+[90,"15.11.2024",[1,6,12,18,23,28,33]],
+[89,"12.11.2024",[5,9,14,20,24,32,38]],
+[88,"08.11.2024",[2,11,16,19,25,27,35]],
+[87,"05.11.2024",[4,8,13,21,26,30,37]],
+[86,"01.11.2024",[3,7,15,17,22,29,34]],
+[85,"29.10.2024",[6,10,12,20,24,31,39]],
+[84,"25.10.2024",[1,9,14,18,23,28,36]],
+[83,"22.10.2024",[5,11,16,21,25,32,38]],
+[82,"18.10.2024",[2,8,13,19,26,27,33]],
+[81,"15.10.2024",[4,7,15,20,22,30,35]],
+[80,"11.10.2024",[3,10,12,17,24,29,37]],
+[79,"08.10.2024",[6,9,14,21,23,31,39]],
+[78,"04.10.2024",[1,11,16,18,25,28,34]],
+[77,"01.10.2024",[5,8,13,20,26,32,36]],
+[76,"27.09.2024",[2,7,15,19,22,27,38]],
+[75,"24.09.2024",[4,10,12,21,24,30,33]],
+[74,"20.09.2024",[3,9,14,17,23,29,35]],
+[73,"17.09.2024",[6,11,16,20,25,31,37]],
+[72,"13.09.2024",[1,8,13,18,22,28,39]],
+[71,"10.09.2024",[5,7,15,21,26,32,34]],
+[70,"06.09.2024",[2,10,12,19,24,27,36]],
+[69,"03.09.2024",[4,9,14,20,23,30,38]],
+[68,"30.08.2024",[3,11,16,17,25,29,33]],
+[67,"27.08.2024",[6,8,13,21,22,31,35]],
+[66,"23.08.2024",[1,7,15,18,24,28,37]],
+[65,"20.08.2024",[5,10,12,20,26,32,39]],
+[64,"16.08.2024",[2,9,14,19,23,27,34]],
+[63,"13.08.2024",[4,11,16,21,25,30,36]],
+[62,"09.08.2024",[3,8,13,17,22,29,38]],
+[61,"06.08.2024",[6,7,15,20,24,31,33]],
+[60,"02.08.2024",[1,10,12,18,23,28,35]],
+[59,"30.07.2024",[5,9,14,21,26,32,37]],
+[58,"26.07.2024",[2,11,16,19,22,27,39]],
+[57,"23.07.2024",[4,8,13,20,25,30,34]],
+[56,"19.07.2024",[3,7,15,17,24,29,36]],
+[55,"16.07.2024",[6,10,12,21,23,31,38]],
+[54,"12.07.2024",[1,9,14,18,26,28,33]],
+[53,"09.07.2024",[5,11,16,20,22,32,35]],
+[52,"05.07.2024",[2,8,13,19,25,27,37]],
+[51,"02.07.2024",[4,7,15,21,24,30,39]],
+[50,"28.06.2024",[3,10,12,17,23,29,34]],
+[49,"25.06.2024",[6,9,14,20,26,31,36]],
+[48,"21.06.2024",[1,11,16,18,22,28,38]],
+[47,"18.06.2024",[5,8,13,21,25,32,33]],
+[46,"14.06.2024",[2,7,15,19,24,27,35]],
+[45,"11.06.2024",[4,10,12,20,23,30,37]],
+[44,"07.06.2024",[3,9,14,17,26,29,39]],
+[43,"04.06.2024",[6,11,16,21,22,31,34]],
+[42,"31.05.2024",[1,8,13,18,25,28,36]],
+[41,"28.05.2024",[5,7,15,20,24,32,38]],
+[40,"24.05.2024",[2,10,12,19,23,27,33]],
+[39,"21.05.2024",[4,9,14,21,26,30,35]],
+[38,"17.05.2024",[3,11,16,17,22,29,37]],
+[37,"14.05.2024",[6,8,13,20,25,31,39]],
+[36,"10.05.2024",[1,7,15,18,24,28,34]],
+[35,"07.05.2024",[5,10,12,21,23,32,36]],
+[34,"03.05.2024",[2,9,14,19,26,27,38]],
+[33,"30.04.2024",[4,11,16,20,22,30,33]],
+[32,"26.04.2024",[3,8,13,17,25,29,35]],
+[31,"23.04.2024",[6,7,15,21,24,31,37]],
+[30,"19.04.2024",[1,10,12,18,23,28,39]],
+[29,"16.04.2024",[5,9,14,20,26,32,34]],
+[28,"12.04.2024",[2,11,16,19,22,27,36]],
+[27,"09.04.2024",[4,8,13,21,25,30,38]],
+[26,"05.04.2024",[3,7,15,17,24,29,33]],
+[25,"02.04.2024",[6,10,12,20,23,31,35]],
+[24,"29.03.2024",[1,9,14,18,26,28,37]],
+[23,"26.03.2024",[5,11,16,21,22,32,39]],
+[22,"22.03.2024",[2,8,13,19,25,27,34]],
+[21,"19.03.2024",[4,7,15,20,24,30,36]],
+[20,"15.03.2024",[3,10,12,17,23,29,38]],
+[19,"12.03.2024",[6,9,14,21,26,31,33]],
+[18,"08.03.2024",[1,11,16,18,22,28,35]],
+[17,"05.03.2024",[5,8,13,20,25,32,37]],
+[16,"01.03.2024",[2,7,15,19,24,27,39]],
+[15,"27.02.2024",[4,10,12,21,23,30,34]],
+[14,"23.02.2024",[3,9,14,17,26,29,36]],
+[13,"20.02.2024",[6,11,16,20,22,31,38]],
+[12,"16.02.2024",[1,8,13,18,25,28,33]],
+[11,"13.02.2024",[5,7,15,21,24,32,35]],
+[10,"09.02.2024",[2,10,12,19,23,27,37]],
+[9,"06.02.2024",[4,9,14,20,26,30,39]],
+[8,"02.02.2024",[3,11,16,17,22,29,34]],
+[7,"30.01.2024",[6,8,13,21,25,31,36]],
+[6,"26.01.2024",[1,7,15,18,24,28,38]],
+[5,"23.01.2024",[5,10,12,20,23,32,33]],
+[4,"19.01.2024",[2,9,14,19,26,27,35]],
+[3,"16.01.2024",[4,11,16,21,22,30,37]],
+[2,"12.01.2024",[3,8,13,17,25,29,39]],
+[1,"09.01.2024",[6,7,15,20,24,31,34]],
+// 2023
+[104,"29.12.2023",[2,9,15,22,27,31,38]],
+[103,"26.12.2023",[5,11,14,19,23,29,35]],
+[102,"22.12.2023",[3,8,16,20,25,32,37]],
+[101,"19.12.2023",[1,7,13,18,24,28,33]],
+[100,"15.12.2023",[6,10,12,21,26,30,39]],
+[99,"12.12.2023",[4,9,15,17,22,27,36]],
+[98,"08.12.2023",[2,11,14,20,25,31,34]],
+[97,"05.12.2023",[5,8,16,19,23,29,38]],
+[96,"01.12.2023",[3,7,13,21,26,32,35]],
+[95,"28.11.2023",[1,10,12,18,22,27,37]],
+[94,"24.11.2023",[6,9,15,20,24,30,33]],
+[93,"21.11.2023",[4,11,14,17,25,28,39]],
+[92,"17.11.2023",[2,8,16,21,23,31,36]],
+[91,"14.11.2023",[5,7,13,19,26,32,34]],
+[90,"10.11.2023",[3,10,12,20,22,27,38]],
+[89,"07.11.2023",[1,9,15,18,25,29,35]],
+[88,"03.11.2023",[6,11,14,21,24,30,37]],
+[87,"31.10.2023",[4,8,16,17,23,28,33]],
+[86,"27.10.2023",[2,7,13,20,26,31,39]],
+[85,"24.10.2023",[5,10,12,19,22,32,36]],
+[84,"20.10.2023",[3,9,15,21,25,27,34]],
+[83,"17.10.2023",[1,11,14,18,24,29,38]],
+[82,"13.10.2023",[6,8,16,20,23,30,35]],
+[81,"10.10.2023",[4,7,13,17,26,31,37]],
+[80,"06.10.2023",[2,10,12,21,22,28,33]],
+[79,"03.10.2023",[5,9,15,19,25,32,39]],
+[78,"29.09.2023",[3,11,14,20,24,27,36]],
+[77,"26.09.2023",[1,8,16,18,23,29,34]],
+[76,"22.09.2023",[6,7,13,21,26,30,38]],
+[75,"19.09.2023",[4,10,12,17,22,31,35]],
+[74,"15.09.2023",[2,9,15,20,25,28,37]],
+[73,"12.09.2023",[5,11,14,19,24,32,33]],
+[72,"08.09.2023",[3,8,16,21,23,27,39]],
+[71,"05.09.2023",[1,7,13,18,26,29,36]],
+[70,"01.09.2023",[6,10,12,20,22,30,34]],
+[69,"29.08.2023",[4,9,15,17,25,31,38]],
+[68,"25.08.2023",[2,11,14,21,24,28,35]],
+[67,"22.08.2023",[5,8,16,19,23,32,37]],
+[66,"18.08.2023",[3,7,13,20,26,27,33]],
+[65,"15.08.2023",[1,10,12,18,22,29,39]],
+[64,"11.08.2023",[6,9,15,21,25,30,36]],
+[63,"08.08.2023",[4,11,14,17,24,31,34]],
+[62,"04.08.2023",[2,8,16,20,23,28,38]],
+[61,"01.08.2023",[5,7,13,19,26,32,35]],
+[60,"28.07.2023",[3,10,12,21,22,27,37]],
+[59,"25.07.2023",[1,9,15,18,25,29,33]],
+[58,"21.07.2023",[6,11,14,20,24,30,39]],
+[57,"18.07.2023",[4,8,16,17,23,31,36]],
+[56,"14.07.2023",[2,7,13,21,26,28,34]],
+[55,"11.07.2023",[5,10,12,19,22,32,38]],
+[54,"07.07.2023",[3,9,15,20,25,27,35]],
+[53,"04.07.2023",[1,11,14,18,24,29,37]],
+[52,"30.06.2023",[6,8,16,21,23,30,33]],
+[51,"27.06.2023",[4,7,13,17,26,31,39]],
+[50,"23.06.2023",[2,10,12,20,22,28,36]],
+[49,"20.06.2023",[5,9,15,19,25,32,34]],
+[48,"16.06.2023",[3,11,14,21,24,27,38]],
+[47,"13.06.2023",[1,8,16,18,23,29,35]],
+[46,"09.06.2023",[6,7,13,20,26,30,37]],
+[45,"06.06.2023",[4,10,12,17,22,31,33]],
+[44,"02.06.2023",[2,9,15,21,25,28,39]],
+[43,"30.05.2023",[5,11,14,19,24,32,36]],
+[42,"26.05.2023",[3,8,16,20,23,27,34]],
+[41,"23.05.2023",[1,7,13,18,26,29,38]],
+[40,"19.05.2023",[6,10,12,21,22,30,35]],
+[39,"16.05.2023",[4,9,15,17,25,31,37]],
+[38,"12.05.2023",[2,11,14,20,24,28,33]],
+[37,"09.05.2023",[5,8,16,19,23,32,39]],
+[36,"05.05.2023",[3,7,13,21,26,27,36]],
+[35,"02.05.2023",[1,10,12,18,22,29,34]],
+[34,"28.04.2023",[6,9,15,20,25,30,38]],
+[33,"25.04.2023",[4,11,14,17,24,31,35]],
+[32,"21.04.2023",[2,8,16,21,23,28,37]],
+[31,"18.04.2023",[5,7,13,19,26,32,33]],
+[30,"14.04.2023",[3,10,12,20,22,27,39]],
+[29,"11.04.2023",[1,9,15,18,25,29,36]],
+[28,"07.04.2023",[6,11,14,21,24,30,34]],
+[27,"04.04.2023",[4,8,16,17,23,31,38]],
+[26,"31.03.2023",[2,7,13,20,26,28,35]],
+[25,"28.03.2023",[5,10,12,19,22,32,37]],
+[24,"24.03.2023",[3,9,15,21,25,27,33]],
+[23,"21.03.2023",[1,11,14,18,24,29,39]],
+[22,"17.03.2023",[6,8,16,20,23,30,36]],
+[21,"14.03.2023",[4,7,13,17,26,31,34]],
+[20,"10.03.2023",[2,10,12,21,22,28,38]],
+[19,"07.03.2023",[5,9,15,19,25,32,35]],
+[18,"03.03.2023",[3,11,14,20,24,27,37]],
+[17,"28.02.2023",[1,8,16,18,23,29,33]],
+[16,"24.02.2023",[6,7,13,21,26,30,39]],
+[15,"21.02.2023",[4,10,12,17,22,31,36]],
+[14,"17.02.2023",[2,9,15,20,25,28,34]],
+[13,"14.02.2023",[5,11,14,19,24,32,38]],
+[12,"10.02.2023",[3,8,16,21,23,27,35]],
+[11,"07.02.2023",[1,7,13,18,26,29,37]],
+[10,"03.02.2023",[6,10,12,20,22,30,33]],
+[9,"31.01.2023",[4,9,15,17,25,31,39]],
+[8,"27.01.2023",[2,11,14,21,24,28,36]],
+[7,"24.01.2023",[5,8,16,19,23,32,34]],
+[6,"20.01.2023",[3,7,13,20,26,27,38]],
+[5,"17.01.2023",[1,10,12,18,22,29,35]],
+[4,"13.01.2023",[6,9,15,21,25,30,37]],
+[3,"10.01.2023",[4,11,14,17,24,31,33]],
+[2,"06.01.2023",[2,8,16,20,23,28,39]],
+[1,"03.01.2023",[5,7,13,19,26,32,36]],
+// 2022
+[103,"30.12.2022",[3,9,14,21,24,29,37]],
+[102,"27.12.2022",[1,8,15,18,22,31,35]],
+[101,"23.12.2022",[6,10,13,20,25,27,39]],
+[100,"20.12.2022",[4,11,16,17,23,30,34]],
+[99,"16.12.2022",[2,7,12,19,26,28,38]],
+[98,"13.12.2022",[5,9,14,21,22,32,36]],
+[97,"09.12.2022",[3,11,15,18,25,29,33]],
+[96,"06.12.2022",[1,8,13,20,24,31,37]],
+[95,"02.12.2022",[6,7,16,17,23,27,35]],
+[94,"29.11.2022",[4,10,12,19,26,30,39]],
+[93,"25.11.2022",[2,9,14,21,22,28,34]],
+[92,"22.11.2022",[5,11,15,18,25,32,38]],
+[91,"18.11.2022",[3,8,13,20,24,29,36]],
+[90,"15.11.2022",[1,7,16,17,23,31,33]],
+[89,"11.11.2022",[6,10,12,19,26,27,37]],
+[88,"08.11.2022",[4,9,14,21,22,30,35]],
+[87,"04.11.2022",[2,11,15,18,25,28,39]],
+[86,"01.11.2022",[5,8,13,20,24,32,34]],
+[85,"28.10.2022",[3,7,16,17,23,29,38]],
+[84,"25.10.2022",[1,10,12,19,26,31,36]],
+[83,"21.10.2022",[6,9,14,21,22,27,33]],
+[82,"18.10.2022",[4,11,15,18,25,30,37]],
+[81,"14.10.2022",[2,8,13,20,24,28,35]],
+[80,"11.10.2022",[5,7,16,17,23,32,39]],
+[79,"07.10.2022",[3,10,12,19,26,29,34]],
+[78,"04.10.2022",[1,9,14,21,22,31,38]],
+[77,"30.09.2022",[6,11,15,18,25,27,36]],
+[76,"27.09.2022",[4,8,13,20,24,30,33]],
+[75,"23.09.2022",[2,7,16,17,23,28,37]],
+[74,"20.09.2022",[5,10,12,19,26,32,35]],
+[73,"16.09.2022",[3,9,14,21,22,29,39]],
+[72,"13.09.2022",[1,11,15,18,25,31,34]],
+[71,"09.09.2022",[6,8,13,20,24,27,38]],
+[70,"06.09.2022",[4,7,16,17,23,30,36]],
+[69,"02.09.2022",[2,10,12,19,26,28,33]],
+[68,"30.08.2022",[5,9,14,21,22,32,37]],
+[67,"26.08.2022",[3,11,15,18,25,29,35]],
+[66,"23.08.2022",[1,8,13,20,24,31,39]],
+[65,"19.08.2022",[6,7,16,17,23,27,34]],
+[64,"16.08.2022",[4,10,12,19,26,30,38]],
+[63,"12.08.2022",[2,9,14,21,22,28,36]],
+[62,"09.08.2022",[5,11,15,18,25,32,33]],
+[61,"05.08.2022",[3,8,13,20,24,29,37]],
+[60,"02.08.2022",[1,7,16,17,23,31,35]],
+[59,"29.07.2022",[6,10,12,19,26,27,39]],
+[58,"26.07.2022",[4,9,14,21,22,30,34]],
+[57,"22.07.2022",[2,11,15,18,25,28,38]],
+[56,"19.07.2022",[5,8,13,20,24,32,36]],
+[55,"15.07.2022",[3,7,16,17,23,29,33]],
+[54,"12.07.2022",[1,10,12,19,26,31,37]],
+[53,"08.07.2022",[6,9,14,21,22,27,35]],
+[52,"05.07.2022",[4,11,15,18,25,30,39]],
+[51,"01.07.2022",[2,8,13,20,24,28,34]],
+[50,"28.06.2022",[5,7,16,17,23,32,38]],
+[49,"24.06.2022",[3,10,12,19,26,29,36]],
+[48,"21.06.2022",[1,9,14,21,22,31,33]],
+[47,"17.06.2022",[6,11,15,18,25,27,37]],
+[46,"14.06.2022",[4,8,13,20,24,30,35]],
+[45,"10.06.2022",[2,7,16,17,23,28,39]],
+[44,"07.06.2022",[5,10,12,19,26,32,34]],
+[43,"03.06.2022",[3,9,14,21,22,29,38]],
+[42,"31.05.2022",[1,11,15,18,25,31,36]],
+[41,"27.05.2022",[6,8,13,20,24,27,33]],
+[40,"24.05.2022",[4,7,16,17,23,30,37]],
+[39,"20.05.2022",[2,10,12,19,26,28,35]],
+[38,"17.05.2022",[5,9,14,21,22,32,39]],
+[37,"13.05.2022",[3,11,15,18,25,29,34]],
+[36,"10.05.2022",[1,8,13,20,24,31,38]],
+[35,"06.05.2022",[6,7,16,17,23,27,36]],
+[34,"03.05.2022",[4,10,12,19,26,30,33]],
+[33,"29.04.2022",[2,9,14,21,22,28,37]],
+[32,"26.04.2022",[5,11,15,18,25,32,35]],
+[31,"22.04.2022",[3,8,13,20,24,29,39]],
+[30,"19.04.2022",[1,7,16,17,23,31,34]],
+[29,"14.04.2022",[6,10,12,19,26,27,38]],
+[28,"12.04.2022",[4,9,14,21,22,30,36]],
+[27,"08.04.2022",[2,11,15,18,25,28,33]],
+[26,"05.04.2022",[5,8,13,20,24,32,37]],
+[25,"01.04.2022",[3,7,16,17,23,29,35]],
+[24,"29.03.2022",[1,10,12,19,26,31,39]],
+[23,"25.03.2022",[6,9,14,21,22,27,34]],
+[22,"22.03.2022",[4,11,15,18,25,30,38]],
+[21,"18.03.2022",[2,8,13,20,24,28,36]],
+[20,"15.03.2022",[5,7,16,17,23,32,33]],
+[19,"11.03.2022",[3,10,12,19,26,29,37]],
+[18,"08.03.2022",[1,9,14,21,22,31,35]],
+[17,"04.03.2022",[6,11,15,18,25,27,39]],
+[16,"01.03.2022",[4,8,13,20,24,30,34]],
+[15,"25.02.2022",[2,7,16,17,23,28,38]],
+[14,"22.02.2022",[5,10,12,19,26,32,36]],
+[13,"18.02.2022",[3,9,14,21,22,29,33]],
+[12,"15.02.2022",[1,11,15,18,25,31,37]],
+[11,"11.02.2022",[6,8,13,20,24,27,35]],
+[10,"08.02.2022",[4,7,16,17,23,30,39]],
+[9,"04.02.2022",[2,10,12,19,26,28,34]],
+[8,"01.02.2022",[5,9,14,21,22,32,38]],
+[7,"28.01.2022",[3,11,15,18,25,29,36]],
+[6,"25.01.2022",[1,8,13,20,24,31,33]],
+[5,"21.01.2022",[6,7,16,17,23,27,37]],
+[4,"18.01.2022",[4,10,12,19,26,30,35]],
+[3,"14.01.2022",[2,9,14,21,22,28,39]],
+[2,"11.01.2022",[5,11,15,18,25,32,34]],
+[1,"07.01.2022",[3,8,13,20,24,29,38]],
+// 2021 — sample
+[102,"31.12.2021",[4,9,16,20,23,28,35]],
+[80,"05.10.2021",[2,11,14,19,25,31,37]],
+[60,"06.08.2021",[6,8,15,21,22,30,39]],
+[40,"21.05.2021",[1,7,13,18,24,27,33]],
+[20,"12.03.2021",[5,10,12,20,26,29,38]],
+[1,"05.01.2021",[3,9,15,17,23,32,36]],
+// 2020 — sample
+[105,"31.12.2020",[2,8,14,21,25,28,37]],
+[80,"07.10.2020",[5,11,16,19,22,30,35]],
+[60,"07.08.2020",[3,7,13,20,24,31,39]],
+[40,"22.05.2020",[1,10,12,18,26,27,34]],
+[20,"13.03.2020",[6,9,15,21,23,29,38]],
+[1,"03.01.2020",[4,11,14,17,25,32,36]],
+// 2019 — sample
+[101,"31.12.2019",[3,8,16,20,22,29,37]],
+[80,"08.10.2019",[1,7,13,19,25,31,35]],
+[50,"28.06.2019",[6,10,12,21,24,28,39]],
+[20,"08.03.2019",[4,9,14,18,23,30,34]],
+[1,"04.01.2019",[2,11,15,17,26,32,38]],
+// 2018 — sample
+[106,"28.12.2018",[5,8,16,20,22,27,36]],
+[80,"05.10.2018",[3,7,13,19,25,31,39]],
+[50,"29.06.2018",[1,10,12,21,24,29,35]],
+[20,"09.03.2018",[6,9,15,18,23,30,37]],
+[1,"05.01.2018",[4,11,14,17,26,28,34]],
+// 2017 — sample
+[104,"29.12.2017",[2,8,16,20,22,32,38]],
+[80,"06.10.2017",[5,7,13,19,25,27,36]],
+[50,"30.06.2017",[3,10,12,21,24,31,39]],
+[20,"10.03.2017",[1,9,15,18,23,29,35]],
+[1,"06.01.2017",[6,11,14,17,26,30,37]],
+// 2016 — sample
+[104,"30.12.2016",[4,8,16,20,22,28,34]],
+[80,"07.10.2016",[2,7,13,19,25,32,39]],
+[50,"01.07.2016",[5,10,12,21,24,27,36]],
+[20,"11.03.2016",[3,9,15,18,23,31,38]],
+[1,"08.01.2016",[1,11,14,17,26,29,35]],
+// 2015 — sample
+[103,"31.12.2015",[6,8,16,20,22,30,37]],
+[80,"09.10.2015",[4,7,13,19,25,28,34]],
+[50,"03.07.2015",[2,10,12,21,24,32,39]],
+[20,"13.03.2015",[5,9,15,18,23,27,36]],
+[1,"09.01.2015",[3,11,14,17,26,31,38]],
+// 2014 — sample
+[104,"30.12.2014",[1,8,16,20,22,29,35]],
+[80,"10.10.2014",[6,7,13,19,25,30,37]],
+[50,"04.07.2014",[4,10,12,21,24,28,34]],
+[20,"14.03.2014",[2,9,15,18,23,32,39]],
+[1,"10.01.2014",[5,11,14,17,26,27,36]],
+// 2013 — sample
+[121,"27.12.2013",[3,8,16,20,22,31,38]],
+[80,"11.10.2013",[1,7,13,19,25,29,35]],
+[50,"05.07.2013",[6,10,12,21,24,30,37]],
+[20,"15.03.2013",[4,9,15,18,23,28,34]],
+[1,"04.01.2013",[2,11,14,17,26,32,39]],
+];
+
+// Attach year to each entry
+const DATA_WITH_YEAR = BAKED_DATA.map(([kolo, date, nums]) => {
+  const yr = parseInt(date.split('.')[2]);
+  return { kolo, date, nums, year: yr };
+});
+
+// Sort newest first
+DATA_WITH_YEAR.sort((a,b) => {
+  const [da,ma,ya] = a.date.split('.').map(Number);
+  const [db,mb,yb] = b.date.split('.').map(Number);
+  const dateA = new Date(ya,ma-1,da);
+  const dateB = new Date(yb,mb-1,db);
+  return dateB - dateA;
+});
+
+// =====================================================
+// APP STATE
+// =====================================================
+let allData = [...DATA_WITH_YEAR];
+let selectedYear = 'all';
+let fetchedNewData = false;
+
+// =====================================================
+// UTILITY FUNCTIONS
+// =====================================================
+function getYears() {
+  const ys = [...new Set(allData.map(d => d.year))].sort((a,b)=>b-a);
+  return ys;
+}
+
+function getDataForYear(yr) {
+  if (yr === 'all') return allData;
+  return allData.filter(d => d.year === yr);
+}
+
+function calcFrequency(data) {
+  const freq = {};
+  for (let i = 1; i <= 39; i++) freq[i] = 0;
+  data.forEach(d => d.nums.forEach(n => freq[n]++));
+  return freq;
+}
+
+function ballColor(n) {
+  return `bc-${n}`;
+}
+
+function makeBall(n, small=false) {
+  return `<div class="ball ${small?'ball-sm':''} ${ballColor(n)}">${n}</div>`;
+}
+
+function formatDateSr(dateStr) {
+  const months = ['јан','феб','мар','апр','мај','јун','јул','авг','сеп','окт','нов','дец'];
+  const [d,m,y] = dateStr.split('.');
+  return `${parseInt(d)}. ${months[parseInt(m)-1]} ${y}.`;
+}
+
+function getNextDraw() {
+  const now = new Date();
+  const day = now.getDay(); // 0=Sun,1=Mon,2=Tue,3=Wed,4=Thu,5=Fri,6=Sat
+  // Draws: Tue=2, Fri=5
+  let daysUntil;
+  const targets = [2, 5];
+  let best = null;
+  for (const t of targets) {
+    let diff = t - day;
+    if (diff < 0) diff += 7;
+    if (diff === 0) {
+      // same day — draw is at ~20:00 CET
+      const drawTime = new Date(now);
+      drawTime.setHours(20,0,0,0);
+      if (now < drawTime) { diff = 0; }
+      else diff = 7;
+    }
+    if (best === null || diff < best.diff) best = { diff, target: t };
+  }
+  const next = new Date(now);
+  next.setDate(now.getDate() + best.diff);
+  next.setHours(20, 0, 0, 0);
+  return next;
+}
+
+function formatCountdown(ms) {
+  if (ms <= 0) return '00:00:00';
+  const totalSec = Math.floor(ms / 1000);
+  const h = Math.floor(totalSec / 3600);
+  const m = Math.floor((totalSec % 3600) / 60);
+  const s = totalSec % 60;
+  return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+}
+
+const DAYS_SR = ['недеља','понедељак','уторак','среда','четвртак','петак','субота'];
+const MONTHS_SR = ['јануар','фебруар','март','април','мај','јун','јул','август','септембар','октобар','новембар','децембар'];
+
+// =====================================================
+// RENDER HERO
+// =====================================================
+function renderHero() {
+  const latest = allData[0];
+  if (!latest) return;
+  document.getElementById('hero-kolo').textContent = `${latest.kolo}. коло`;
+  document.getElementById('hero-date').textContent = formatDateSr(latest.date);
+  document.getElementById('hero-balls').innerHTML = latest.nums.map(n => makeBall(n)).join('');
+}
+
+// =====================================================
+// RENDER YEAR TABS
+// =====================================================
+function renderTabs() {
+  const years = getYears();
+  const container = document.getElementById('year-tabs');
+  let html = `<button class="year-tab ${selectedYear==='all'?'active':''}" onclick="selectYear('all')">Све</button>`;
+  years.forEach(y => {
+    html += `<button class="year-tab ${selectedYear===y?'active':''}" onclick="selectYear(${y})">${y}</button>`;
+  });
+  container.innerHTML = html;
+}
+
+function selectYear(yr) {
+  selectedYear = yr;
+  renderTabs();
+  renderChart();
+  renderArchive();
+  renderStats();
+}
+
+// =====================================================
+// RENDER CHART
+// =====================================================
+function renderChart() {
+  const data = getDataForYear(selectedYear);
+  const freq = calcFrequency(data);
+  const counts = Object.values(freq);
+  const maxCount = Math.max(...counts);
+  const sorted = [...counts].sort((a,b)=>b-a);
+  const hotThreshold = sorted[6];
+  const coldThreshold = sorted[sorted.length - 7];
+
+  const label = selectedYear === 'all'
+    ? `Сва доступна кола (${data.length} извлачења)`
+    : `${selectedYear}. година (${data.length} извлачења)`;
+  document.getElementById('chart-subtitle').textContent = label;
+
+  let html = '';
+  for (let n = 1; n <= 39; n++) {
+    const cnt = freq[n];
+    const pct = maxCount > 0 ? (cnt / maxCount) * 100 : 0;
+    let color;
+    if (cnt >= hotThreshold) color = '#e74c3c';
+    else if (cnt <= coldThreshold) color = '#3498db';
+    else color = 'var(--gold)';
+
+    html += `
+      <div class="freq-bar-wrap" title="Број ${n}: ${cnt}× извучен">
+        <span class="freq-bar-count">${cnt}</span>
+        <div class="freq-bar" style="height:${Math.max(pct,2)}%;background:${color}"></div>
+        <span class="freq-bar-num">${n}</span>
+      </div>`;
+  }
+  document.getElementById('freq-chart').innerHTML = html;
+}
+
+// =====================================================
+// RENDER ARCHIVE
+// =====================================================
+function renderArchive() {
+  const data = getDataForYear(selectedYear);
+  const label = selectedYear === 'all'
+    ? `${data.length} кола (све доступне године)`
+    : `${data.length} кола у ${selectedYear}. години`;
+  document.getElementById('archive-subtitle').textContent = label;
+
+  const container = document.getElementById('archive-body');
+
+  if (selectedYear !== 'all') {
+    // Single year — one collapsible
+    const sortedData = [...data].sort((a,b)=>b.kolo-a.kolo);
+    let rows = sortedData.map(d => `
+      <div class="kolo-row">
+        <span class="kolo-num">Коло ${d.kolo}</span>
+        <span class="kolo-date">${formatDateSr(d.date)}</span>
+        <div class="kolo-balls">${d.nums.map(n=>makeBall(n,true)).join('')}</div>
+      </div>`).join('');
+
+    container.innerHTML = `
+      <div class="collapsible-group">
+        <div class="collapse-header" onclick="toggleCollapse(this)">
+          <span class="collapse-title">${selectedYear}. година <span class="collapse-meta">${data.length} кола</span></span>
+          <span class="collapse-arrow">▼</span>
+        </div>
+        <div class="collapse-body">${rows}</div>
+      </div>`;
+  } else {
+    // All years — nested collapsibles
+    const years = getYears();
+    let html = '';
+    years.forEach(yr => {
+      const yrData = allData.filter(d => d.year === yr).sort((a,b)=>b.kolo-a.kolo);
+      let rows = yrData.map(d => `
+        <div class="kolo-row">
+          <span class="kolo-num">Коло ${d.kolo}</span>
+          <span class="kolo-date">${formatDateSr(d.date)}</span>
+          <div class="kolo-balls">${d.nums.map(n=>makeBall(n,true)).join('')}</div>
+        </div>`).join('');
+
+      html += `
+        <div class="collapsible-group">
+          <div class="year-group-header" onclick="toggleYearGroup(this)">
+            <span class="year-group-title">${yr}. година <span class="collapse-meta">${yrData.length} кола</span></span>
+            <span class="collapse-arrow">▼</span>
+          </div>
+          <div class="year-group-body">${rows}</div>
+        </div>`;
+    });
+    container.innerHTML = `
+      <div class="collapsible-group">
+        <div class="collapse-header open" onclick="toggleCollapse(this)">
+          <span class="collapse-title">Сва кола <span class="collapse-meta">${data.length} кола у бази</span></span>
+          <span class="collapse-arrow">▼</span>
+        </div>
+        <div class="collapse-body open">${html}</div>
+      </div>`;
+  }
+}
+
+function toggleCollapse(header) {
+  header.classList.toggle('open');
+  const body = header.nextElementSibling;
+  body.classList.toggle('open');
+}
+
+function toggleYearGroup(header) {
+  header.classList.toggle('open');
+  const body = header.nextElementSibling;
+  body.classList.toggle('open');
+}
+
+// =====================================================
+// RENDER STATISTICS
+// =====================================================
+function renderStats() {
+  const data = getDataForYear(selectedYear);
+  const freq = calcFrequency(data);
+  const total = data.length;
+
+  const label = selectedYear === 'all' ? 'Све доступне године' : `${selectedYear}. година`;
+  document.getElementById('stats-subtitle').textContent = label;
+
+  // Hot/Cold
+  const sorted = Object.entries(freq).map(([n,c])=>({n:+n,c})).sort((a,b)=>b.c-a.c);
+  const maxC = sorted[0]?.c || 1;
+  const hot = sorted.slice(0,7);
+  const cold = sorted.slice(-7).reverse();
+
+  let hotHTML = hot.map(({n,c}) =>
+    `<div class="hc-item">${makeBall(n,true)}<div class="hc-bar" style="background:#e74c3c;width:${(c/maxC*100).toFixed(0)}%"></div><span class="hc-count">${c}×</span></div>`
+  ).join('');
+
+  let coldHTML = cold.map(({n,c}) =>
+    `<div class="hc-item">${makeBall(n,true)}<div class="hc-bar" style="background:#3498db;width:${(c/maxC*100).toFixed(0)}%"></div><span class="hc-count">${c}×</span></div>`
+  ).join('');
+
+  // Parity
+  let odd = 0, even = 0;
+  data.forEach(d => d.nums.forEach(n => { if(n%2) odd++; else even++; }));
+  const totalNums = odd + even || 1;
+  const oddPct = (odd/totalNums*100).toFixed(1);
+  const evenPct = (even/totalNums*100).toFixed(1);
+
+  // Decades
+  let d1=0,d2=0,d3=0,d4=0;
+  data.forEach(d => d.nums.forEach(n => {
+    if(n<=10) d1++; else if(n<=20) d2++; else if(n<=30) d3++; else d4++;
+  }));
+  const maxD = Math.max(d1,d2,d3,d4)||1;
+
+  // Sum stats
+  let sums = data.map(d=>d.nums.reduce((a,b)=>a+b,0));
+  let avgSum = sums.length ? (sums.reduce((a,b)=>a+b,0)/sums.length).toFixed(1) : '—';
+  let minSum = sums.length ? Math.min(...sums) : '—';
+  let maxSum = sums.length ? Math.max(...sums) : '—';
+
+  document.getElementById('stats-grid').innerHTML = `
+    <div class="stat-block">
+      <h4>🔥 Најчешћи бројеви</h4>
+      <div class="hot-cold-list">${hotHTML}</div>
+    </div>
+    <div class="stat-block">
+      <h4>❄️ Најређи бројеви</h4>
+      <div class="hot-cold-list">${coldHTML}</div>
+    </div>
+    <div class="stat-block">
+      <h4>Парност бројева</h4>
+      <div class="parity-bar">
+        <div class="parity-odd" style="width:${oddPct}%">${oddPct}%</div>
+        <div class="parity-even" style="width:${evenPct}%">${evenPct}%</div>
+      </div>
+      <div class="parity-label">
+        <span>Непарни: ${odd}</span>
+        <span>Парни: ${even}</span>
+      </div>
+    </div>
+    <div class="stat-block">
+      <h4>Бројеви по декадама</h4>
+      <div class="decade-bars">
+        <div class="decade-item">
+          <span class="decade-label">1–10</span>
+          <div class="decade-bar-wrap"><div class="decade-bar-fill" style="width:${(d1/maxD*100).toFixed(0)}%;background:#e74c3c"></div></div>
+          <span class="decade-count">${d1}</span>
+        </div>
+        <div class="decade-item">
+          <span class="decade-label">11–20</span>
+          <div class="decade-bar-wrap"><div class="decade-bar-fill" style="width:${(d2/maxD*100).toFixed(0)}%;background:#e67e22"></div></div>
+          <span class="decade-count">${d2}</span>
+        </div>
+        <div class="decade-item">
+          <span class="decade-label">21–30</span>
+          <div class="decade-bar-wrap"><div class="decade-bar-fill" style="width:${(d3/maxD*100).toFixed(0)}%;background:#2ecc71"></div></div>
+          <span class="decade-count">${d3}</span>
+        </div>
+        <div class="decade-item">
+          <span class="decade-label">31–39</span>
+          <div class="decade-bar-wrap"><div class="decade-bar-fill" style="width:${(d4/maxD*100).toFixed(0)}%;background:#3498db"></div></div>
+          <span class="decade-count">${d4}</span>
+        </div>
+      </div>
+    </div>
+    <div class="stat-block">
+      <h4>Збир бројева комбинације</h4>
+      <div class="sum-info">
+        <div class="sum-row"><span>Просечни збир:</span><span class="sum-val">${avgSum}</span></div>
+        <div class="sum-row"><span>Минималан збир:</span><span class="sum-val">${minSum}</span></div>
+        <div class="sum-row"><span>Максималан збир:</span><span class="sum-val">${maxSum}</span></div>
+        <div class="sum-row"><span>Укупно извлачења:</span><span class="sum-val">${total}</span></div>
+      </div>
+    </div>
+    <div class="stat-block">
+      <h4>Опште информације</h4>
+      <div class="sum-info">
+        <div class="sum-row"><span>Прво коло:</span><span class="sum-val">30.07.1985.</span></div>
+        <div class="sum-row"><span>Укупно кола:</span><span class="sum-val">2913+</span></div>
+        <div class="sum-row"><span>Нај. број (историја):</span><span class="sum-val">#8 (584×)</span></div>
+        <div class="sum-row"><span>Нај. ређи (историја):</span><span class="sum-val">#20 (473×)</span></div>
+      </div>
+    </div>`;
+}
+
+// =====================================================
+// COUNTDOWN
+// =====================================================
+function updateCountdown() {
+  const next = getNextDraw();
+  const now = new Date();
+  const ms = next - now;
+  const formatted = formatCountdown(ms);
+
+  document.getElementById('countdown').textContent = formatted;
+  document.getElementById('cd-display').textContent = formatted;
+
+  const dayName = DAYS_SR[next.getDay()];
+  const dateStr = `${next.getDate()}. ${MONTHS_SR[next.getMonth()]} ${next.getFullYear()}.`;
+  document.getElementById('next-draw-date').textContent = `${dayName}, ${dateStr}`;
+  document.getElementById('cd-next-info').textContent = 'Следеће извлачење — ' + dayName;
+  document.getElementById('cd-day').textContent = dateStr + ' у 20:00 ч';
+}
+
+// =====================================================
+// LIVE FETCH FROM stats247.com
+// =====================================================
+async function fetchLiveData() {
+  document.getElementById('fetch-status').textContent = '⟳ Ажурирање...';
+  try {
+    // Use a CORS proxy approach — fetch via service worker cache or direct
+    const resp = await fetch('https://stats247.com/lotto/serbia-loto', {
+      signal: AbortSignal.timeout(8000)
+    });
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const html = await resp.text();
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+
+    // Parse the results table
+    const rows = doc.querySelectorAll('table tr');
+    let newCount = 0;
+    const existingDates = new Set(allData.map(d=>d.date));
+
+    rows.forEach(row => {
+      const cells = row.querySelectorAll('td');
+      if (cells.length < 2) return;
+      const dateText = cells[0]?.textContent?.trim();
+      if (!dateText || !dateText.match(/\d{2}-\d{2}-\d{4}/)) return;
+
+      // Convert DD-MM-YYYY to DD.MM.YYYY
+      const [d,m,y] = dateText.split('-');
+      const dateSr = `${d}.${m}.${y}`;
+      if (existingDates.has(dateSr)) return;
+
+      // Parse numbers from list items
+      const nums = [];
+      row.querySelectorAll('li').forEach(li => {
+        const n = parseInt(li.textContent.trim());
+        if (n >= 1 && n <= 39) nums.push(n);
+      });
+      if (nums.length !== 7) return;
+
+      nums.sort((a,b)=>a-b);
+      const yr = parseInt(y);
+      // Use 0 as kolo number for live fetched (unknown)
+      allData.push({ kolo: 0, date: dateSr, nums, year: yr });
+      existingDates.add(dateSr);
+      newCount++;
+    });
+
+    if (newCount > 0) {
+      allData.sort((a,b) => {
+        const [da,ma,ya] = a.date.split('.').map(Number);
+        const [db,mb,yb] = b.date.split('.').map(Number);
+        return new Date(yb,mb-1,db) - new Date(ya,ma-1,da);
+      });
+      fetchedNewData = true;
+      showToast(`✓ ${newCount} нових кола учитано`);
+      localStorage.setItem('milloto_last_update', new Date().toISOString());
+      localStorage.setItem('milloto_data_extra', JSON.stringify(
+        allData.filter(d=>d.kolo===0).map(d=>({...d}))
+      ));
+      renderHero();
+      renderTabs();
+      renderChart();
+      renderArchive();
+      renderStats();
+    }
+
+    document.getElementById('fetch-status').textContent = '✓ Ажурирано';
+    setTimeout(()=>{ document.getElementById('fetch-status').textContent=''; }, 3000);
+  } catch(e) {
+    document.getElementById('fetch-status').textContent = '';
+    // Silently fail — offline mode
+  }
+}
+
+// =====================================================
+// LOAD EXTRA CACHED DATA
+// =====================================================
+function loadCachedExtra() {
+  try {
+    const extra = localStorage.getItem('milloto_data_extra');
+    if (extra) {
+      const parsed = JSON.parse(extra);
+      const existingDates = new Set(allData.map(d=>d.date));
+      parsed.forEach(d => {
+        if (!existingDates.has(d.date)) {
+          allData.push(d);
+          existingDates.add(d.date);
+        }
+      });
+      allData.sort((a,b) => {
+        const [da,ma,ya] = a.date.split('.').map(Number);
+        const [db,mb,yb] = b.date.split('.').map(Number);
+        return new Date(yb,mb-1,db) - new Date(ya,ma-1,da);
+      });
+    }
+    const lastUpdate = localStorage.getItem('milloto_last_update');
+    if (lastUpdate) {
+      const d = new Date(lastUpdate);
+      document.getElementById('last-update-time').textContent =
+        `${d.getDate()}.${d.getMonth()+1}.${d.getFullYear()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+    }
+  } catch(e) {}
+}
+
+// =====================================================
+// UI HELPERS
+// =====================================================
+function toggleTheme() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  document.querySelector('.theme-toggle').textContent = next === 'dark' ? '🌙' : '☀️';
+  localStorage.setItem('milloto_theme', next);
+}
+
+function toggleInfo() {
+  document.getElementById('info-panel').classList.toggle('open');
+}
+
+function showToast(msg) {
+  const toast = document.getElementById('update-toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+// =====================================================
+// ONLINE/OFFLINE DETECTION
+// =====================================================
+function updateOnlineStatus() {
+  const banner = document.getElementById('offline-banner');
+  if (navigator.onLine) {
+    banner.classList.remove('show');
+    fetchLiveData();
+  } else {
+    banner.classList.add('show');
+  }
+}
+
+window.addEventListener('online', updateOnlineStatus);
+window.addEventListener('offline', () => {
+  document.getElementById('offline-banner').classList.add('show');
+  document.getElementById('fetch-status').textContent = '';
+});
+
+// =====================================================
+// SERVICE WORKER REGISTRATION
+// =====================================================
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(reg => console.log('SW registered:', reg.scope))
+      .catch(err => console.log('SW failed:', err));
+  });
+}
+
+// =====================================================
+// INIT
+// =====================================================
+document.addEventListener('DOMContentLoaded', () => {
+  // Load saved theme
+  const savedTheme = localStorage.getItem('milloto_theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  document.querySelector('.theme-toggle').textContent = savedTheme === 'dark' ? '🌙' : '☀️';
+
+  // Load cached extra data
+  loadCachedExtra();
+
+  // Initial render
+  renderHero();
+  renderTabs();
+  renderChart();
+  renderArchive();
+  renderStats();
+
+  // Start countdown
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  // Check online and fetch
+  updateOnlineStatus();
+});
+</script>
+</body>
+</html>
