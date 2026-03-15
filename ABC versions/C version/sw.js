@@ -1,6 +1,6 @@
 // MilLoto Service Worker v1.0
-const CACHE_NAME = 'MilLoto_vD';
-const DATA_CACHE_NAME = 'MilLoto_data_vD';
+const CACHE_NAME = 'MilLoto_vB';
+const DATA_CACHE_NAME = 'MilLoto_data_vB';
 
 const STATIC_ASSETS = [
   './index.html',

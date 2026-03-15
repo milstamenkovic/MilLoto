@@ -1,11 +1,11 @@
 <!-- MilLoto -->
 <!-- Статистика и архива -- Лото 7/39 - Народна лутрија Србије -->
-<!-- Main - Version D -->
+<!-- Version C -->
 <!-- © 2026 Mil Stamenković -->
 <!-- Created with help of Free Claude AI -->
-<!-- Created: 14.03.2026. - Ćuprija, Serbia -->
+<!-- Created: 15.03.2026. - Ćuprija, Serbia -->
 <!-- Revised: 15.03.2026. - Ćuprija, Serbia -->
-<!-- Published: 14.03.2026. - Ćuprija, Serbia --> 
+<!-- Published: 15.03.2026. - Ćuprija, Serbia --> 
 
 
 
@@ -503,37 +503,9 @@ footer a { color: var(--gold-dim); text-decoration: none; }
 }
 .btn-install-dismiss:hover { background: var(--bg4); color: var(--text2); }
 
-/* ===== ALARM BUTTON IN HERO ===== */
-#btn-alarm-toggle {
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  color: var(--text2);
-  border-radius: 8px;
-  padding: 6px 12px;
-  cursor: pointer;
-  font-size: 0.82rem;
-  font-weight: 600;
-  transition: all var(--transition);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-#btn-alarm-toggle:hover { background: var(--bg4); color: var(--text); border-color: var(--gold-dim); }
-#btn-alarm-toggle.active { background: var(--bg4); border-color: var(--gold-dim); color: var(--gold); }
-.alarm-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--text3); transition: background var(--transition); }
-#btn-alarm-toggle.has-alarms .alarm-dot { background: var(--green); }
-
-/* ===== ALARM DROPDOWN ===== */
-#alarm-dropdown { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
-#alarm-dropdown.open { max-height: 800px; }
-.alarm-dropdown-inner { margin-top: 12px; background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
-.alarm-dropdown-header { padding: 10px 14px; border-bottom: 1px solid var(--border); }
-.alarm-dropdown-title { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--gold); }
-.alarm-dropdown-body { padding: 12px 14px; }
-
-/* ===== ALARM PANEL STYLES ===== */
+/* =====================================================
+   NEW FEATURE 3 — ALARM PANEL
+   ===================================================== */
 .alarm-panel { padding: 16px; }
 .alarm-intro {
   font-size: 0.82rem;
@@ -664,7 +636,7 @@ footer a { color: var(--gold-dim); text-decoration: none; }
       </div>
     </div>
     <div class="titlebar-controls">
-      <button class="btn-icon theme-toggle" onclick="toggleTheme()" title="Промени тему">Активирајте светлу тему</button>
+      <button class="btn-icon theme-toggle" onclick="toggleTheme()" title="Промени тему">Активирај светлу тему</button>
       <button class="btn-icon" onclick="toggleInfo()" title="Информације">ℹ️ <span style="font-size:0.75rem">Инфо</span></button>
     </div>
   </div>
@@ -725,77 +697,7 @@ footer a { color: var(--gold-dim); text-decoration: none; }
         <div class="next-draw-info" id="next-draw-date">—</div>
       </div>
       <div id="countdown">--:--:--</div>
-      <button id="btn-alarm-toggle" onclick="toggleAlarmDropdown()" title="Подсетници за извлачење">
-        <span class="alarm-dot"></span>
-        🔔 Подсетник
-        <span id="alarm-toggle-arrow" style="font-size:0.65rem;transition:transform 0.25s ease">▼</span>
-      </button>
     </div>
-
-    <!-- ALARM DROPDOWN -->
-    <div id="alarm-dropdown">
-      <div class="alarm-dropdown-inner">
-        <div class="alarm-dropdown-header">
-          <span class="alarm-dropdown-title">🔔 Подсетник за извлачење</span>
-        </div>
-        <div class="alarm-dropdown-body">
-          <p class="alarm-intro">
-            Подесите <strong>када желите да добијете обавештење</strong> пре следећег извлачења.
-            Ради када су и апликација (PWA) и страница затворени, али интернет прегледач ("browser") мора бити отворен.
-          </p>
-          <div class="alarm-status default" id="alarm-status-bar">
-            ⚪ Статус: <strong id="alarm-perm-text">проверавање...</strong>
-          </div>
-          <div class="alarm-next-draw">
-            Следеће извлачење: <strong id="alarm-next-draw-time">—</strong>
-          </div>
-          <div class="alarm-options" id="alarm-options">
-            <label class="alarm-option">
-              <input type="checkbox" value="1440" data-label="24 сата пре">
-              <span class="alarm-option-label">24 сата пре извлачења</span>
-              <span class="alarm-option-time" id="alarm-time-1440">—</span>
-            </label>
-            <label class="alarm-option">
-              <input type="checkbox" value="720" data-label="12 сати пре">
-              <span class="alarm-option-label">12 сати пре извлачења</span>
-              <span class="alarm-option-time" id="alarm-time-720">—</span>
-            </label>
-            <label class="alarm-option">
-              <input type="checkbox" value="360" data-label="6 сати пре">
-              <span class="alarm-option-label">6 сати пре извлачења</span>
-              <span class="alarm-option-time" id="alarm-time-360">—</span>
-            </label>
-            <label class="alarm-option">
-              <input type="checkbox" value="60" data-label="1 сат пре">
-              <span class="alarm-option-label">1 сат пре извлачења</span>
-              <span class="alarm-option-time" id="alarm-time-60">—</span>
-            </label>
-            <label class="alarm-option">
-              <input type="checkbox" value="15" data-label="15 минута пре">
-              <span class="alarm-option-label">15 минута пре извлачења</span>
-              <span class="alarm-option-time" id="alarm-time-15">—</span>
-            </label>
-            <label class="alarm-option">
-              <input type="checkbox" value="10" data-label="10 минута пре">
-              <span class="alarm-option-label">10 минута пре извлачења</span>
-              <span class="alarm-option-time" id="alarm-time-10">—</span>
-            </label>
-            <label class="alarm-option">
-              <input type="checkbox" value="5" data-label="5 минута пре">
-              <span class="alarm-option-label">5 минута пре извлачења</span>
-              <span class="alarm-option-time" id="alarm-time-5">—</span>
-            </label>
-          </div>
-          <div class="alarm-actions">
-            <button class="btn-alarm-set" onclick="saveAlarms()">💾 Сачувај подсетнике</button>
-            <button class="btn-alarm-cancel" onclick="cancelAlarms()">✕ Откажи све</button>
-          </div>
-          <div class="alarm-saved-notice" id="alarm-saved-notice"></div>
-        </div>
-      </div>
-    </div>
-    <!-- END ALARM DROPDOWN -->
-
   </div>
 </section>
 
@@ -859,6 +761,75 @@ footer a { color: var(--gold-dim); text-decoration: none; }
     </div>
   </div>
 
+  <!-- NEW: ALARM CARD -->
+  <div class="section-card" id="alarm-section">
+    <div class="section-header">
+      <div>
+        <div class="section-title">🔔 Подсетник за извлачење</div>
+      </div>
+    </div>
+    <div class="alarm-panel">
+        <p class="alarm-intro">
+            Подесите <strong>када желите да добијете обавештење</strong> пре следећег извлачења.
+        </p>
+        <p class="alarm-intro">
+            Обавештење пре сваког кола. Ради када су и апликација (PWA) и интернет страница затворени, али интернет прегледач ("browser") мора бити отворен.
+        </p>
+    </div>
+
+      <div class="alarm-status default" id="alarm-status-bar">
+        ⚪ Статус дозволе за обавештења: <strong id="alarm-perm-text">проверавање...</strong>
+      </div>
+
+      <div class="alarm-next-draw" id="alarm-next-info">
+        Следеће извлачење: <strong id="alarm-next-draw-time">—</strong>
+      </div>
+
+      <div class="alarm-options" id="alarm-options">
+        <label class="alarm-option">
+          <input type="checkbox" value="1440" data-label="24 сата пре">
+          <span class="alarm-option-label">24 сата пре</span>
+          <span class="alarm-option-time" id="alarm-time-1440">—</span>
+        </label>
+        <label class="alarm-option">
+          <input type="checkbox" value="720" data-label="12 сати пре">
+          <span class="alarm-option-label">12 сати пре</span>
+          <span class="alarm-option-time" id="alarm-time-720">—</span>
+        </label>
+        <label class="alarm-option">
+          <input type="checkbox" value="360" data-label="6 сати пре">
+          <span class="alarm-option-label">6 сати пре</span>
+          <span class="alarm-option-time" id="alarm-time-360">—</span>
+        </label>
+        <label class="alarm-option">
+          <input type="checkbox" value="60" data-label="1 сат пре">
+          <span class="alarm-option-label">1 сат пре</span>
+          <span class="alarm-option-time" id="alarm-time-60">—</span>
+        </label>
+        <label class="alarm-option">
+          <input type="checkbox" value="15" data-label="15 минута пре">
+          <span class="alarm-option-label">15 минута пре</span>
+          <span class="alarm-option-time" id="alarm-time-15">—</span>
+        </label>
+        <label class="alarm-option">
+          <input type="checkbox" value="10" data-label="10 минута пре">
+          <span class="alarm-option-label">10 минута пре</span>
+          <span class="alarm-option-time" id="alarm-time-10">—</span>
+        </label>
+        <label class="alarm-option">
+          <input type="checkbox" value="5" data-label="5 минута пре">
+          <span class="alarm-option-label">5 минута пре</span>
+          <span class="alarm-option-time" id="alarm-time-5">—</span>
+        </label>
+      </div>
+
+      <div class="alarm-actions">
+        <button class="btn-alarm-set" onclick="saveAlarms()">💾 Сачувај подсетнике</button>
+        <button class="btn-alarm-cancel" onclick="cancelAlarms()">✕ Откажи све</button>
+      </div>
+      <div class="alarm-saved-notice" id="alarm-saved-notice"></div>
+    </div>
+  </div>
 
 </main>
 
@@ -885,8 +856,8 @@ footer a { color: var(--gold-dim); text-decoration: none; }
       </div>
     </div>
     <div class="pwa-popup-title-wrap">
-      <div class="pwa-popup-title">Инсталирај MilLoto</div>
-      <div class="pwa-popup-subtitle">Лото 7/39 апликација</div>
+      <div class="pwa-popup-title">Инсталирај "MilLoto"</div>
+      <div class="pwa-popup-subtitle">Статистика и архива -- Лото 7/39 - Народна лутрија Србије</div>
     </div>
     <button class="pwa-popup-close" onclick="dismissPwaPopup()">✕</button>
   </div>
@@ -894,15 +865,16 @@ footer a { color: var(--gold-dim); text-decoration: none; }
     <div class="pwa-popup-benefits">
       <div class="pwa-benefit">
         <span class="pwa-benefit-icon">📶</span>
-        <span>Ради <strong>и без интернета</strong> — архива и статистика увек доступни</span>
+        <span>Ради <strong>и без интернета</strong> — Статистика и архива увек доступни!</span>
       </div>
       <div class="pwa-benefit">
         <span class="pwa-benefit-icon">⚡</span>
-        <span>Брже отварање — директно са радне површи или почетног екрана</span>
+        <span>Брже отварање — Директно са радне површине или почетног екрана или других менија (нпр. "Windows Start menu").
+        </span>
       </div>
       <div class="pwa-benefit">
         <span class="pwa-benefit-icon">🔔</span>
-        <span>Подсетници пре извлачења — обавештења чак и кад је апликација затворена</span>
+        <span>Подсетници пре извлачења — Oбавештења чак и када су и апликација (PWA) и интернет страница затворени, али интернет прегледач ("browser") мора бити отворен.<span>
       </div>
       <div class="pwa-benefit">
         <span class="pwa-benefit-icon">🔄</span>
@@ -911,7 +883,7 @@ footer a { color: var(--gold-dim); text-decoration: none; }
     </div>
     <div class="pwa-popup-actions">
       <button class="btn-install" id="btn-install-pwa" onclick="triggerPwaInstall()">📲 Инсталирај апликацију</button>
-      <button class="btn-install-dismiss" onclick="dismissPwaPopup()">Не, хвала</button>
+      <button class="btn-install-dismiss" onclick="dismissPwaPopup()">Не, хвала!</button>
     </div>
   </div>
 </div>
@@ -1219,7 +1191,7 @@ function formatCountdown(ms) {
   const s=Math.floor(ms/1000);
   return `${String(Math.floor(s/3600)).padStart(2,'0')}:${String(Math.floor((s%3600)/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
 }
-const DAYS_SR=['Недеља','Понедељак','Уторак','Среда','Четвртак','Петак','Субота'];
+const DAYS_SR=['недеља','понедељак','уторак','среда','четвртак','петак','субота'];
 const MONTHS_SR=['јануар','фебруар','март','април','мај','јун','јул','август','септембар','октобар','новембар','децембар'];
 
 // =====================================================
@@ -1393,7 +1365,7 @@ function toggleTheme() {
   const html=document.documentElement;
   const next=html.getAttribute('data-theme')==='dark'?'light':'dark';
   html.setAttribute('data-theme',next);
-  document.querySelector('.theme-toggle').textContent=next==='dark'?'Активирајте светлу тему':'Активирајте тамну тему';
+  document.querySelector('.theme-toggle').textContent=next==='dark'?'Активирај светлу тему':'Активирај тамну тему';
   localStorage.setItem('milloto_theme',next);
 }
 function toggleInfo() { document.getElementById('info-panel').classList.toggle('open'); }
@@ -1443,7 +1415,7 @@ window.addEventListener('appinstalled', () => {
 function triggerPwaInstall() {
   if (!deferredInstallPrompt) {
     // Fallback for browsers that don't support beforeinstallprompt (iOS Safari etc.)
-    showToast('На iOS: Дели → Додај на почетни екран');
+    showToast('На "iOS": Дели → Додај на почетни екран');
     dismissPwaPopup();
     return;
   }
@@ -1451,7 +1423,7 @@ function triggerPwaInstall() {
   deferredInstallPrompt.userChoice.then(result => {
     if (result.outcome === 'accepted') {
       localStorage.setItem('milloto_pwa_installed', '1');
-      showToast('✓ MilLoto инсталиран!');
+      showToast('✓ "MilLoto" инсталиран!');
     }
     dismissPwaPopup();
     deferredInstallPrompt = null;
@@ -1461,18 +1433,6 @@ function triggerPwaInstall() {
 function dismissPwaPopup() {
   document.getElementById('pwa-popup').classList.remove('show');
   localStorage.setItem('milloto_pwa_dismissed', '1');
-}
-
-// =====================================================
-// ALARM DROPDOWN TOGGLE
-// =====================================================
-function toggleAlarmDropdown() {
-  const dropdown = document.getElementById('alarm-dropdown');
-  const btn = document.getElementById('btn-alarm-toggle');
-  const arrow = document.getElementById('alarm-toggle-arrow');
-  const isOpen = dropdown.classList.toggle('open');
-  btn.classList.toggle('active', isOpen);
-  arrow.style.transform = isOpen ? 'rotate(180deg)' : 'rotate(0deg)';
 }
 
 // =====================================================
@@ -1491,7 +1451,7 @@ function updateAlarmUI() {
     permText.textContent = 'Дозвољено ✓';
   } else if (perm === 'denied') {
     bar.classList.add('denied');
-    permText.textContent = 'Блокирано — Омогућите у подешавањима интернет прегледача ("browser")';
+    permText.textContent = 'Блокирано — Омогућите у подешавањима прегледача';
   } else {
     bar.classList.add('default');
     permText.textContent = 'Нису дозвољена — Кликните "Сачувај" да активирате';
@@ -1500,7 +1460,7 @@ function updateAlarmUI() {
   // Update next draw time display and alarm time previews
   const next = getNextDraw();
   const dayName = DAYS_SR[next.getDay()];
-  const dateStr = `${next.getDate()}. ${MONTHS_SR[next.getMonth()]} ${next.getFullYear()}. у 20:00h`;
+  const dateStr = `${next.getDate()}. ${MONTHS_SR[next.getMonth()]} ${next.getFullYear()}. у 20:00`;
   document.getElementById('alarm-next-draw-time').textContent = `${dayName}, ${dateStr}`;
 
   ALARM_OFFSETS.forEach(offset => {
@@ -1517,7 +1477,6 @@ function updateAlarmUI() {
     document.querySelectorAll('#alarm-options input[type="checkbox"]').forEach(cb => {
       cb.checked = saved.includes(parseInt(cb.value));
     });
-    document.getElementById('btn-alarm-toggle').classList.toggle('has-alarms', saved.length > 0);
   } catch(e) {}
 }
 
@@ -1532,7 +1491,7 @@ async function saveAlarms() {
     }
   }
   if (Notification.permission === 'denied') {
-    showToast('⚠️ Обавештења су блокирана у интернет прегледачу ("browser").');
+    showToast('⚠️ Обавештења су блокирана у прегледачу');
     return;
   }
 
@@ -1566,9 +1525,6 @@ async function saveAlarms() {
   // Also persist alarms in localStorage for SW to re-read on restart
   localStorage.setItem('milloto_alarms_scheduled', JSON.stringify(alarms));
 
-  // Update button dot
-  document.getElementById('btn-alarm-toggle').classList.toggle('has-alarms', checked.length > 0);
-
   const notice = document.getElementById('alarm-saved-notice');
   if (checked.length > 0) {
     notice.textContent = `✓ Сачувано ${checked.length} подсетника за следеће извлачење`;
@@ -1589,7 +1545,7 @@ function cancelAlarms() {
   if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
     navigator.serviceWorker.controller.postMessage({ type: 'CANCEL_ALARMS' });
   }
-  document.getElementById('btn-alarm-toggle').classList.remove('has-alarms');
+
   const notice = document.getElementById('alarm-saved-notice');
   notice.textContent = '✓ Сви подсетници су откажани';
   notice.classList.add('show');
@@ -1644,7 +1600,7 @@ if ('serviceWorker' in navigator) {
 document.addEventListener('DOMContentLoaded', () => {
   const savedTheme = localStorage.getItem('milloto_theme') || 'dark';
   document.documentElement.setAttribute('data-theme', savedTheme);
-  document.querySelector('.theme-toggle').textContent = savedTheme==='dark' ? 'Активирајте светлу тему' : 'Активирајте тамну тему';
+  document.querySelector('.theme-toggle').textContent = savedTheme==='dark' ? 'Активирај светлу тему' : 'Активирај тамну тему';
 
   loadCachedExtra();
   renderHero(); renderTabs(); renderChart(); renderArchive(); renderStats();
@@ -1655,7 +1611,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if ('Notification' in window) {
     updateAlarmUI();
   } else {
-    document.getElementById('btn-alarm-toggle').style.display = 'none';
+    document.getElementById('alarm-section').style.display = 'none';
   }
 });
 </script>
