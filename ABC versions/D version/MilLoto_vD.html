@@ -158,6 +158,7 @@ a { color: var(--gold); }
   border-bottom: 1px solid var(--border);
   padding: 20px 16px;
 }
+
 .hero-inner { max-width: 1100px; margin: 0 auto; }
 .hero-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text3); margin-bottom: 6px; }
 .hero-kolo-info { display: flex; align-items: baseline; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
@@ -872,21 +873,10 @@ footer a { color: var(--gold-dim); text-decoration: none; }
 <!-- NEW FEATURE 1: PWA INSTALL POPUP -->
 <div id="pwa-popup">
   <div class="pwa-popup-header">
-    <div class="pwa-popup-icon">
-      <div class="pwa-popup-icon-balls">
-        <div class="pwa-popup-icon-ball" style="background:#e74c3c"></div>
-        <div class="pwa-popup-icon-ball" style="background:#e67e22"></div>
-        <div class="pwa-popup-icon-ball" style="background:#f1c40f"></div>
-        <div class="pwa-popup-icon-ball" style="background:#2ecc71"></div>
-        <div class="pwa-popup-icon-ball" style="background:#3498db"></div>
-        <div class="pwa-popup-icon-ball" style="background:#9b59b6"></div>
-        <div class="pwa-popup-icon-ball" style="background:#e91e63"></div>
-        <div class="pwa-popup-icon-ball" style="background:#00bcd4"></div>
-      </div>
-    </div>
+    <img src="./icons/icon-192" alt="MilLoto Icon">
     <div class="pwa-popup-title-wrap">
-      <div class="pwa-popup-title">Инсталирај MilLoto</div>
-      <div class="pwa-popup-subtitle">Лото 7/39 апликација</div>
+      <div class="pwa-popup-title">Инсталирајте "MilLoto"</div>
+      <div class="pwa-popup-subtitle">Статистика и архива -- Лото 7/39 - Народна лутрија Србије</div>
     </div>
     <button class="pwa-popup-close" onclick="dismissPwaPopup()">✕</button>
   </div>
@@ -894,15 +884,15 @@ footer a { color: var(--gold-dim); text-decoration: none; }
     <div class="pwa-popup-benefits">
       <div class="pwa-benefit">
         <span class="pwa-benefit-icon">📶</span>
-        <span>Ради <strong>и без интернета</strong> — архива и статистика увек доступни</span>
+        <span>Ради <strong>и без интернета</strong> — статистика и архива увек доступни</span>
       </div>
       <div class="pwa-benefit">
         <span class="pwa-benefit-icon">⚡</span>
-        <span>Брже отварање — директно са радне површи или почетног екрана</span>
+        <span>Брже отварање — директно са радне површине или почетног екрана</span>
       </div>
       <div class="pwa-benefit">
         <span class="pwa-benefit-icon">🔔</span>
-        <span>Подсетници пре извлачења — обавештења чак и кад је апликација затворена</span>
+        <span>Подсетници пре извлачења</span>
       </div>
       <div class="pwa-benefit">
         <span class="pwa-benefit-icon">🔄</span>
@@ -1191,7 +1181,7 @@ function calcFrequency(data) {
 }
 function makeBall(n,small=false) { return `<div class="ball ${small?'ball-sm':''} bc-${n}">${n}</div>`; }
 function formatDateSr(dateStr) {
-  const months=['јан','феб','мар','апр','мај','јун','јул','авг','сеп','окт','нов','дец'];
+  const months=['јан','феб','март','апр','мај','јун','јул','авг','сеп','окт','нов','дец'];
   const [d,m,y]=dateStr.split('.');
   return `${parseInt(d)}. ${months[parseInt(m)-1]} ${y}.`;
 }
@@ -1436,7 +1426,7 @@ window.addEventListener('beforeinstallprompt', e => {
 window.addEventListener('appinstalled', () => {
   localStorage.setItem('milloto_pwa_installed', '1');
   document.getElementById('pwa-popup').classList.remove('show');
-  showToast('✓ MilLoto инсталиран!');
+  showToast('✓ "MilLoto" инсталиран!');
   deferredInstallPrompt = null;
 });
 
@@ -1451,7 +1441,7 @@ function triggerPwaInstall() {
   deferredInstallPrompt.userChoice.then(result => {
     if (result.outcome === 'accepted') {
       localStorage.setItem('milloto_pwa_installed', '1');
-      showToast('✓ MilLoto инсталиран!');
+      showToast('✓ "MilLoto" инсталиран!');
     }
     dismissPwaPopup();
     deferredInstallPrompt = null;
