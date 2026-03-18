@@ -70,12 +70,10 @@
 }
 
 html {
-  overflow-x: hidden;
   scroll-behavior: smooth;
 }
 
 body {
-  overflow-x: hidden;
   font-family: 'Segoe UI', 'Arial', sans-serif;
   background: var(--bg);
   color: var(--text);
@@ -202,7 +200,7 @@ a { color: var(--gold); }
 #countdown { font-size: 1.1rem; font-weight: 700; color: var(--gold); font-variant-numeric: tabular-nums; min-width: 120px; }
 #fetch-status { font-size: 0.75rem; color: var(--text3); margin-left: auto; }
 
-/* ===== NAVIGATION ===== */
+/* ===== YEARS / NAVIGATION BAR ===== */
 #nav-bar {
   background: var(--bg2);
   max-width: 1068px;
@@ -439,7 +437,10 @@ footer a { color: var(--gold-dim); text-decoration: none; }
   transition: right 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
   overflow: hidden;
 }
-#pwa-popup.show { right: 24px; }
+#pwa-popup.show {
+  visibility: visible;
+  right: 24px;
+}
 .pwa-popup-header {
   background: linear-gradient(135deg, var(--bg3), var(--bg4));
   padding: 14px 16px 10px;
