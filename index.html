@@ -63,9 +63,19 @@
 }
 
 /* ===== RESET & BASE ===== */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
 body {
+  overflow-x: hidden;
   font-family: 'Segoe UI', 'Arial', sans-serif;
   background: var(--bg);
   color: var(--text);
@@ -416,9 +426,9 @@ footer a { color: var(--gold-dim); text-decoration: none; }
    NEW FEATURE 1 — PWA INSTALL POPUP (side slide-in)
    ===================================================== */
 #pwa-popup {
+  visibility: hidden;
   position: fixed;
   bottom: 24px;
-  right: -420px; /* hidden off-screen */
   width: 360px;
   max-width: calc(100vw - 32px);
   background: var(--bg2);
