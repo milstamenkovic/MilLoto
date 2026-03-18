@@ -93,6 +93,7 @@ a { color: var(--gold); }
   z-index: 100;
   overflow-x: hidden;
 }
+
 .titlebar-main {
   display: flex;
   align-items: center;
@@ -101,6 +102,7 @@ a { color: var(--gold); }
   max-width: 1100px;
   margin: 0 auto;
 }
+
 .app-logo { display: flex; align-items: center; gap: 10px; }
 .logo-balls { display: flex; gap: 3px; }
 .logo-ball { width: 14px; height: 14px; border-radius: 50%; display: inline-block; }
@@ -162,13 +164,13 @@ a { color: var(--gold); }
 
 /* ===== HERO ===== */
 #hero {
+  position: sticky;
   max-width: 1068px;
   background: linear-gradient(135deg, var(--bg2) 0%, var(--bg3) 100%);
   border-bottom: 1px solid var(--border);
   margin: 0 auto;
   padding: 20px 16px;
-  position: sticky;
-  top: 57px;
+  top: 89px;
   z-index: 95;
   box-shadow: var(--shadow);
   overflow-x: hidden;
@@ -689,7 +691,7 @@ footer a { color: var(--gold-dim); text-decoration: none; }
     </div>
     <div class="titlebar-controls">
       <button class="btn-icon theme-toggle" onclick="toggleTheme()" title="Промени тему">Активирајте светлу тему</button>
-      <button class="btn-icon" onclick="toggleInfo()" title="Информације">ℹ️ <span style="font-size:0.75rem">Инфо</span></button>
+      <button class="btn-icon" onclick="toggleInfo()" title="Информације">ℹ️</button>
     </div>
   </div>
 </header>
