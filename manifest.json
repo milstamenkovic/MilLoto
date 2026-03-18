@@ -1,7 +1,7 @@
 {
   "name": "MilLoto",
   "short_name": "MilLoto",
-  "description": "MilLoto -- Статистике и архива -- Лото 7/39 - Народна лутрија Србије",
+  "description": "MilLoto -- Статистика и архива -- Лото 7/39 - Државна лутрија Србије",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#0f1923",

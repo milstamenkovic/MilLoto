@@ -4,7 +4,7 @@
 <!-- © 2026 Mil Stamenković -->
 <!-- Created with help of Free Claude AI -->
 <!-- Created: 14.03.2026. - Ćuprija, Serbia -->
-<!-- Revised: 15.03.2026. - Ćuprija, Serbia -->
+<!-- Revised: 18.03.2026. - Ćuprija, Serbia -->
 <!-- Published: 14.03.2026. - Ćuprija, Serbia --> 
 
 
@@ -14,7 +14,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="MilLoto - Статистика и архива -- Лото 7/39 - Народна лутрија Србије">
+<meta name="description" content="MilLoto - Статистика и архива -- Лото 7/39 - Државна лутрија Србије">
 <meta name="theme-color" content="#c8972a">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -154,9 +154,15 @@ a { color: var(--gold); }
 
 /* ===== HERO ===== */
 #hero {
+  max-width: 1068px;
   background: linear-gradient(135deg, var(--bg2) 0%, var(--bg3) 100%);
   border-bottom: 1px solid var(--border);
+  margin: 0 auto;
   padding: 20px 16px;
+  position: sticky;
+  top: 57px;
+  z-index: 95;
+  box-shadow: var(--shadow);
 }
 
 .hero-inner { max-width: 1100px; margin: 0 auto; }
@@ -189,9 +195,10 @@ a { color: var(--gold); }
 /* ===== NAVIGATION ===== */
 #nav-bar {
   background: var(--bg2);
+  max-width: 1068px;
+  margin: 0 auto;
   border-bottom: 2px solid var(--border);
-  position: sticky;
-  top: 57px;
+  top: 197px;
   z-index: 90;
   overflow-x: auto;
   scrollbar-width: thin;
@@ -220,7 +227,11 @@ a { color: var(--gold); }
 .year-tab.active { background: var(--gold); color: #0f1923; border-color: var(--gold); }
 
 /* ===== MAIN CONTENT ===== */
-#main { max-width: 1100px; margin: 0 auto; padding: 16px; }
+#main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 16px;
+}
 
 /* ===== SECTION CARDS ===== */
 .section-card {
@@ -521,17 +532,14 @@ footer a { color: var(--gold-dim); text-decoration: none; }
   white-space: nowrap;
   flex-shrink: 0;
 }
-
 #btn-alarm-toggle:hover { background: var(--bg4); color: var(--text); border-color: var(--gold-dim); }
-
 #btn-alarm-toggle.active { background: var(--bg4); border-color: var(--gold-dim); color: var(--gold); }
 .alarm-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--text3); transition: background var(--transition); }
-
 #btn-alarm-toggle.has-alarms .alarm-dot { background: var(--green); }
 
 /* ===== ALARM DROPDOWN ===== */
 #alarm-dropdown { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
-#alarm-dropdown.open { max-height: 800px; }
+#alarm-dropdown.open { max-height: 600px; }
 .alarm-dropdown-inner { margin-top: 12px; background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
 .alarm-dropdown-header { padding: 10px 14px; border-bottom: 1px solid var(--border); }
 .alarm-dropdown-title { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--gold); }
@@ -664,7 +672,7 @@ footer a { color: var(--gold-dim); text-decoration: none; }
       <div>
         <div class="app-title"><a href="#">MilLoto</a></div>
         <div class="app-subtitle">Статистика и архива</div>
-        <div class="app-subtitle">Лото 7/39 - Народна лутрија Србије</div>
+        <div class="app-subtitle">Лото 7/39 - Државна лутрија Србије</div>
       </div>
     </div>
     <div class="titlebar-controls">
@@ -683,7 +691,7 @@ footer a { color: var(--gold-dim); text-decoration: none; }
         <li>Бира се 7 бројева од 1 до 39</li>
         <li>Извлачење: уторак и петак</li>
         <li>Оператер: Државна лутрија Србије</li>
-        <li>Најстарије коло у архиви: 30.07.1985.</li>
+        <li>Најстарије коло у статистици: 30.07.1985.</li>
       </ul>
     </div>
     <div class="info-card">
@@ -706,7 +714,7 @@ footer a { color: var(--gold-dim); text-decoration: none; }
     <div class="info-card">
       <h4 style="text-transform: none;">О "MilLoto"</h4>
       <p>"MilLoto" ради онлајн и офлајн. Подаци се аутоматски ажурирају приликом посете. Статистика обухвата свe доступне архивске податке.</p>
-      <p style="margin-top:6px">Извор података: <a href="https://stats247.com/lotto/serbia-loto" target="_blank">stats247.com</a></p>
+      <p style="margin-top:6px">Извор података: <a href="https://stats247.com/lotto/serbia-loto" target="_blank" rel="noopener">stats247.com</a> и <a href="https://naslovi.net/vesti/loto-brojevi" target="_blank" rel="noopener">naslovi.net/vesti/loto-brojevi</a></p>
     </div>
   </div>
 </div>
@@ -725,7 +733,7 @@ footer a { color: var(--gold-dim); text-decoration: none; }
     </div>
     <div class="hero-next">
       <div>
-        <div class="next-draw-label">Следеће извлачење</div>
+        <div class="next-draw-label">Следеће извлачење:</div>
         <div class="next-draw-info" id="next-draw-date">—</div>
       </div>
       <div id="countdown">--:--:--</div>
@@ -745,7 +753,7 @@ footer a { color: var(--gold-dim); text-decoration: none; }
         <div class="alarm-dropdown-body">
           <p class="alarm-intro">
             Подесите <strong>када желите да добијете обавештење</strong> пре следећег извлачења.
-            Ради када су и апликација (PWA) и страница затворени, али интернет прегледач ("browser") мора бити отворен.
+            Ради када су и апликација (PWA) и страница затворени, али прегледач ("browser") мора бити отворен.
           </p>
           <div class="alarm-status default" id="alarm-status-bar">
             ⚪ Статус: <strong id="alarm-perm-text">проверавање...</strong>
@@ -867,8 +875,8 @@ footer a { color: var(--gold-dim); text-decoration: none; }
 </main>
 
 <footer>
-  <p><a href="https://milstamenkovic.github.io">MilLoto<br>© 2026 Милан Стаменковић</a></p>
-  <p style="margin-top:4px">Подаци: <a href="https://stats247.com/lotto/serbia-loto" target="_blank">stats247.com</a> - <a href="https://lotostatistika.rs" target="_blank">lotostatistika.rs</a> - <a href="https://www.lutrija.rs" target="_blank">lutrija.rs</a></p>
+  <p><a href="https://milstamenkovic.github.io" target="_blank" rel="noopener">MilLoto<br>© 2026 Милан Стаменковић</a></p>
+  <p style="margin-top:4px">Подаци: <a href="https://stats247.com/lotto/serbia-loto" target="_blank" rel="noopener">stats247.com</a> - <a href="https://lotostatistika.rs" target="_blank" rel="noopener">lotostatistika.rs</a> - <a href="https://www.lutrija.rs" target="_blank" rel="noopener">lutrija.rs</a> - <a href="https://naslovi.net/vesti/loto-brojevi" target="_blank" rel="noopener">naslovi.net/vesti/loto-brojevi</a></p>
 </footer>
 
 <div id="update-toast">✓ Подаци ажурирани</div>
@@ -876,10 +884,21 @@ footer a { color: var(--gold-dim); text-decoration: none; }
 <!-- NEW FEATURE 1: PWA INSTALL POPUP -->
 <div id="pwa-popup">
   <div class="pwa-popup-header">
-    <img src="./icons/icon-192.png" alt="MilLoto Icon" style="width: 48px;">
+    <div class="pwa-popup-icon">
+      <div class="pwa-popup-icon-balls">
+        <div class="pwa-popup-icon-ball" style="background:#e74c3c"></div>
+        <div class="pwa-popup-icon-ball" style="background:#e67e22"></div>
+        <div class="pwa-popup-icon-ball" style="background:#f1c40f"></div>
+        <div class="pwa-popup-icon-ball" style="background:#2ecc71"></div>
+        <div class="pwa-popup-icon-ball" style="background:#3498db"></div>
+        <div class="pwa-popup-icon-ball" style="background:#9b59b6"></div>
+        <div class="pwa-popup-icon-ball" style="background:#e91e63"></div>
+        <div class="pwa-popup-icon-ball" style="background:#00bcd4"></div>
+      </div>
+    </div>
     <div class="pwa-popup-title-wrap">
       <div class="pwa-popup-title">Инсталирајте "MilLoto"</div>
-      <div class="pwa-popup-subtitle">Статистика и архива -- Лото 7/39 - Народна лутрија Србије</div>
+      <div class="pwa-popup-subtitle">Лото 7/39 апликација</div>
     </div>
     <button class="pwa-popup-close" onclick="dismissPwaPopup()">✕</button>
   </div>
@@ -887,15 +906,15 @@ footer a { color: var(--gold-dim); text-decoration: none; }
     <div class="pwa-popup-benefits">
       <div class="pwa-benefit">
         <span class="pwa-benefit-icon">📶</span>
-        <span>Ради <strong>и без интернета</strong> — статистика и архива увек доступни</span>
+        <span>Ради <strong>и без интернета</strong> — Статистика и архива увек доступни</span>
       </div>
       <div class="pwa-benefit">
         <span class="pwa-benefit-icon">⚡</span>
-        <span>Брже отварање — директно са радне површине или почетног екрана</span>
+        <span>Брже отварање — Директно са радне површине или почетног екрана, на било којем уређају</span>
       </div>
       <div class="pwa-benefit">
         <span class="pwa-benefit-icon">🔔</span>
-        <span>Подсетници пре извлачења</span>
+        <span>Подсетници пре извлачења — Обавештења чак и кад је апликација затворена (интернет прегледач ("browser") мора бити отворен)</span>
       </div>
       <div class="pwa-benefit">
         <span class="pwa-benefit-icon">🔄</span>
@@ -903,7 +922,7 @@ footer a { color: var(--gold-dim); text-decoration: none; }
       </div>
     </div>
     <div class="pwa-popup-actions">
-      <button class="btn-install" id="btn-install-pwa" onclick="triggerPwaInstall()">📲 Инсталирајте апликацију</button>
+      <button class="btn-install" id="btn-install-pwa" onclick="triggerPwaInstall()">📲 Инсталирајте "MilLoto"</button>
       <button class="btn-install-dismiss" onclick="dismissPwaPopup()">Не, хвала</button>
     </div>
   </div>
@@ -914,6 +933,7 @@ footer a { color: var(--gold-dim); text-decoration: none; }
 // BAKED-IN DATA
 // =====================================================
 const BAKED_DATA = [
+[22,"17.03.2026",[11,19,20,21,24,36,38]],
 [21,"13.03.2026",[13,16,24,28,33,34,35]],
 [20,"10.03.2026",[5,6,12,18,22,29,31]],
 [19,"06.03.2026",[2,16,27,30,31,35,38]],
@@ -1212,7 +1232,7 @@ function formatCountdown(ms) {
   const s=Math.floor(ms/1000);
   return `${String(Math.floor(s/3600)).padStart(2,'0')}:${String(Math.floor((s%3600)/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
 }
-const DAYS_SR=['Недеља','Понедељак','Уторак','Среда','Четвртак','Петак','Субота'];
+const DAYS_SR=['недеља','понедељак','уторак','среда','четвртак','петак','субота'];
 const MONTHS_SR=['јануар','фебруар','март','април','мај','јун','јул','август','септембар','октобар','новембар','децембар'];
 
 // =====================================================
@@ -1249,7 +1269,7 @@ function renderChart() {
 }
 function renderArchive() {
   const data=getDataForYear(selectedYear);
-  document.getElementById('archive-subtitle').textContent=selectedYear==='all'?`${data.length} кола (све доступне године)`:`${data.length} кола у ${selectedYear}. години`;
+  document.getElementById('archive-subtitle').textContent=selectedYear==='all'?`${data.length} кола (све доступне године) (кликните на коло како бисте видели резултате)`:`${data.length} кола у ${selectedYear}. години`;
   const container=document.getElementById('archive-body');
   if (selectedYear!=='all') {
     const rows=[...data].sort((a,b)=>b.kolo-a.kolo).map(d=>`<div class="kolo-row"><span class="kolo-num">Коло ${d.kolo}</span><span class="kolo-date">${formatDateSr(d.date)}</span><div class="kolo-balls">${d.nums.map(n=>makeBall(n,true)).join('')}</div></div>`).join('');
@@ -1296,7 +1316,7 @@ function renderStats() {
       <div class="sum-row"><span>Укупно извлачења:</span><span class="sum-val">${total}</span></div>
     </div></div>
     <div class="stat-block"><h4>Опште информације</h4><div class="sum-info">
-      <div class="sum-row"><span>Најстарије коло у архиви:</span><span class="sum-val">30.07.1985.</span></div>
+      <div class="sum-row"><span>Најстарије коло у статистици:</span><span class="sum-val">30.07.1985.</span></div>
       <div class="sum-row"><span>Укупно кола:</span><span class="sum-val">2913+</span></div>
       <div class="sum-row"><span>Нај. број (историја):</span><span class="sum-val">#8 (584×)</span></div>
       <div class="sum-row"><span>Нај. ређи (историја):</span><span class="sum-val">#20 (473×)</span></div>
@@ -1319,44 +1339,139 @@ function updateCountdown() {
 }
 
 // =====================================================
-// LIVE FETCH
+// LIVE FETCH — naslovi.net (primary) + stats247.com (fallback)
 // =====================================================
-async function fetchLiveData() {
-  document.getElementById('fetch-status').textContent='⟳ Ажурирање...';
-  try {
-    const resp=await fetch('https://stats247.com/lotto/serbia-loto',{signal:AbortSignal.timeout(8000)});
-    if(!resp.ok) throw new Error('HTTP '+resp.status);
-    const html=await resp.text();
-    const doc=new DOMParser().parseFromString(html,'text/html');
-    const rows=doc.querySelectorAll('table tr');
-    let newCount=0;
-    const existingDates=new Set(allData.map(d=>d.date));
-    rows.forEach(row=>{
-      const cells=row.querySelectorAll('td');
-      if(cells.length<2) return;
-      const dateText=cells[0]?.textContent?.trim();
-      if(!dateText||!dateText.match(/\d{2}-\d{2}-\d{4}/)) return;
-      const [d,m,y]=dateText.split('-');
-      const dateSr=`${d}.${m}.${y}`;
-      if(existingDates.has(dateSr)) return;
-      const nums=[];
-      row.querySelectorAll('li').forEach(li=>{const n=parseInt(li.textContent.trim());if(n>=1&&n<=39)nums.push(n);});
-      if(nums.length!==7) return;
-      nums.sort((a,b)=>a-b);
-      allData.push({kolo:0,date:dateSr,nums,year:parseInt(y)});
-      existingDates.add(dateSr);
-      newCount++;
-    });
-    if(newCount>0){
-      allData.sort((a,b)=>{const[da,ma,ya]=a.date.split('.').map(Number),[db,mb,yb]=b.date.split('.').map(Number);return new Date(yb,mb-1,db)-new Date(ya,ma-1,da);});
-      showToast(`✓ ${newCount} нових кола учитано`);
-      localStorage.setItem('milloto_last_update',new Date().toISOString());
-      localStorage.setItem('milloto_data_extra',JSON.stringify(allData.filter(d=>d.kolo===0)));
-      renderHero(); renderTabs(); renderChart(); renderArchive(); renderStats();
+
+// Helper: merge new draws into allData, return count of new ones added
+function mergeDraws(newDraws) {
+  const existingDates = new Set(allData.map(d => d.date));
+  let count = 0;
+  newDraws.forEach(draw => {
+    if (!existingDates.has(draw.date)) {
+      allData.push(draw);
+      existingDates.add(draw.date);
+      count++;
     }
-    document.getElementById('fetch-status').textContent='✓ Ажурирано';
-    setTimeout(()=>{document.getElementById('fetch-status').textContent='';},3000);
-  } catch(e){ document.getElementById('fetch-status').textContent=''; }
+  });
+  return count;
+}
+
+// Parse naslovi.net — reads article snippets which contain draw results
+// Articles contain text like: "kombinacija koja je izvučena glasi: 34, 28, 33, 35, 24, 13 i 16"
+// or: "Izvučeni su brojevi 34, 28, 33, 35, 24, 13, 16"
+function parseNaslovi(doc) {
+  const draws = [];
+  try {
+    // Find all article links/snippets on the page
+    const articles = doc.querySelectorAll('h2, p, div');
+    const existingDates = new Set(allData.map(d => d.date));
+
+    articles.forEach(el => {
+      const text = el.textContent || '';
+
+      // Skip Loto 5+ articles (different game)
+      if (text.includes('5+') || text.includes('loto 5') || text.includes('Loto 5')) return;
+
+      // Look for number sequences that match loto results
+      // Pattern: "glasi: N, N, N, N, N, N i N" or "brojevi N, N, N, N, N, N i N"
+      const pattern = /(?:glasi|izvučeni\s+su\s+(?:loto\s+)?brojevi|kombinacija)[:\s]+(\d{1,2})[,\s]+(\d{1,2})[,\s]+(\d{1,2})[,\s]+(\d{1,2})[,\s]+(\d{1,2})[,\s]+(\d{1,2})(?:\s+i\s+|\s*,\s*)(\d{1,2})/i;
+      const match = text.match(pattern);
+      if (!match) return;
+
+      const nums = [match[1],match[2],match[3],match[4],match[5],match[6],match[7]]
+        .map(Number)
+        .filter(n => n >= 1 && n <= 39);
+      if (nums.length !== 7) return;
+
+      // Find the date from a nearby parent/sibling link URL (format: /YYYY-MM-DD/)
+      const parentHTML = el.closest('div, article, li')?.innerHTML || '';
+      const urlDateMatch = parentHTML.match(/\/(\d{4})-(\d{2})-(\d{2})\//);
+      if (!urlDateMatch) return;
+      const dateSr = `${urlDateMatch[3]}.${urlDateMatch[2]}.${urlDateMatch[1]}`;
+      if (existingDates.has(dateSr)) return;
+
+      // Find kolo number from text like "u 22. kolu" or "22. kola"
+      const koloMatch = text.match(/u\s+(\d+)\.\s+kolu/i);
+      const koloNum = koloMatch ? parseInt(koloMatch[1]) : 0;
+
+      nums.sort((a, b) => a - b);
+      draws.push({ kolo: koloNum, date: dateSr, nums, year: parseInt(urlDateMatch[1]) });
+      existingDates.add(dateSr);
+    });
+  } catch(e) {}
+  return draws;
+}
+
+// Parse stats247.com — reads the HTML results table
+function parseStats247(doc) {
+  const draws = [];
+  try {
+    const rows = doc.querySelectorAll('table tr');
+    rows.forEach(row => {
+      const cells = row.querySelectorAll('td');
+      if (cells.length < 2) return;
+      const dateText = cells[0]?.textContent?.trim();
+      if (!dateText || !dateText.match(/\d{2}-\d{2}-\d{4}/)) return;
+      const [d, m, y] = dateText.split('-');
+      const dateSr = `${d}.${m}.${y}`;
+      const nums = [];
+      row.querySelectorAll('li').forEach(li => {
+        const n = parseInt(li.textContent.trim());
+        if (n >= 1 && n <= 39) nums.push(n);
+      });
+      if (nums.length !== 7) return;
+      nums.sort((a, b) => a - b);
+      draws.push({ kolo: 0, date: dateSr, nums, year: parseInt(y) });
+    });
+  } catch(e) {}
+  return draws;
+}
+
+async function fetchLiveData() {
+  document.getElementById('fetch-status').textContent = '⟳ Ажурирање...';
+  let totalNew = 0;
+
+  // === SOURCE 1: naslovi.net (fastest, updates within hours) ===
+  try {
+    const resp = await fetch('https://naslovi.net/vesti/loto-brojevi', {
+      signal: AbortSignal.timeout(8000)
+    });
+    if (resp.ok) {
+      const html = await resp.text();
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      const draws = parseNaslovi(doc);
+      totalNew += mergeDraws(draws);
+    }
+  } catch(e) { /* naslovi failed, continue to fallback */ }
+
+  // === SOURCE 2: stats247.com (broader history, last 100 draws) ===
+  try {
+    const resp = await fetch('https://stats247.com/lotto/serbia-loto', {
+      signal: AbortSignal.timeout(8000)
+    });
+    if (resp.ok) {
+      const html = await resp.text();
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      const draws = parseStats247(doc);
+      totalNew += mergeDraws(draws);
+    }
+  } catch(e) { /* stats247 failed, silent */ }
+
+  // === Update app if anything new was found ===
+  if (totalNew > 0) {
+    allData.sort((a, b) => {
+      const [da,ma,ya] = a.date.split('.').map(Number);
+      const [db,mb,yb] = b.date.split('.').map(Number);
+      return new Date(yb,mb-1,db) - new Date(ya,ma-1,da);
+    });
+    showToast(`✓ ${totalNew} нових кола учитано`);
+    localStorage.setItem('milloto_last_update', new Date().toISOString());
+    localStorage.setItem('milloto_data_extra', JSON.stringify(allData.filter(d => d.kolo === 0 || d._fetched)));
+    renderHero(); renderTabs(); renderChart(); renderArchive(); renderStats();
+  }
+
+  document.getElementById('fetch-status').textContent = '✓ Ажурирано';
+  setTimeout(() => { document.getElementById('fetch-status').textContent = ''; }, 3000);
 }
 
 // =====================================================
@@ -1429,7 +1544,7 @@ window.addEventListener('beforeinstallprompt', e => {
 window.addEventListener('appinstalled', () => {
   localStorage.setItem('milloto_pwa_installed', '1');
   document.getElementById('pwa-popup').classList.remove('show');
-  showToast('✓ "MilLoto" инсталиран!');
+  showToast('✓ MilLoto инсталиран!');
   deferredInstallPrompt = null;
 });
 
@@ -1444,7 +1559,7 @@ function triggerPwaInstall() {
   deferredInstallPrompt.userChoice.then(result => {
     if (result.outcome === 'accepted') {
       localStorage.setItem('milloto_pwa_installed', '1');
-      showToast('✓ "MilLoto" инсталиран!');
+      showToast('✓ MilLoto инсталиран!');
     }
     dismissPwaPopup();
     deferredInstallPrompt = null;
@@ -1484,7 +1599,7 @@ function updateAlarmUI() {
     permText.textContent = 'Дозвољено ✓';
   } else if (perm === 'denied') {
     bar.classList.add('denied');
-    permText.textContent = 'Блокирано — Омогућите у подешавањима интернет прегледача ("browser")';
+    permText.textContent = 'Блокирано — Омогућите у подешавањима интернет прегледача ("broswer")';
   } else {
     bar.classList.add('default');
     permText.textContent = 'Нису дозвољена — Кликните "Сачувај" да активирате';
@@ -1493,7 +1608,7 @@ function updateAlarmUI() {
   // Update next draw time display and alarm time previews
   const next = getNextDraw();
   const dayName = DAYS_SR[next.getDay()];
-  const dateStr = `${next.getDate()}. ${MONTHS_SR[next.getMonth()]} ${next.getFullYear()}. у 20:00h`;
+  const dateStr = `${next.getDate()}. ${MONTHS_SR[next.getMonth()]} ${next.getFullYear()}. у 20:00`;
   document.getElementById('alarm-next-draw-time').textContent = `${dayName}, ${dateStr}`;
 
   ALARM_OFFSETS.forEach(offset => {
@@ -1525,7 +1640,7 @@ async function saveAlarms() {
     }
   }
   if (Notification.permission === 'denied') {
-    showToast('⚠️ Обавештења су блокирана у интернет прегледачу ("browser").');
+    showToast('⚠️ Обавештења су блокирана у интернет прегледачу ("browser")');
     return;
   }
 
