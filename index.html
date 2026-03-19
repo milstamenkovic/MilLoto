@@ -553,11 +553,22 @@ footer a { color: var(--gold-dim); text-decoration: none; }
 #btn-alarm-toggle.has-alarms .alarm-dot { background: var(--green); }
 
 /* ===== ALARM DROPDOWN ===== */
-#alarm-dropdown { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
-#alarm-dropdown.open { max-height: 600px; }
+#alarm-dropdown {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+
+#alarm-dropdown.open {
+  max-height: 100%;
+}
+
 .alarm-dropdown-inner { margin-top: 12px; background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+
 .alarm-dropdown-header { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+
 .alarm-dropdown-title { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--gold); }
+
 .alarm-dropdown-body { padding: 12px 14px; }
 
 /* ===== ALARM PANEL STYLES ===== */
