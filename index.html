@@ -19,7 +19,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="MilLoto">
-<base href="https://milstamenkovic.github.io/MilLoto">
+<base href="MilLoto">
 <link rel="manifest" href="/manifest.json">
 <link rel="apple-touch-icon" href="/Media/Icons/icon192.png">
 <link rel="icon" type="image/png" href="/Media/Icons/icon192.png">
@@ -956,7 +956,7 @@ footer a { color: var(--gold-dim); text-decoration: none; }
 </div>
 
 <!-- BAKED DATA -->
-<script src="/loto-arhiva.js"></script>
+<script src="loto-arhiva.js"></script>
 
 <script>
 
@@ -1522,7 +1522,7 @@ if ('serviceWorker' in navigator) {
 // =====================================================
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js')
+    navigator.serviceWorker.register('/sw.js')
       .then(reg => {
         console.log('SW registered:', reg.scope);
         // Once SW is active, reschedule alarms
