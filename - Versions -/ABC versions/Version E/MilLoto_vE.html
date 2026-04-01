@@ -1,0 +1,1560 @@
+<!-- MilLoto -->
+<!-- Статистика и архива -- Лото 7/39 - Народна лутрија Србије -->
+<!-- Main - Version E -->
+<!-- © 2026 Mil Stamenković -->
+<!-- Created with help of Free Claude AI -->
+<!-- Created: 01.04.2026. - Ćuprija, Serbia -->
+<!-- Revised: 01.04.2026. - Ćuprija, Serbia -->
+
+
+
+<!DOCTYPE html>
+<html lang="sr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="MilLoto - Статистика и архива -- Лото 7/39 - Државна лутрија Србије">
+<meta name="theme-color" content="#c8972a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="MilLoto">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/Media/Icons/icon192.png">
+<link rel="icon" type="image/png" href="/Media/Icons/icon192.png">
+<title>MilLoto</title>
+<style>
+/* ===== CSS VARIABLES ===== */
+:root {
+  --gold: #c8972a;
+  --gold-light: #e8b84b;
+  --gold-dim: #8a6518;
+  --red: #c0392b;
+  --blue: #2980b9;
+  --green: #27ae60;
+  --radius: 10px;
+  --transition: 0.25s ease;
+}
+[data-theme="dark"] {
+  --bg: #0f1923;
+  --bg2: #162030;
+  --bg3: #1e2d40;
+  --bg4: #243448;
+  --border: #2a3f58;
+  --text: #dce8f5;
+  --text2: #728497;
+  --text3: #7a8a9b;
+  --text4: #00263f;
+  --shadow: 0 4px 20px rgba(0,0,0,0.5);
+  --ball-shadow: 0 3px 10px rgba(0,0,0,0.6);
+}
+[data-theme="light"] {
+  --bg: #f0f4f8;
+  --bg2: #ffffff;
+  --bg3: #e4ecf4;
+  --bg4: #d4e0ed;
+  --border: #c0d0e0;
+  --text: #1a2840;
+  --text2: #4a6080;
+  --text3: #313f53;
+  --text4: #003457;
+  --shadow: 0 4px 20px rgba(0,0,0,0.12);
+  --ball-shadow: 0 3px 10px rgba(0,0,0,0.2);
+}
+
+/* ===== RESET & BASE ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Segoe UI', 'Arial', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  transition: background var(--transition), color var(--transition);
+  font-size: 15px;
+  line-height: 1.5;
+}
+a { color: var(--gold); }
+
+/* ===== TITLE BAR ===== */
+#titlebar {
+  background: var(--bg2);
+  border-bottom: 2px solid var(--gold-dim);
+  box-shadow: var(--shadow);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  overflow-x: hidden;
+}
+
+.titlebar-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.app-logo { display: flex; align-items: center; gap: 10px; }
+.logo-balls { display: flex; gap: 3px; }
+.logo-ball { width: 14px; height: 14px; border-radius: 50%; display: inline-block; }
+.app-title { font-size: 1.4rem; font-weight: 700; color: var(--gold); letter-spacing: 1px; }
+.app-subtitle { font-size: 0.7rem; color: var(--text3); letter-spacing: 2px; text-transform: uppercase; }
+.titlebar-controls { display: flex; align-items: center; gap: 8px; }
+.btn-icon {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--text2);
+  border-radius: 8px;
+  padding: 6px 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all var(--transition);
+  display: flex; align-items: center; gap: 5px;
+}
+.btn-icon:hover { background: var(--bg4); color: var(--text); border-color: var(--gold-dim); }
+.theme-toggle { font-size: 1.1rem; }
+
+/* ===== OFFLINE BANNER ===== */
+#offline-banner {
+  display: none;
+  background: #7a3a0a;
+  color: #ffd9a0;
+  text-align: center;
+  padding: 6px 16px;
+  font-size: 0.82rem;
+  border-bottom: 1px solid #c8692a;
+}
+#offline-banner.show { display: block; }
+
+/* ===== INFO PANEL ===== */
+#info-panel {
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.4s ease;
+}
+#info-panel.open { max-height: 500px; }
+.info-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+.info-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+}
+.info-card h4 { color: var(--gold); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+.info-card p, .info-card li { font-size: 0.82rem; color: var(--text2); line-height: 1.6; }
+.info-card ul { padding-left: 14px; }
+
+/* ===== HERO ===== */
+#hero {
+  position: sticky;
+  max-width: 1068px;
+  background: linear-gradient(135deg, var(--bg2) 0%, var(--bg3) 100%);
+  border-bottom: 1px solid var(--border);
+  margin: 0 auto;
+  padding: 20px 16px;
+  top: 89px;
+  z-index: 95;
+  box-shadow: var(--shadow);
+  overflow-x: hidden;
+}
+
+.hero-inner { max-width: 1100px; margin: 0 auto; }
+.hero-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text3); margin-bottom: 6px; }
+.hero-kolo-info { display: flex; align-items: baseline; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
+.hero-kolo-num { font-size: 1.5rem; font-weight: 700; color: var(--gold); }
+.hero-date { font-size: 0.9rem; color: var(--text2); }
+.hero-balls { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+.ball {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 1rem; color: #fff;
+  box-shadow: var(--ball-shadow);
+  position: relative; flex-shrink: 0;
+}
+.ball::after {
+  content: ''; position: absolute; top: 6px; left: 10px;
+  width: 12px; height: 6px; border-radius: 50%;
+  background: rgba(255,255,255,0.35); transform: rotate(-30deg);
+}
+.ball-sm { width: 34px; height: 34px; font-size: 0.78rem; }
+.ball-sm::after { width: 8px; height: 4px; top: 4px; left: 7px; }
+.hero-next { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.next-draw-label { font-size: 0.78rem; color: var(--text3); }
+.next-draw-info { font-size: 0.9rem; color: var(--text2); }
+#countdown { font-size: 1.1rem; font-weight: 700; color: var(--gold); font-variant-numeric: tabular-nums; min-width: 120px; }
+#fetch-status { font-size: 0.75rem; color: var(--text3); margin-left: auto; }
+
+/* ===== YEARS / NAVIGATION BAR ===== */
+#nav-bar {
+  background: var(--bg2);
+  max-width: 1068px;
+  margin: 0 auto;
+  border-bottom: 2px solid var(--border);
+  top: 197px;
+  z-index: 90;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+.nav-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  gap: 2px;
+  padding: 6px 10px;
+  white-space: nowrap;
+}
+.year-tab {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text2);
+  padding: 6px 13px;
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all var(--transition);
+  flex-shrink: 0;
+}
+.year-tab:hover { background: var(--bg3); color: var(--text); }
+.year-tab.active { background: var(--gold); color: #0f1923; border-color: var(--gold); }
+
+/* ===== MAIN CONTENT ===== */
+#main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+/* ===== SECTION CARDS ===== */
+.section-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.section-header {
+  padding: 13px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg3);
+}
+.section-title { font-size: 0.88rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--gold); }
+.section-subtitle { font-size: 0.75rem; color: var(--text3); margin-top: 1px; }
+.section-title-countdown { margin: auto; font-size: 0.88rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--green); }
+
+/* ===== FREQUENCY CHART — FIXED WIDTH ===== */
+.chart-container {
+  padding: 16px 16px 8px;  /* matches section-card inner padding */
+  overflow-x: auto;
+}
+.freq-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 160px;
+  width: 100%;          /* fill full card width */
+  min-width: 400px;     /* prevent collapse on tiny screens */
+  padding-bottom: 24px;
+  position: relative;
+}
+.freq-bar-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  justify-content: flex-end;
+  cursor: pointer;
+  position: relative;
+}
+.freq-bar { width: 100%; min-height: 2px; border-radius: 3px 3px 0 0; transition: height 0.4s ease, background 0.3s; }
+.freq-bar-wrap:hover .freq-bar { filter: brightness(1.3); }
+.freq-bar-num { font-size: 0.6rem; color: var(--text4); margin-top: 3px; font-weight: 600; position: absolute; bottom: 0; }
+.freq-bar-count { font-size: 0.58rem; color: var(--text3); position: absolute; top: -14px; white-space: nowrap; }
+.freq-bar-wrap:hover .freq-bar-count { color: var(--gold); }
+.chart-legend { display: flex; gap: 16px; padding: 8px 16px 12px; flex-wrap: wrap; }
+.legend-item { display: flex; align-items: center; gap: 6px; font-size: 0.75rem; color: var(--text3); }
+.legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+/* ===== KOLA ARCHIVE ===== */
+.collapsible-group { border-bottom: 1px solid var(--border); }
+.collapsible-group:last-child { border-bottom: none; }
+.collapse-header { padding: 11px 16px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: background var(--transition); user-select: none; }
+.collapse-header:hover { background: var(--bg3); }
+.collapse-title { font-size: 0.88rem; font-weight: 600; color: var(--text); }
+.collapse-meta { font-size: 0.75rem; color: var(--text3); margin-left: 8px; }
+.collapse-arrow { color: var(--text3); transition: transform var(--transition); font-size: 0.75rem; }
+.collapse-header.open .collapse-arrow { transform: rotate(180deg); }
+.collapse-body { display: none; border-top: 1px solid var(--border); }
+.collapse-body.open { display: block; }
+.year-group-header { padding: 9px 16px 9px 24px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; background: var(--bg3); border-bottom: 1px solid var(--border); transition: background var(--transition); }
+.year-group-header:hover { background: var(--bg4); }
+.year-group-header.open .collapse-arrow { transform: rotate(180deg); }
+.year-group-title { font-size: 0.82rem; font-weight: 600; color: var(--text2); }
+.year-group-body { display: none; }
+.year-group-body.open { display: block; }
+.kolo-row { display: flex; align-items: center; gap: 10px; padding: 8px 16px 8px 32px; border-bottom: 1px solid var(--border); transition: background var(--transition); flex-wrap: wrap; }
+.kolo-row:last-child { border-bottom: none; }
+.kolo-row:hover { background: var(--bg3); }
+.kolo-num { font-size: 0.72rem; font-weight: 700; color: var(--text3); min-width: 55px; }
+.kolo-date { font-size: 0.75rem; color: var(--text2); min-width: 90px; }
+.kolo-balls { display: flex; gap: 4px; flex-wrap: wrap; }
+
+/* ===== STATISTICS ===== */
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; padding: 14px; }
+.stat-block { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; }
+.stat-block h4 { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--gold); margin-bottom: 10px; }
+.hot-cold-list { display: flex; flex-direction: column; gap: 5px; }
+.hc-item { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; }
+.hc-bar { height: 6px; border-radius: 3px; flex: 1; }
+.hc-count { color: var(--text3); font-size: 0.72rem; min-width: 28px; text-align: right; }
+.parity-bar { display: flex; height: 28px; border-radius: 6px; overflow: hidden; margin: 8px 0; }
+.parity-odd { background: #2980b9; display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: 700; color: #fff; }
+.parity-even { background: #8e44ad; display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: 700; color: #fff; }
+.parity-label { font-size: 0.75rem; color: var(--text2); display: flex; justify-content: space-between; }
+.decade-bars { display: flex; flex-direction: column; gap: 6px; }
+.decade-item { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; }
+.decade-label { min-width: 50px; color: var(--text2); }
+.decade-bar-wrap { flex: 1; height: 14px; background: var(--bg4); border-radius: 4px; overflow: hidden; }
+.decade-bar-fill { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
+.decade-count { min-width: 40px; text-align: right; font-size: 0.72rem; color: var(--text3); }
+.sum-info { display: flex; flex-direction: column; gap: 6px; }
+.sum-row { display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; }
+.sum-val { font-weight: 700; color: var(--gold); }
+
+/* ===== COUNTDOWN ===== */
+.countdown-big { padding: 20px; text-align: center; }
+.countdown-display { font-size: 2.4rem; font-weight: 700; color: var(--gold); letter-spacing: 3px; font-variant-numeric: tabular-nums; margin: 8px 0; }
+.countdown-next-info { font-size: 0.85rem; color: var(--text2); margin-bottom: 4px; }
+.countdown-day { font-size: 0.8rem; color: var(--text3); }
+
+/* ===== BALLS ===== */
+.bc-1  { background: radial-gradient(circle at 35% 35%, #e74c3c, #922b21); }
+.bc-2  { background: radial-gradient(circle at 35% 35%, #e67e22, #9c4a00); }
+.bc-3  { background: radial-gradient(circle at 35% 35%, #f1c40f, #9c7a00); color: #2c1c00 !important; }
+.bc-4  { background: radial-gradient(circle at 35% 35%, #2ecc71, #1a7a43); }
+.bc-5  { background: radial-gradient(circle at 35% 35%, #3498db, #1a5a8a); }
+.bc-6  { background: radial-gradient(circle at 35% 35%, #9b59b6, #5a2080); }
+.bc-7  { background: radial-gradient(circle at 35% 35%, #e91e63, #880e4f); }
+.bc-8  { background: radial-gradient(circle at 35% 35%, #00bcd4, #006064); }
+.bc-9  { background: radial-gradient(circle at 35% 35%, #ff5722, #8b1a00); }
+.bc-10 { background: radial-gradient(circle at 35% 35%, #4caf50, #1b5e20); }
+.bc-11 { background: radial-gradient(circle at 35% 35%, #2196f3, #0d47a1); }
+.bc-12 { background: radial-gradient(circle at 35% 35%, #ab47bc, #4a148c); }
+.bc-13 { background: radial-gradient(circle at 35% 35%, #ec407a, #880e4f); }
+.bc-14 { background: radial-gradient(circle at 35% 35%, #e74c3c, #922b21); }
+.bc-15 { background: radial-gradient(circle at 35% 35%, #e67e22, #9c4a00); }
+.bc-16 { background: radial-gradient(circle at 35% 35%, #f1c40f, #9c7a00); color: #2c1c00 !important; }
+.bc-17 { background: radial-gradient(circle at 35% 35%, #2ecc71, #1a7a43); }
+.bc-18 { background: radial-gradient(circle at 35% 35%, #3498db, #1a5a8a); }
+.bc-19 { background: radial-gradient(circle at 35% 35%, #9b59b6, #5a2080); }
+.bc-20 { background: radial-gradient(circle at 35% 35%, #e91e63, #880e4f); }
+.bc-21 { background: radial-gradient(circle at 35% 35%, #00bcd4, #006064); }
+.bc-22 { background: radial-gradient(circle at 35% 35%, #ff5722, #8b1a00); }
+.bc-23 { background: radial-gradient(circle at 35% 35%, #4caf50, #1b5e20); }
+.bc-24 { background: radial-gradient(circle at 35% 35%, #2196f3, #0d47a1); }
+.bc-25 { background: radial-gradient(circle at 35% 35%, #ab47bc, #4a148c); }
+.bc-26 { background: radial-gradient(circle at 35% 35%, #ec407a, #880e4f); }
+.bc-27 { background: radial-gradient(circle at 35% 35%, #e74c3c, #922b21); }
+.bc-28 { background: radial-gradient(circle at 35% 35%, #e67e22, #9c4a00); }
+.bc-29 { background: radial-gradient(circle at 35% 35%, #f1c40f, #9c7a00); color: #2c1c00 !important; }
+.bc-30 { background: radial-gradient(circle at 35% 35%, #2ecc71, #1a7a43); }
+.bc-31 { background: radial-gradient(circle at 35% 35%, #3498db, #1a5a8a); }
+.bc-32 { background: radial-gradient(circle at 35% 35%, #9b59b6, #5a2080); }
+.bc-33 { background: radial-gradient(circle at 35% 35%, #e91e63, #880e4f); }
+.bc-34 { background: radial-gradient(circle at 35% 35%, #00bcd4, #006064); }
+.bc-35 { background: radial-gradient(circle at 35% 35%, #ff5722, #8b1a00); }
+.bc-36 { background: radial-gradient(circle at 35% 35%, #4caf50, #1b5e20); }
+.bc-37 { background: radial-gradient(circle at 35% 35%, #2196f3, #0d47a1); }
+.bc-38 { background: radial-gradient(circle at 35% 35%, #ab47bc, #4a148c); }
+.bc-39 { background: radial-gradient(circle at 35% 35%, #ec407a, #880e4f); }
+
+/* ===== TOAST ===== */
+#update-toast {
+  position: fixed; bottom: 20px; right: 20px;
+  background: var(--bg2); border: 1px solid var(--gold-dim);
+  border-radius: var(--radius); padding: 10px 16px;
+  font-size: 0.8rem; color: var(--text2);
+  box-shadow: var(--shadow); z-index: 999;
+  opacity: 0; transform: translateY(20px);
+  transition: all 0.3s ease; pointer-events: none;
+}
+#update-toast.show { opacity: 1; transform: translateY(0); }
+
+/* ===== FOOTER ===== */
+footer { text-align: center; padding: 20px; color: var(--text3); font-size: 0.75rem; border-top: 1px solid var(--border); margin-top: 8px; }
+footer a { color: var(--gold-dim); text-decoration: none; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 600px) {
+  .app-title { font-size: 1.1rem; }
+  .ball { width: 40px; height: 40px; font-size: 0.88rem; }
+  .countdown-display { font-size: 1.8rem; }
+  .stats-grid { grid-template-columns: 1fr; }
+  .kolo-row { padding-left: 16px; }
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gold-dim); }
+
+/* =====================================================
+   NEW FEATURE 1 — PWA INSTALL POPUP (side slide-in)
+   ===================================================== */
+#pwa-popup {
+  visibility: hidden;
+  position: fixed;
+  bottom: 24px;
+  width: 360px;
+  max-width: calc(100vw - 32px);
+  background: var(--bg2);
+  border: 1px solid var(--gold-dim);
+  border-radius: 14px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+  z-index: 9999;
+  transition: right 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  overflow: hidden;
+}
+#pwa-popup.show {
+  visibility: visible;
+  right: 24px;
+}
+.pwa-popup-header {
+  background: linear-gradient(135deg, var(--bg3), var(--bg4));
+  padding: 14px 16px 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.pwa-popup-icon {
+  width: 48px; height: 48px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #0f1923, #1e2d40);
+  border: 2px solid var(--gold-dim);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.pwa-popup-icon-balls {
+  display: grid;
+  grid-template-columns: repeat(4, 8px);
+  gap: 2px;
+  padding: 4px;
+}
+.pwa-popup-icon-ball {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+}
+.pwa-popup-title-wrap { flex: 1; }
+.pwa-popup-title { font-size: 1rem; font-weight: 700; color: var(--gold); }
+.pwa-popup-subtitle { font-size: 0.72rem; color: var(--text3); }
+.pwa-popup-close {
+  background: none; border: none;
+  color: var(--text3); cursor: pointer;
+  font-size: 1.2rem; padding: 4px;
+  line-height: 1;
+  transition: color var(--transition);
+}
+.pwa-popup-close:hover { color: var(--text); }
+.pwa-popup-body { padding: 14px 16px; }
+.pwa-popup-benefits {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.pwa-benefit {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.82rem;
+  color: var(--text2);
+}
+.pwa-benefit-icon {
+  font-size: 1rem;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.pwa-popup-actions {
+  display: flex;
+  gap: 8px;
+}
+.btn-install {
+  flex: 1;
+  background: var(--gold);
+  border: none;
+  color: #0f1923;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background var(--transition);
+}
+.btn-install:hover { background: var(--gold-light); }
+.btn-install-dismiss {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--text3);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.btn-install-dismiss:hover { background: var(--bg4); color: var(--text2); }
+
+/* ===== ALARM BUTTON IN HERO ===== */
+#btn-alarm-toggle {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--text2);
+  border-radius: 8px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 600;
+  transition: all var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+#btn-alarm-toggle:hover { background: var(--bg4); color: var(--text); border-color: var(--gold-dim); }
+#btn-alarm-toggle.active { background: var(--bg4); border-color: var(--gold-dim); color: var(--gold); }
+.alarm-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--text3); transition: background var(--transition); }
+#btn-alarm-toggle.has-alarms .alarm-dot { background: var(--green); }
+
+/* ===== ALARM DROPDOWN ===== */
+#alarm-dropdown {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+
+#alarm-dropdown.open {
+  max-height: 100%;
+}
+
+.alarm-dropdown-inner { margin-top: 12px; background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+
+.alarm-dropdown-header { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+
+.alarm-dropdown-title { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--gold); }
+
+.alarm-dropdown-body { padding: 12px 14px; }
+
+/* ===== ALARM PANEL STYLES ===== */
+.alarm-panel { padding: 16px; }
+.alarm-intro {
+  font-size: 0.82rem;
+  color: var(--text2);
+  margin-bottom: 14px;
+  line-height: 1.6;
+}
+.alarm-intro strong { color: var(--text); }
+
+.alarm-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-bottom: 14px;
+  font-size: 0.82rem;
+}
+.alarm-status.granted { background: rgba(39,174,96,0.15); border: 1px solid rgba(39,174,96,0.3); color: #2ecc71; }
+.alarm-status.denied  { background: rgba(192,57,43,0.15);  border: 1px solid rgba(192,57,43,0.3);  color: #e74c3c; }
+.alarm-status.default { background: rgba(200,151,42,0.15); border: 1px solid rgba(200,151,42,0.3); color: var(--gold); }
+
+.alarm-next-draw {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  font-size: 0.82rem;
+  color: var(--text2);
+}
+.alarm-next-draw strong { color: var(--gold); font-size: 0.92rem; }
+
+.alarm-options {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+.alarm-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.alarm-option:hover { background: var(--bg4); border-color: var(--gold-dim); }
+.alarm-option input[type="checkbox"] {
+  width: 16px; height: 16px;
+  accent-color: var(--gold);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.alarm-option-label { flex: 1; font-size: 0.85rem; color: var(--text); }
+.alarm-option-time { font-size: 0.75rem; color: var(--text3); }
+.alarm-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.btn-alarm-set {
+  background: var(--gold);
+  border: none;
+  color: #0f1923;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background var(--transition);
+}
+.btn-alarm-set:hover { background: var(--gold-light); }
+.btn-alarm-cancel {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--text2);
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.btn-alarm-cancel:hover { background: var(--bg4); color: var(--text); }
+.alarm-saved-notice {
+  display: none;
+  margin-top: 10px;
+  padding: 8px 12px;
+  background: rgba(39,174,96,0.12);
+  border: 1px solid rgba(39,174,96,0.25);
+  border-radius: 6px;
+  font-size: 0.8rem;
+  color: #2ecc71;
+}
+.alarm-saved-notice.show { display: block; }
+.alarm-permission-btn {
+  background: var(--gold);
+  border: none;
+  color: #0f1923;
+  border-radius: 8px;
+  padding: 9px 16px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 8px;
+}
+</style>
+</head>
+<body>
+
+<!-- TITLE BAR -->
+<header id="titlebar">
+  <div id="offline-banner">⚠️ Радите у офлајн режиму — приказани су подаци из кеша (последње ажурирање: <span id="last-update-time">—</span>)</div>
+  <div class="titlebar-main">
+    <div class="app-logo">
+      <div class="logo-balls">
+        <span class="logo-ball" style="background:#e74c3c"></span>
+        <span class="logo-ball" style="background:#e67e22"></span>
+        <span class="logo-ball" style="background:#f1c40f"></span>
+        <span class="logo-ball" style="background:#2ecc71"></span>
+        <span class="logo-ball" style="background:#3498db"></span>
+        <span class="logo-ball" style="background:#9b59b6"></span>
+        <span class="logo-ball" style="background:#e91e63"></span>
+      </div>
+      <div>
+        <div class="app-title"><a href="#">MilLoto</a></div>
+        <div class="app-subtitle">Статистика и архива</div>
+        <div class="app-subtitle">Лото 7/39 - Државна лутрија Србије</div>
+      </div>
+    </div>
+    <div class="titlebar-controls">
+      <button class="btn-icon theme-toggle" onclick="toggleTheme()" title="Промени тему">Активирајте светлу тему</button>
+      <button class="btn-icon" onclick="toggleInfo()" title="Информације">ℹ️</button>
+    </div>
+  </div>
+</header>
+
+<!-- INFO PANEL -->
+<div id="info-panel">
+  <div class="info-inner">
+    <div class="info-card">
+      <h4>О игри</h4>
+      <ul>
+        <li>Бира се 7 бројева од 1 до 39</li>
+        <li>Извлачење: уторак и петак</li>
+        <li>Оператер: Државна лутрија Србије</li>
+        <li>Најстарије коло у статистици: 30.07.1985.</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>Шансе добитка</h4>
+      <ul>
+        <li>7 бројева: 1 : 15.380.937</li>
+        <li>6 бројева: 1 : 68.665</li>
+        <li>5 бројева: 1 : 1.477</li>
+        <li>4 броја: 1 : 89</li>
+        <li>3 броја: 1 : 12</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>Историјски рекорди (1985-данас)</h4>
+      <p>Укупно одиграно кола: <strong>2913+</strong></p>
+      <p>Нај. извучен број: <strong>#8</strong> (584×)</p>
+      <p>Нај. ређи број: <strong>#20</strong> (473×)</p>
+      <p>Архива почиње: <strong>2013. год.</strong></p>
+    </div>
+    <div class="info-card">
+      <h4 style="text-transform: none;">О "MilLoto"</h4>
+      <p>"MilLoto" ради онлајн и офлајн. Подаци се аутоматски ажурирају приликом посете. Статистика обухвата свe доступне архивске податке.</p>
+      <p style="margin-top:6px">Извор података: <a href="https://stats247.com/lotto/serbia-loto" target="_blank" rel="noopener">stats247.com</a> и <a href="https://naslovi.net/vesti/loto-brojevi" target="_blank" rel="noopener">naslovi.net/vesti/loto-brojevi</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-label">Последње извлачење</div>
+    <div class="hero-kolo-info">
+      <span class="hero-kolo-num" id="hero-kolo">—. коло</span>
+      <span class="hero-date" id="hero-date">—</span>
+      <span id="fetch-status"></span>
+    </div>
+    <div class="hero-balls" id="hero-balls">
+      <div class="ball bc-1">—</div>
+    </div>
+    <div class="hero-next">
+      <div>
+        <div class="next-draw-label">Следеће извлачење:</div>
+        <div class="next-draw-info" id="next-draw-date">—</div>
+      </div>
+      <div id="countdown">--:--:--</div>
+      <button id="btn-alarm-toggle" onclick="toggleAlarmDropdown()" title="Подсетници за извлачење">
+        <span class="alarm-dot"></span>
+        🔔 Подсетник
+        <span id="alarm-toggle-arrow" style="font-size:0.65rem;transition:transform 0.25s ease">▼</span>
+      </button>
+    </div>
+
+    <!-- ALARM DROPDOWN -->
+    <div id="alarm-dropdown">
+      <div class="alarm-dropdown-inner">
+        <div class="alarm-dropdown-header">
+          <span class="alarm-dropdown-title">🔔 Подсетник за извлачење</span>
+        </div>
+        <div class="alarm-dropdown-body">
+          <p class="alarm-intro">
+            Подесите <strong>када желите да добијете обавештење</strong> пре следећег извлачења.
+            Ради када су и апликација (PWA) и страница затворени, али прегледач ("browser") мора бити отворен.
+          </p>
+          <div class="alarm-status default" id="alarm-status-bar">
+            ⚪ Статус: <strong id="alarm-perm-text">проверавање...</strong>
+          </div>
+          <div class="alarm-next-draw">
+            Следеће извлачење: <strong id="alarm-next-draw-time">—</strong>
+          </div>
+          <div class="alarm-options" id="alarm-options">
+            <label class="alarm-option">
+              <input type="checkbox" value="1440" data-label="24 сата пре">
+              <span class="alarm-option-label">24 сата пре извлачења</span>
+              <span class="alarm-option-time" id="alarm-time-1440">—</span>
+            </label>
+            <label class="alarm-option">
+              <input type="checkbox" value="720" data-label="12 сати пре">
+              <span class="alarm-option-label">12 сати пре извлачења</span>
+              <span class="alarm-option-time" id="alarm-time-720">—</span>
+            </label>
+            <label class="alarm-option">
+              <input type="checkbox" value="360" data-label="6 сати пре">
+              <span class="alarm-option-label">6 сати пре извлачења</span>
+              <span class="alarm-option-time" id="alarm-time-360">—</span>
+            </label>
+            <label class="alarm-option">
+              <input type="checkbox" value="60" data-label="1 сат пре">
+              <span class="alarm-option-label">1 сат пре извлачења</span>
+              <span class="alarm-option-time" id="alarm-time-60">—</span>
+            </label>
+            <label class="alarm-option">
+              <input type="checkbox" value="15" data-label="15 минута пре">
+              <span class="alarm-option-label">15 минута пре извлачења</span>
+              <span class="alarm-option-time" id="alarm-time-15">—</span>
+            </label>
+            <label class="alarm-option">
+              <input type="checkbox" value="10" data-label="10 минута пре">
+              <span class="alarm-option-label">10 минута пре извлачења</span>
+              <span class="alarm-option-time" id="alarm-time-10">—</span>
+            </label>
+            <label class="alarm-option">
+              <input type="checkbox" value="5" data-label="5 минута пре">
+              <span class="alarm-option-label">5 минута пре извлачења</span>
+              <span class="alarm-option-time" id="alarm-time-5">—</span>
+            </label>
+          </div>
+          <div class="alarm-actions">
+            <button class="btn-alarm-set" onclick="saveAlarms()">💾 Сачувај подсетнике</button>
+            <button class="btn-alarm-cancel" onclick="cancelAlarms()">✕ Откажи све</button>
+          </div>
+          <div class="alarm-saved-notice" id="alarm-saved-notice"></div>
+        </div>
+      </div>
+    </div>
+    <!-- END ALARM DROPDOWN -->
+
+  </div>
+</section>
+
+<!-- YEAR NAV -->
+<nav id="nav-bar">
+  <div class="nav-inner" id="year-tabs"></div>
+</nav>
+
+<!-- MAIN -->
+<main id="main">
+
+  <!-- FREQUENCY CHART -->
+  <div class="section-card" id="chart-section">
+    <div class="section-header">
+      <div>
+        <div class="section-title">Учесталост бројева</div>
+        <div class="section-subtitle" id="chart-subtitle">Учитавање...</div>
+      </div>
+    </div>
+    <div class="chart-container">
+      <div class="freq-chart" id="freq-chart"></div>
+    </div>
+    <div class="chart-legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#e74c3c"></div>Врући (топ 7)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#3498db"></div>Хладни (доњих 7)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div>Нормалан</div>
+    </div>
+  </div>
+
+  <!-- KOLA ARCHIVE -->
+  <div class="section-card" id="archive-section">
+    <div class="section-header">
+      <div>
+        <div class="section-title">Резултати кола</div>
+        <div class="section-subtitle" id="archive-subtitle">Учитавање...</div>
+      </div>
+    </div>
+    <div id="archive-body"></div>
+  </div>
+
+  <!-- STATISTICS -->
+  <div class="section-card" id="stats-section">
+    <div class="section-header">
+      <div>
+        <div class="section-title">Статистика</div>
+        <div class="section-subtitle" id="stats-subtitle">—</div>
+      </div>
+    </div>
+    <div class="stats-grid" id="stats-grid"></div>
+  </div>
+
+  <!-- COUNTDOWN -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-title-countdown">Одбројавање до следећег извлачења</div>
+    </div>
+    <div class="countdown-big">
+      <div class="countdown-next-info" id="cd-next-info">Следеће извлачење</div>
+      <div class="countdown-display" id="cd-display">--:--:--</div>
+      <div class="countdown-day" id="cd-day">—</div>
+    </div>
+  </div>
+
+
+</main>
+
+<footer>
+  <p><a href="https://milstamenkovic.github.io" target="_blank" rel="noopener">MilLoto<br>© 2026 Милан Стаменковић</a></p>
+  <p style="margin-top:4px">Подаци: <a href="https://stats247.com/lotto/serbia-loto" target="_blank" rel="noopener">stats247.com</a> - <a href="https://lotostatistika.rs" target="_blank" rel="noopener">lotostatistika.rs</a> - <a href="https://www.lutrija.rs" target="_blank" rel="noopener">lutrija.rs</a> - <a href="https://naslovi.net/vesti/loto-brojevi" target="_blank" rel="noopener">naslovi.net/vesti/loto-brojevi</a></p>
+</footer>
+
+<div id="update-toast">✓ Подаци ажурирани</div>
+
+<!-- NEW FEATURE 1: PWA INSTALL POPUP -->
+<div id="pwa-popup">
+  <div class="pwa-popup-header">
+    <div class="pwa-popup-icon">
+      <div class="pwa-popup-icon-balls">
+        <div class="pwa-popup-icon-ball" style="background:#e74c3c"></div>
+        <div class="pwa-popup-icon-ball" style="background:#e67e22"></div>
+        <div class="pwa-popup-icon-ball" style="background:#f1c40f"></div>
+        <div class="pwa-popup-icon-ball" style="background:#2ecc71"></div>
+        <div class="pwa-popup-icon-ball" style="background:#3498db"></div>
+        <div class="pwa-popup-icon-ball" style="background:#9b59b6"></div>
+        <div class="pwa-popup-icon-ball" style="background:#e91e63"></div>
+        <div class="pwa-popup-icon-ball" style="background:#00bcd4"></div>
+      </div>
+    </div>
+    <div class="pwa-popup-title-wrap">
+      <div class="pwa-popup-title">Инсталирајте "MilLoto"</div>
+      <div class="pwa-popup-subtitle">Лото 7/39 апликација</div>
+    </div>
+    <button class="pwa-popup-close" onclick="dismissPwaPopup()">✕</button>
+  </div>
+  <div class="pwa-popup-body">
+    <div class="pwa-popup-benefits">
+      <div class="pwa-benefit">
+        <span class="pwa-benefit-icon">📶</span>
+        <span>Ради <strong>и без интернета</strong> — Статистика и архива увек доступни</span>
+      </div>
+      <div class="pwa-benefit">
+        <span class="pwa-benefit-icon">⚡</span>
+        <span>Брже отварање — Директно са радне површине или почетног екрана, на било којем уређају</span>
+      </div>
+      <div class="pwa-benefit">
+        <span class="pwa-benefit-icon">🔔</span>
+        <span>Подсетници пре извлачења — Обавештења чак и кад је апликација затворена (интернет прегледач ("browser") мора бити отворен)</span>
+      </div>
+      <div class="pwa-benefit">
+        <span class="pwa-benefit-icon">🔄</span>
+        <span>Аутоматско ажурирање резултата при следећем отварању</span>
+      </div>
+    </div>
+    <div class="pwa-popup-actions">
+      <button class="btn-install" id="btn-install-pwa" onclick="triggerPwaInstall()">📲 Инсталирајте "MilLoto"</button>
+      <button class="btn-install-dismiss" onclick="dismissPwaPopup()">Не, хвала</button>
+    </div>
+  </div>
+</div>
+
+<!-- BAKED DATA -->
+<script src="/loto-arhiva.js"></script>
+
+<script>
+
+const DATA_WITH_YEAR = BAKED_DATA.map(([kolo, date, nums]) => {
+  const yr = parseInt(date.split('.')[2]);
+  return { kolo, date, nums, year: yr };
+});
+DATA_WITH_YEAR.sort((a,b) => {
+  const [da,ma,ya] = a.date.split('.').map(Number);
+  const [db,mb,yb] = b.date.split('.').map(Number);
+  return new Date(yb,mb-1,db) - new Date(ya,ma-1,da);
+});
+
+let allData = [...DATA_WITH_YEAR];
+let selectedYear = 'all';
+let fetchedNewData = false;
+
+// =====================================================
+// UTILITY
+// =====================================================
+function getYears() { return [...new Set(allData.map(d=>d.year))].sort((a,b)=>b-a); }
+function getDataForYear(yr) { return yr==='all' ? allData : allData.filter(d=>d.year===yr); }
+function calcFrequency(data) {
+  const freq = {};
+  for (let i=1;i<=39;i++) freq[i]=0;
+  data.forEach(d=>d.nums.forEach(n=>freq[n]++));
+  return freq;
+}
+function makeBall(n,small=false) { return `<div class="ball ${small?'ball-sm':''} bc-${n}">${n}</div>`; }
+function formatDateSr(dateStr) {
+  const months=['јан','феб','март','апр','мај','јун','јул','авг','сеп','окт','нов','дец'];
+  const [d,m,y]=dateStr.split('.');
+  return `${parseInt(d)}. ${months[parseInt(m)-1]} ${y}.`;
+}
+function getNextDraw() {
+  const now = new Date();
+  const targets = [2, 5];
+  let best = null;
+  for (const t of targets) {
+    let diff = t - now.getDay();
+    if (diff < 0) diff += 7;
+    if (diff === 0) {
+      const drawTime = new Date(now);
+      drawTime.setHours(20,0,0,0);
+      if (now >= drawTime) diff = 7;
+    }
+    if (best===null || diff < best.diff) best={diff,target:t};
+  }
+  const next = new Date(now);
+  next.setDate(now.getDate()+best.diff);
+  next.setHours(20,0,0,0);
+  return next;
+}
+function formatCountdown(ms) {
+  if (ms<=0) return '00:00:00';
+  const s=Math.floor(ms/1000);
+  return `${String(Math.floor(s/3600)).padStart(2,'0')}:${String(Math.floor((s%3600)/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
+}
+const DAYS_SR=['недеља','понедељак','уторак','среда','четвртак','петак','субота'];
+const MONTHS_SR=['јануар','фебруар','март','април','мај','јун','јул','август','септембар','октобар','новембар','децембар'];
+
+// =====================================================
+// RENDER FUNCTIONS (unchanged from your version)
+// =====================================================
+function renderHero() {
+  const latest=allData[0]; if(!latest) return;
+  document.getElementById('hero-kolo').textContent=`${latest.kolo}. коло`;
+  document.getElementById('hero-date').textContent=formatDateSr(latest.date);
+  document.getElementById('hero-balls').innerHTML=latest.nums.map(n=>makeBall(n)).join('');
+}
+function renderTabs() {
+  const years=getYears();
+  let html=`<button class="year-tab ${selectedYear==='all'?'active':''}" onclick="selectYear('all')">Све</button>`;
+  years.forEach(y=>{ html+=`<button class="year-tab ${selectedYear===y?'active':''}" onclick="selectYear(${y})">${y}</button>`; });
+  document.getElementById('year-tabs').innerHTML=html;
+}
+function selectYear(yr) { selectedYear=yr; renderTabs(); renderChart(); renderArchive(); renderStats(); }
+function renderChart() {
+  const data=getDataForYear(selectedYear);
+  const freq=calcFrequency(data);
+  const counts=Object.values(freq);
+  const maxCount=Math.max(...counts);
+  const sorted=[...counts].sort((a,b)=>b-a);
+  const hotThreshold=sorted[6], coldThreshold=sorted[sorted.length-7];
+  document.getElementById('chart-subtitle').textContent=selectedYear==='all'?`Сва доступна кола (${data.length} извлачења)`:`${selectedYear}. година (${data.length} извлачења)`;
+  let html='';
+  for (let n=1;n<=39;n++) {
+    const cnt=freq[n], pct=maxCount>0?(cnt/maxCount*100):0;
+    const color=cnt>=hotThreshold?'#e74c3c':cnt<=coldThreshold?'#3498db':'var(--gold)';
+    html+=`<div class="freq-bar-wrap" title="Број ${n}: ${cnt}× извучен"><span class="freq-bar-count">${cnt}</span><div class="freq-bar" style="height:${Math.max(pct,2)}%;background:${color}"></div><span class="freq-bar-num">${n}</span></div>`;
+  }
+  document.getElementById('freq-chart').innerHTML=html;
+}
+function renderArchive() {
+  const data=getDataForYear(selectedYear);
+  document.getElementById('archive-subtitle').textContent=selectedYear==='all'?`${data.length} кола (све доступне године) (кликните на коло како бисте видели резултате)`:`${data.length} кола у ${selectedYear}. години`;
+  const container=document.getElementById('archive-body');
+  if (selectedYear!=='all') {
+    const rows=[...data].sort((a,b)=>b.kolo-a.kolo).map(d=>`<div class="kolo-row"><span class="kolo-num">Коло ${d.kolo}</span><span class="kolo-date">${formatDateSr(d.date)}</span><div class="kolo-balls">${d.nums.map(n=>makeBall(n,true)).join('')}</div></div>`).join('');
+    container.innerHTML=`<div class="collapsible-group"><div class="collapse-header" onclick="toggleCollapse(this)"><span class="collapse-title">${selectedYear}. година <span class="collapse-meta">${data.length} кола</span></span><span class="collapse-arrow">▼</span></div><div class="collapse-body">${rows}</div></div>`;
+  } else {
+    let html='';
+    getYears().forEach(yr=>{
+      const yrData=allData.filter(d=>d.year===yr).sort((a,b)=>b.kolo-a.kolo);
+      const rows=yrData.map(d=>`<div class="kolo-row"><span class="kolo-num">Коло ${d.kolo}</span><span class="kolo-date">${formatDateSr(d.date)}</span><div class="kolo-balls">${d.nums.map(n=>makeBall(n,true)).join('')}</div></div>`).join('');
+      html+=`<div class="collapsible-group"><div class="year-group-header" onclick="toggleYearGroup(this)"><span class="year-group-title">${yr}. година <span class="collapse-meta">${yrData.length} кола</span></span><span class="collapse-arrow">▼</span></div><div class="year-group-body">${rows}</div></div>`;
+    });
+    container.innerHTML=`<div class="collapsible-group"><div class="collapse-header open" onclick="toggleCollapse(this)"><span class="collapse-title">Сва кола <span class="collapse-meta">${data.length} кола у бази</span></span><span class="collapse-arrow">▼</span></div><div class="collapse-body open">${html}</div></div>`;
+  }
+}
+function toggleCollapse(header) { header.classList.toggle('open'); header.nextElementSibling.classList.toggle('open'); }
+function toggleYearGroup(header) { header.classList.toggle('open'); header.nextElementSibling.classList.toggle('open'); }
+function renderStats() {
+  const data=getDataForYear(selectedYear), freq=calcFrequency(data), total=data.length;
+  document.getElementById('stats-subtitle').textContent=selectedYear==='all'?'Све доступне године':`${selectedYear}. година`;
+  const sorted=Object.entries(freq).map(([n,c])=>({n:+n,c})).sort((a,b)=>b.c-a.c);
+  const maxC=sorted[0]?.c||1;
+  const hotHTML=sorted.slice(0,7).map(({n,c})=>`<div class="hc-item">${makeBall(n,true)}<div class="hc-bar" style="background:#e74c3c;width:${(c/maxC*100).toFixed(0)}%"></div><span class="hc-count">${c}×</span></div>`).join('');
+  const coldHTML=sorted.slice(-7).reverse().map(({n,c})=>`<div class="hc-item">${makeBall(n,true)}<div class="hc-bar" style="background:#3498db;width:${(c/maxC*100).toFixed(0)}%"></div><span class="hc-count">${c}×</span></div>`).join('');
+  let odd=0,even=0; data.forEach(d=>d.nums.forEach(n=>{if(n%2)odd++;else even++;}));
+  const tot=odd+even||1,oddPct=(odd/tot*100).toFixed(1),evenPct=(even/tot*100).toFixed(1);
+  let d1=0,d2=0,d3=0,d4=0; data.forEach(d=>d.nums.forEach(n=>{if(n<=10)d1++;else if(n<=20)d2++;else if(n<=30)d3++;else d4++;}));
+  const maxD=Math.max(d1,d2,d3,d4)||1;
+  const sums=data.map(d=>d.nums.reduce((a,b)=>a+b,0));
+  const avgSum=sums.length?(sums.reduce((a,b)=>a+b,0)/sums.length).toFixed(1):'—';
+  document.getElementById('stats-grid').innerHTML=`
+    <div class="stat-block"><h4>🔥 Најчешћи бројеви</h4><div class="hot-cold-list">${hotHTML}</div></div>
+    <div class="stat-block"><h4>❄️ Најређи бројеви</h4><div class="hot-cold-list">${coldHTML}</div></div>
+    <div class="stat-block"><h4>Парност бројева</h4><div class="parity-bar"><div class="parity-odd" style="width:${oddPct}%">${oddPct}%</div><div class="parity-even" style="width:${evenPct}%">${evenPct}%</div></div><div class="parity-label"><span>Непарни: ${odd}</span><span>Парни: ${even}</span></div></div>
+    <div class="stat-block"><h4>Бројеви по декадама</h4><div class="decade-bars">
+      <div class="decade-item"><span class="decade-label">1–10</span><div class="decade-bar-wrap"><div class="decade-bar-fill" style="width:${(d1/maxD*100).toFixed(0)}%;background:#e74c3c"></div></div><span class="decade-count">${d1}</span></div>
+      <div class="decade-item"><span class="decade-label">11–20</span><div class="decade-bar-wrap"><div class="decade-bar-fill" style="width:${(d2/maxD*100).toFixed(0)}%;background:#e67e22"></div></div><span class="decade-count">${d2}</span></div>
+      <div class="decade-item"><span class="decade-label">21–30</span><div class="decade-bar-wrap"><div class="decade-bar-fill" style="width:${(d3/maxD*100).toFixed(0)}%;background:#2ecc71"></div></div><span class="decade-count">${d3}</span></div>
+      <div class="decade-item"><span class="decade-label">31–39</span><div class="decade-bar-wrap"><div class="decade-bar-fill" style="width:${(d4/maxD*100).toFixed(0)}%;background:#3498db"></div></div><span class="decade-count">${d4}</span></div>
+    </div></div>
+    <div class="stat-block"><h4>Збир бројева комбинације</h4><div class="sum-info">
+      <div class="sum-row"><span>Просечни збир:</span><span class="sum-val">${avgSum}</span></div>
+      <div class="sum-row"><span>Минималан збир:</span><span class="sum-val">${sums.length?Math.min(...sums):'—'}</span></div>
+      <div class="sum-row"><span>Максималан збир:</span><span class="sum-val">${sums.length?Math.max(...sums):'—'}</span></div>
+      <div class="sum-row"><span>Укупно извлачења:</span><span class="sum-val">${total}</span></div>
+    </div></div>
+    <div class="stat-block"><h4>Опште информације</h4><div class="sum-info">
+      <div class="sum-row"><span>Најстарије коло у статистици:</span><span class="sum-val">30.07.1985.</span></div>
+      <div class="sum-row"><span>Укупно кола:</span><span class="sum-val">2913+</span></div>
+      <div class="sum-row"><span>Нај. број (историја):</span><span class="sum-val">#8 (584×)</span></div>
+      <div class="sum-row"><span>Нај. ређи (историја):</span><span class="sum-val">#20 (473×)</span></div>
+    </div></div>`;
+}
+
+// =====================================================
+// COUNTDOWN
+// =====================================================
+function updateCountdown() {
+  const next=getNextDraw(), now=new Date(), ms=next-now;
+  const formatted=formatCountdown(ms);
+  document.getElementById('countdown').textContent=formatted;
+  document.getElementById('cd-display').textContent=formatted;
+  const dayName=DAYS_SR[next.getDay()];
+  const dateStr=`${next.getDate()}. ${MONTHS_SR[next.getMonth()]} ${next.getFullYear()}.`;
+  document.getElementById('next-draw-date').textContent=`${dayName}, ${dateStr}`;
+  document.getElementById('cd-next-info').textContent='Следеће извлачење — '+dayName;
+  document.getElementById('cd-day').textContent=dateStr+' у 20:00 ч';
+}
+
+// =====================================================
+// LIVE FETCH — naslovi.net (primary) + stats247.com (fallback)
+// =====================================================
+
+// Helper: merge new draws into allData, return count of new ones added
+function mergeDraws(newDraws) {
+  const existingDates = new Set(allData.map(d => d.date));
+  let count = 0;
+  newDraws.forEach(draw => {
+    if (!existingDates.has(draw.date)) {
+      allData.push(draw);
+      existingDates.add(draw.date);
+      count++;
+    }
+  });
+  return count;
+}
+
+// Parse naslovi.net — reads article snippets which contain draw results
+// Articles contain text like: "kombinacija koja je izvučena glasi: 34, 28, 33, 35, 24, 13 i 16"
+// or: "Izvučeni su brojevi 34, 28, 33, 35, 24, 13, 16"
+function parseNaslovi(doc) {
+  const draws = [];
+  const existingDates = new Set(allData.map(d => d.date));
+
+  try {
+    // Get all text-containing elements
+    const elements = doc.querySelectorAll('h2, p, div');
+
+    elements.forEach(el => {
+      const text = el.textContent || '';
+
+      // Skip Loto 5+ and Loto plus articles
+      if (/loto\s*5\+|loto\s+5\s+plus|loto\s+plus/i.test(text)) return;
+      // Skip if text is very short (nav items etc)
+      if (text.trim().length < 40) return;
+
+      // Find 7 numbers between 1-39 separated by commas/spaces/i
+      // Handles: "13, 16, 23, 6, 29, 37 i 28" and "22 34 7 31 30 23 38"
+      const numPattern = /\b([1-9]|[1-2]\d|3[0-9])\b[\s,]+\b([1-9]|[1-2]\d|3[0-9])\b[\s,]+\b([1-9]|[1-2]\d|3[0-9])\b[\s,]+\b([1-9]|[1-2]\d|3[0-9])\b[\s,]+\b([1-9]|[1-2]\d|3[0-9])\b[\s,]+\b([1-9]|[1-2]\d|3[0-9])\b(?:[\s,]+i[\s,]+|[\s,]+)\b([1-9]|[1-2]\d|3[0-9])\b/;
+      const match = text.match(numPattern);
+      if (!match) return;
+
+      const nums = [match[1],match[2],match[3],match[4],match[5],match[6],match[7]]
+        .map(Number)
+        .filter(n => n >= 1 && n <= 39);
+      if (nums.length !== 7) return;
+      // All 7 must be unique
+      if (new Set(nums).size !== 7) return;
+
+      // Extract date from parent URL /YYYY-MM-DD/
+      const parentHTML = el.closest('div, article, li, section')?.innerHTML || '';
+      const urlDateMatch = parentHTML.match(/\/(\d{4})-(\d{2})-(\d{2})\//);
+      if (!urlDateMatch) return;
+      const dateSr = `${urlDateMatch[3]}.${urlDateMatch[2]}.${urlDateMatch[1]}`;
+      if (existingDates.has(dateSr)) return;
+
+      // Extract kolo number
+      const koloMatch = text.match(/\b(\d+)\.\s*kolu?\b/i);
+      const koloNum = koloMatch ? parseInt(koloMatch[1]) : 0;
+      // Sanity check — kolo number should be reasonable
+      if (koloNum > 200) return;
+
+      nums.sort((a, b) => a - b);
+      draws.push({ kolo: koloNum, date: dateSr, nums, year: parseInt(urlDateMatch[1]) });
+      existingDates.add(dateSr);
+    });
+  } catch(e) {}
+
+  return draws;
+}
+
+// Parse stats247.com — reads the HTML results table
+function parseStats247(doc) {
+  const draws = [];
+  try {
+    const rows = doc.querySelectorAll('table tr');
+    rows.forEach(row => {
+      const cells = row.querySelectorAll('td');
+      if (cells.length < 2) return;
+      const dateText = cells[0]?.textContent?.trim();
+      if (!dateText || !dateText.match(/\d{2}-\d{2}-\d{4}/)) return;
+      const [d, m, y] = dateText.split('-');
+      const dateSr = `${d}.${m}.${y}`;
+      const nums = [];
+      row.querySelectorAll('li').forEach(li => {
+        const n = parseInt(li.textContent.trim());
+        if (n >= 1 && n <= 39) nums.push(n);
+      });
+      if (nums.length !== 7) return;
+      nums.sort((a, b) => a - b);
+      draws.push({ kolo: 0, date: dateSr, nums, year: parseInt(y) });
+    });
+  } catch(e) {}
+  return draws;
+}
+
+async function fetchLiveData() {
+  document.getElementById('fetch-status').textContent = '⟳ Ажурирање...';
+  let totalNew = 0;
+
+  // === SOURCE 1: naslovi.net (fastest, updates within hours) ===
+  try {
+    const resp = await fetch('https://naslovi.net/vesti/loto-brojevi', {
+      signal: AbortSignal.timeout(8000)
+    });
+    if (resp.ok) {
+      const html = await resp.text();
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      const draws = parseNaslovi(doc);
+      totalNew += mergeDraws(draws);
+    }
+  } catch(e) { /* naslovi failed, continue to fallback */ }
+
+  // === SOURCE 2: stats247.com (broader history, last 100 draws) ===
+  try {
+    const resp = await fetch('https://stats247.com/lotto/serbia-loto', {
+      signal: AbortSignal.timeout(8000)
+    });
+    if (resp.ok) {
+      const html = await resp.text();
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      const draws = parseStats247(doc);
+      totalNew += mergeDraws(draws);
+    }
+  } catch(e) { /* stats247 failed, silent */ }
+
+  // === Update app if anything new was found ===
+  if (totalNew > 0) {
+    allData.sort((a, b) => {
+      const [da,ma,ya] = a.date.split('.').map(Number);
+      const [db,mb,yb] = b.date.split('.').map(Number);
+      return new Date(yb,mb-1,db) - new Date(ya,ma-1,da);
+    });
+    showToast(`✓ ${totalNew} нових кола учитано`);
+    localStorage.setItem('milloto_last_update', new Date().toISOString());
+    localStorage.setItem('milloto_data_extra', JSON.stringify(allData.filter(d => d.kolo === 0 || d._fetched)));
+    renderHero(); renderTabs(); renderChart(); renderArchive(); renderStats();
+  }
+
+  document.getElementById('fetch-status').textContent = '✓ Ажурирано';
+  setTimeout(() => { document.getElementById('fetch-status').textContent = ''; }, 3000);
+}
+
+// =====================================================
+// LOAD CACHED EXTRA
+// =====================================================
+function loadCachedExtra() {
+  try {
+    const extra=localStorage.getItem('milloto_data_extra');
+    if(extra){
+      const parsed=JSON.parse(extra);
+      const existingDates=new Set(allData.map(d=>d.date));
+      parsed.forEach(d=>{if(!existingDates.has(d.date)){allData.push(d);existingDates.add(d.date);}});
+      allData.sort((a,b)=>{const[da,ma,ya]=a.date.split('.').map(Number),[db,mb,yb]=b.date.split('.').map(Number);return new Date(yb,mb-1,db)-new Date(ya,ma-1,da);});
+    }
+    const lastUpdate=localStorage.getItem('milloto_last_update');
+    if(lastUpdate){
+      const d=new Date(lastUpdate);
+      document.getElementById('last-update-time').textContent=`${d.getDate()}.${d.getMonth()+1}.${d.getFullYear()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+    }
+  } catch(e){}
+}
+
+// =====================================================
+// UI HELPERS
+// =====================================================
+function toggleTheme() {
+  const html=document.documentElement;
+  const next=html.getAttribute('data-theme')==='dark'?'light':'dark';
+  html.setAttribute('data-theme',next);
+  document.querySelector('.theme-toggle').textContent=next==='dark'?'Активирајте светлу тему':'Активирајте тамну тему';
+  localStorage.setItem('milloto_theme',next);
+}
+function toggleInfo() { document.getElementById('info-panel').classList.toggle('open'); }
+function showToast(msg) {
+  const toast=document.getElementById('update-toast');
+  toast.textContent=msg; toast.classList.add('show');
+  setTimeout(()=>toast.classList.remove('show'),3000);
+}
+
+// =====================================================
+// ONLINE/OFFLINE
+// =====================================================
+function updateOnlineStatus() {
+  const banner=document.getElementById('offline-banner');
+  if(navigator.onLine){ banner.classList.remove('show'); fetchLiveData(); }
+  else banner.classList.add('show');
+}
+window.addEventListener('online',updateOnlineStatus);
+window.addEventListener('offline',()=>{ document.getElementById('offline-banner').classList.add('show'); document.getElementById('fetch-status').textContent=''; });
+
+// =====================================================
+// NEW FEATURE 1: PWA INSTALL POPUP
+// =====================================================
+let deferredInstallPrompt = null;
+
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredInstallPrompt = e;
+
+  // Show popup only if not dismissed before and not already installed
+  const dismissed = localStorage.getItem('milloto_pwa_dismissed');
+  const installed = localStorage.getItem('milloto_pwa_installed');
+  if (!dismissed && !installed) {
+    setTimeout(() => {
+      document.getElementById('pwa-popup').classList.add('show');
+    }, 2500); // slight delay so page loads first
+  }
+});
+
+window.addEventListener('appinstalled', () => {
+  localStorage.setItem('milloto_pwa_installed', '1');
+  document.getElementById('pwa-popup').classList.remove('show');
+  showToast('✓ MilLoto инсталиран!');
+  deferredInstallPrompt = null;
+});
+
+function triggerPwaInstall() {
+  if (!deferredInstallPrompt) {
+    // Fallback for browsers that don't support beforeinstallprompt (iOS Safari etc.)
+    showToast('На iOS: Дели → Додај на почетни екран');
+    dismissPwaPopup();
+    return;
+  }
+  deferredInstallPrompt.prompt();
+  deferredInstallPrompt.userChoice.then(result => {
+    if (result.outcome === 'accepted') {
+      localStorage.setItem('milloto_pwa_installed', '1');
+      showToast('✓ MilLoto инсталиран!');
+    }
+    dismissPwaPopup();
+    deferredInstallPrompt = null;
+  });
+}
+
+function dismissPwaPopup() {
+  document.getElementById('pwa-popup').classList.remove('show');
+  localStorage.setItem('milloto_pwa_dismissed', '1');
+}
+
+// =====================================================
+// ALARM DROPDOWN TOGGLE
+// =====================================================
+function toggleAlarmDropdown() {
+  const dropdown = document.getElementById('alarm-dropdown');
+  const btn = document.getElementById('btn-alarm-toggle');
+  const arrow = document.getElementById('alarm-toggle-arrow');
+  const isOpen = dropdown.classList.toggle('open');
+  btn.classList.toggle('active', isOpen);
+  arrow.style.transform = isOpen ? 'rotate(180deg)' : 'rotate(0deg)';
+}
+
+// =====================================================
+// NEW FEATURE 3: ALARM SYSTEM
+// =====================================================
+const ALARM_OFFSETS = [1440, 720, 360, 60, 15, 10, 5]; // minutes before draw
+
+function updateAlarmUI() {
+  const perm = Notification.permission;
+  const bar = document.getElementById('alarm-status-bar');
+  const permText = document.getElementById('alarm-perm-text');
+
+  bar.className = 'alarm-status';
+  if (perm === 'granted') {
+    bar.classList.add('granted');
+    permText.textContent = 'Дозвољено ✓';
+  } else if (perm === 'denied') {
+    bar.classList.add('denied');
+    permText.textContent = 'Блокирано — Омогућите у подешавањима интернет прегледача ("broswer")';
+  } else {
+    bar.classList.add('default');
+    permText.textContent = 'Нису дозвољена — Кликните "Сачувај" да активирате';
+  }
+
+  // Update next draw time display and alarm time previews
+  const next = getNextDraw();
+  const dayName = DAYS_SR[next.getDay()];
+  const dateStr = `${next.getDate()}. ${MONTHS_SR[next.getMonth()]} ${next.getFullYear()}. у 20:00`;
+  document.getElementById('alarm-next-draw-time').textContent = `${dayName}, ${dateStr}`;
+
+  ALARM_OFFSETS.forEach(offset => {
+    const fireAt = new Date(next.getTime() - offset * 60 * 1000);
+    const el = document.getElementById(`alarm-time-${offset}`);
+    if (el) {
+      el.textContent = `${String(fireAt.getHours()).padStart(2,'0')}:${String(fireAt.getMinutes()).padStart(2,'0')}`;
+    }
+  });
+
+  // Restore saved alarm checkboxes
+  try {
+    const saved = JSON.parse(localStorage.getItem('milloto_alarms') || '[]');
+    document.querySelectorAll('#alarm-options input[type="checkbox"]').forEach(cb => {
+      cb.checked = saved.includes(parseInt(cb.value));
+    });
+    document.getElementById('btn-alarm-toggle').classList.toggle('has-alarms', saved.length > 0);
+  } catch(e) {}
+}
+
+async function saveAlarms() {
+  // Request permission first if needed
+  if (Notification.permission === 'default') {
+    const result = await Notification.requestPermission();
+    updateAlarmUI();
+    if (result !== 'granted') {
+      showToast('⚠️ Обавештења нису дозвољена');
+      return;
+    }
+  }
+  if (Notification.permission === 'denied') {
+    showToast('⚠️ Обавештења су блокирана у интернет прегледачу ("browser")');
+    return;
+  }
+
+  const checked = [];
+  document.querySelectorAll('#alarm-options input[type="checkbox"]:checked').forEach(cb => {
+    checked.push(parseInt(cb.value));
+  });
+
+  localStorage.setItem('milloto_alarms', JSON.stringify(checked));
+
+  // Build alarm objects for next draw
+  const next = getNextDraw();
+  const alarms = checked.map(offset => {
+    const fireAt = next.getTime() - offset * 60 * 1000;
+    const label = document.querySelector(`#alarm-options input[value="${offset}"]`)?.dataset.label || `${offset} мин пре`;
+    return {
+      fireAt,
+      message: `🎱 Лото извлачење за ${label}! Не заборавите да попуните листић.`,
+      requireInteraction: offset <= 15
+    };
+  });
+
+  // Send to Service Worker
+  if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+    navigator.serviceWorker.controller.postMessage({
+      type: 'SCHEDULE_ALARMS',
+      alarms
+    });
+  }
+
+  // Also persist alarms in localStorage for SW to re-read on restart
+  localStorage.setItem('milloto_alarms_scheduled', JSON.stringify(alarms));
+
+  // Update button dot
+  document.getElementById('btn-alarm-toggle').classList.toggle('has-alarms', checked.length > 0);
+
+  const notice = document.getElementById('alarm-saved-notice');
+  if (checked.length > 0) {
+    notice.textContent = `✓ Сачувано ${checked.length} подсетника за следеће извлачење`;
+  } else {
+    notice.textContent = '✓ Сви подсетници су уклоњени';
+  }
+  notice.classList.add('show');
+  setTimeout(() => notice.classList.remove('show'), 4000);
+
+  showToast(checked.length > 0 ? `🔔 ${checked.length} подсетника активно` : '🔕 Подсетници уклоњени');
+}
+
+function cancelAlarms() {
+  document.querySelectorAll('#alarm-options input[type="checkbox"]').forEach(cb => cb.checked = false);
+  localStorage.removeItem('milloto_alarms');
+  localStorage.removeItem('milloto_alarms_scheduled');
+
+  if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+    navigator.serviceWorker.controller.postMessage({ type: 'CANCEL_ALARMS' });
+  }
+  document.getElementById('btn-alarm-toggle').classList.remove('has-alarms');
+  const notice = document.getElementById('alarm-saved-notice');
+  notice.textContent = '✓ Сви подсетници су откажани';
+  notice.classList.add('show');
+  setTimeout(() => notice.classList.remove('show'), 3000);
+}
+
+// Re-schedule alarms after SW registration (so they survive page reloads)
+function rescheduleAlarmsFromStorage() {
+  try {
+    const alarms = JSON.parse(localStorage.getItem('milloto_alarms_scheduled') || '[]');
+    if (alarms.length === 0) return;
+    // Filter out already-passed alarms and reschedule
+    const future = alarms.filter(a => a.fireAt > Date.now());
+    if (future.length > 0 && navigator.serviceWorker.controller) {
+      navigator.serviceWorker.controller.postMessage({ type: 'SCHEDULE_ALARMS', alarms: future });
+    }
+  } catch(e) {}
+}
+
+// Listen for messages from SW (REQUEST_ALARMS)
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.addEventListener('message', event => {
+    if (event.data?.type === 'REQUEST_ALARMS') {
+      rescheduleAlarmsFromStorage();
+    }
+  });
+}
+
+// =====================================================
+// SERVICE WORKER
+// =====================================================
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(reg => {
+        console.log('SW registered:', reg.scope);
+        // Once SW is active, reschedule alarms
+        if (reg.active) rescheduleAlarmsFromStorage();
+        reg.addEventListener('updatefound', () => {
+          reg.installing?.addEventListener('statechange', e => {
+            if (e.target.state === 'activated') rescheduleAlarmsFromStorage();
+          });
+        });
+      })
+      .catch(err => console.log('SW failed:', err));
+  });
+}
+
+// =====================================================
+// INIT
+// =====================================================
+document.addEventListener('DOMContentLoaded', () => {
+  const savedTheme = localStorage.getItem('milloto_theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  document.querySelector('.theme-toggle').textContent = savedTheme==='dark' ? 'Активирајте светлу тему' : 'Активирајте тамну тему';
+
+  loadCachedExtra();
+  renderHero(); renderTabs(); renderChart(); renderArchive(); renderStats();
+  updateCountdown(); setInterval(updateCountdown, 1000);
+  updateOnlineStatus();
+
+  // Alarm UI
+  if ('Notification' in window) {
+    updateAlarmUI();
+  } else {
+    document.getElementById('btn-alarm-toggle').style.display = 'none';
+  }
+});
+</script>
+</body>
+</html>
