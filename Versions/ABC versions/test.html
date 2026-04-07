@@ -1,13 +1,11 @@
 <!-- MilLoto -->
 <!-- Статистика и архива -- Лото 7/39 - Народна лутрија Србије -->
-<!-- Version G -->
+<!-- test -->
 <!-- © 2026 Mil Stamenković -->
 <!-- Created with help of Free Claude AI -->
 <!-- Created: 14.03.2026. - Ćuprija, Serbia -->
-<!-- Revised: 07.04.2026. - Ćuprija, Serbia -->
+<!-- Revised: 08.04.2026. - Ćuprija, Serbia -->
 <!-- Published: 14.03.2026. - Ćuprija, Serbia --> 
-
-
 
 <!DOCTYPE html>
 <html lang="sr" data-theme="dark">
@@ -687,15 +685,6 @@ footer a { color: var(--gold-dim); text-decoration: none; }
   <div id="offline-banner">⚠️ Радите у офлајн режиму — приказани су подаци из кеша (последње ажурирање: <span id="last-update-time">—</span>)</div>
   <div class="titlebar-main">
     <div class="app-logo">
-      <!-- <div class="logo-balls">
-        <span class="logo-ball" style="background:#e74c3c"></span>
-        <span class="logo-ball" style="background:#e67e22"></span>
-        <span class="logo-ball" style="background:#f1c40f"></span>
-        <span class="logo-ball" style="background:#2ecc71"></span>
-        <span class="logo-ball" style="background:#3498db"></span>
-        <span class="logo-ball" style="background:#9b59b6"></span>
-        <span class="logo-ball" style="background:#e91e63"></span>
-      </div> -->
       <img src="./Media/Icons/icon192.png" alt="MilLoto Logo" style="width:55px">
       <div>
         <div class="app-title"><a href="index.html">MilLoto</a></div>
@@ -741,7 +730,7 @@ footer a { color: var(--gold-dim); text-decoration: none; }
     </div>
     <div class="info-card">
       <h4 style="text-transform: none;">О "MilLoto"</h4>
-      <p>"MilLoto" ради онлајн и офлајн. Подаци се аутоматски ажурирају приликом посете. Статистика обухвата свe доступне архивске податке.</p>
+      <p>"MilLoto" ради онлајн и офлајн. Подаци се аутоматски ажурирају приликом посете кроз CORS Proxy.</p>
       <p style="margin-top:6px">Извор података: <a href="https://stats247.com/lotto/serbia-loto" target="_blank" rel="noopener">stats247.com</a> и <a href="https://naslovi.net/vesti/loto-brojevi" target="_blank" rel="noopener">naslovi.net/vesti/loto-brojevi</a></p>
     </div>
   </div>
@@ -961,7 +950,7 @@ footer a { color: var(--gold-dim); text-decoration: none; }
 
 <script>
 
-const DATA_WITH_YEAR = BAKED_DATA.map(([kolo, date, nums]) => {
+const DATA_WITH_YEAR = (typeof BAKED_DATA !== 'undefined' ? BAKED_DATA : []).map(([kolo, date, nums]) => {
   const yr = parseInt(date.split('.')[2]);
   return { kolo, date, nums, year: yr };
 });
@@ -1020,11 +1009,11 @@ const DAYS_SR=['недеља','понедељак','уторак','среда','
 const MONTHS_SR=['јануар','фебруар','март','април','мај','јун','јул','август','септембар','октобар','новембар','децембар'];
 
 // =====================================================
-// RENDER FUNCTIONS (unchanged from your version)
+// RENDER FUNCTIONS
 // =====================================================
 function renderHero() {
   const latest=allData[0]; if(!latest) return;
-  document.getElementById('hero-kolo').textContent=`${latest.kolo}. коло`;
+  document.getElementById('hero-kolo').textContent=`${latest.kolo > 0 ? latest.kolo : 'Новије'}. коло`;
   document.getElementById('hero-date').textContent=formatDateSr(latest.date);
   document.getElementById('hero-balls').innerHTML=latest.nums.map(n=>makeBall(n)).join('');
 }
@@ -1056,13 +1045,13 @@ function renderArchive() {
   document.getElementById('archive-subtitle').textContent=selectedYear==='all'?`${data.length} кола (све доступне године) (кликните на коло како бисте видели резултате)`:`${data.length} кола у ${selectedYear}. години`;
   const container=document.getElementById('archive-body');
   if (selectedYear!=='all') {
-    const rows=[...data].sort((a,b)=>b.kolo-a.kolo).map(d=>`<div class="kolo-row"><span class="kolo-num">Коло ${d.kolo}</span><span class="kolo-date">${formatDateSr(d.date)}</span><div class="kolo-balls">${d.nums.map(n=>makeBall(n,true)).join('')}</div></div>`).join('');
+    const rows=[...data].sort((a,b)=>b.kolo-a.kolo).map(d=>`<div class="kolo-row"><span class="kolo-num">Коло ${d.kolo > 0 ? d.kolo : '?'}</span><span class="kolo-date">${formatDateSr(d.date)}</span><div class="kolo-balls">${d.nums.map(n=>makeBall(n,true)).join('')}</div></div>`).join('');
     container.innerHTML=`<div class="collapsible-group"><div class="collapse-header" onclick="toggleCollapse(this)"><span class="collapse-title">${selectedYear}. година <span class="collapse-meta">${data.length} кола</span></span><span class="collapse-arrow">▼</span></div><div class="collapse-body">${rows}</div></div>`;
   } else {
     let html='';
     getYears().forEach(yr=>{
       const yrData=allData.filter(d=>d.year===yr).sort((a,b)=>b.kolo-a.kolo);
-      const rows=yrData.map(d=>`<div class="kolo-row"><span class="kolo-num">Коло ${d.kolo}</span><span class="kolo-date">${formatDateSr(d.date)}</span><div class="kolo-balls">${d.nums.map(n=>makeBall(n,true)).join('')}</div></div>`).join('');
+      const rows=yrData.map(d=>`<div class="kolo-row"><span class="kolo-num">Коло ${d.kolo > 0 ? d.kolo : '?'}</span><span class="kolo-date">${formatDateSr(d.date)}</span><div class="kolo-balls">${d.nums.map(n=>makeBall(n,true)).join('')}</div></div>`).join('');
       html+=`<div class="collapsible-group"><div class="year-group-header" onclick="toggleYearGroup(this)"><span class="year-group-title">${yr}. година <span class="collapse-meta">${yrData.length} кола</span></span><span class="collapse-arrow">▼</span></div><div class="year-group-body">${rows}</div></div>`;
     });
     container.innerHTML=`<div class="collapsible-group"><div class="collapse-header open" onclick="toggleCollapse(this)"><span class="collapse-title">Сва кола <span class="collapse-meta">${data.length} кола у бази</span></span><span class="collapse-arrow">▼</span></div><div class="collapse-body open">${html}</div></div>`;
@@ -1123,78 +1112,76 @@ function updateCountdown() {
 }
 
 // =====================================================
-// LIVE FETCH — naslovi.net (primary) + stats247.com (fallback)
+// LIVE FETCH — naslovi.net & stats247.com via CORS Proxy
 // =====================================================
 
-// Helper: merge new draws into allData, return count of new ones added
+function normalizeDate(dateStr) {
+  // Pretvara "07.04.2026" i "7.4.2026." u jedinstveni format "7.4.2026" radi poređenja
+  const parts = dateStr.split('.').map(p => p.trim()).filter(p => p !== '');
+  if (parts.length >= 3) {
+    return `${parseInt(parts[0])}.${parseInt(parts[1])}.${parts[2]}`;
+  }
+  return dateStr;
+}
+
 function mergeDraws(newDraws) {
-  const existingDates = new Set(allData.map(d => d.date));
+  const existingDates = new Set(allData.map(d => normalizeDate(d.date)));
   let count = 0;
   newDraws.forEach(draw => {
-    if (!existingDates.has(draw.date)) {
+    const norm = normalizeDate(draw.date);
+    if (!existingDates.has(norm)) {
+      draw._fetched = true;
+      draw.date = norm;
       allData.push(draw);
-      existingDates.add(draw.date);
+      existingDates.add(norm);
       count++;
+    } else {
+      // Ako arhiva ima kolo "0" a sada smo saznali tačan broj kola, ažuriraj
+      const existing = allData.find(d => normalizeDate(d.date) === norm);
+      if (existing && existing.kolo === 0 && draw.kolo > 0) {
+        existing.kolo = draw.kolo;
+        count++;
+      }
     }
   });
   return count;
 }
 
-// Parse naslovi.net — reads article snippets which contain draw results
-// Articles contain text like: "kombinacija koja je izvučena glasi: 34, 28, 33, 35, 24, 13 i 16"
-// or: "Izvučeni su brojevi 34, 28, 33, 35, 24, 13, 16"
 function parseNaslovi(doc) {
   const draws = [];
-  const existingDates = new Set(allData.map(d => d.date));
-
   try {
-    // Get all text-containing elements
     const elements = doc.querySelectorAll('h2, p, div');
-
     elements.forEach(el => {
       const text = el.textContent || '';
-
-      // Skip Loto 5+ and Loto plus articles
       if (/loto\s*5\+|loto\s+5\s+plus|loto\s+plus/i.test(text)) return;
-      // Skip if text is very short (nav items etc)
       if (text.trim().length < 40) return;
 
-      // Find 7 numbers between 1-39 separated by commas/spaces/i
-      // Handles: "13, 16, 23, 6, 29, 37 i 28" and "22 34 7 31 30 23 38"
-      const numPattern = /\b([1-9]|[1-2]\d|3[0-9])\b[\s,]+\b([1-9]|[1-2]\d|3[0-9])\b[\s,]+\b([1-9]|[1-2]\d|3[0-9])\b[\s,]+\b([1-9]|[1-2]\d|3[0-9])\b[\s,]+\b([1-9]|[1-2]\d|3[0-9])\b[\s,]+\b([1-9]|[1-2]\d|3[0-9])\b(?:[\s,]+i[\s,]+|[\s,]+)\b([1-9]|[1-2]\d|3[0-9])\b/;
+      const numPattern = /\b([1-9]|[1-2]\d|3[0-9])\b[\s,]+\b([1-9]|[1-2]\d|3[0-9])\b[\s,]+\b([1-9]|[1-2]\d|3[0-9])\b[\s,]+\b([1-9]|[1-2]\d|3[0-9])\b[\s,]+\b([1-9]|[1-2]\d|3[0-9])\b[\s,]+\b([1-9]|[1-2]\d|3[0-9])\b(?:[\s,]+i[\s,]+|[\s,]+|\s*\-\s*)\b([1-9]|[1-2]\d|3[0-9])\b/;
       const match = text.match(numPattern);
       if (!match) return;
 
       const nums = [match[1],match[2],match[3],match[4],match[5],match[6],match[7]]
         .map(Number)
         .filter(n => n >= 1 && n <= 39);
-      if (nums.length !== 7) return;
-      // All 7 must be unique
-      if (new Set(nums).size !== 7) return;
+      if (nums.length !== 7 || new Set(nums).size !== 7) return;
 
-      // Extract date from parent URL /YYYY-MM-DD/
       const parentHTML = el.closest('div, article, li, section')?.innerHTML || '';
       const urlDateMatch = parentHTML.match(/\/(\d{4})-(\d{2})-(\d{2})\//);
       if (!urlDateMatch) return;
-      const dateSr = `${urlDateMatch[3]}.${urlDateMatch[2]}.${urlDateMatch[1]}`;
-      if (existingDates.has(dateSr)) return;
+      
+      const dateSr = `${parseInt(urlDateMatch[3])}.${parseInt(urlDateMatch[2])}.${urlDateMatch[1]}`;
 
-      // Extract kolo number
       const koloMatch = text.match(/\b(\d+)\.\s*kolu?\b/i);
       const koloNum = koloMatch ? parseInt(koloMatch[1]) : 0;
-      // Sanity check — kolo number should be reasonable
       if (koloNum > 200) return;
 
       nums.sort((a, b) => a - b);
       draws.push({ kolo: koloNum, date: dateSr, nums, year: parseInt(urlDateMatch[1]) });
-      existingDates.add(dateSr);
     });
-  } catch(e) {}
-
+  } catch(e) { console.error('Parse naslovi err', e); }
   return draws;
 }
 
-// Parse stats247.com — reads the HTML results table
 function parseStats247(doc) {
   const draws = [];
   try {
@@ -1203,51 +1190,86 @@ function parseStats247(doc) {
       const cells = row.querySelectorAll('td');
       if (cells.length < 2) return;
       const dateText = cells[0]?.textContent?.trim();
-      if (!dateText || !dateText.match(/\d{2}-\d{2}-\d{4}/)) return;
-      const [d, m, y] = dateText.split('-');
-      const dateSr = `${d}.${m}.${y}`;
-      const nums = [];
-      row.querySelectorAll('li').forEach(li => {
-        const n = parseInt(li.textContent.trim());
-        if (n >= 1 && n <= 39) nums.push(n);
+      if (!dateText) return;
+      
+      let d, m, y;
+      let match = dateText.match(/(\d{2})[-/.](\d{2})[-/.](\d{4})/);
+      if (match) { d = match[1]; m = match[2]; y = match[3]; }
+      else {
+        match = dateText.match(/(\d{4})[-/.](\d{2})[-/.](\d{2})/);
+        if (match) { y = match[1]; m = match[2]; d = match[3]; }
+        else return;
+      }
+      const dateSr = `${parseInt(d)}.${parseInt(m)}.${y}`;
+      
+      let nums = [];
+      const numCell = cells[1];
+      numCell.querySelectorAll('li, span, div').forEach(el => {
+        const n = parseInt(el.textContent.trim());
+        if (n >= 1 && n <= 39 && !nums.includes(n)) nums.push(n);
       });
-      if (nums.length !== 7) return;
-      nums.sort((a, b) => a - b);
-      draws.push({ kolo: 0, date: dateSr, nums, year: parseInt(y) });
+      
+      if (nums.length < 7) {
+         nums = [];
+         const text = numCell.textContent;
+         const matches = text.match(/\b([1-9]|[1-2]\d|3[0-9])\b/g);
+         if (matches) {
+            matches.forEach(str => {
+               const n = parseInt(str);
+               if (n >= 1 && n <= 39 && !nums.includes(n)) nums.push(n);
+            });
+         }
+      }
+      
+      if (nums.length >= 7) {
+        draws.push({ kolo: 0, date: dateSr, nums: nums.slice(0,7).sort((a,b)=>a-b), year: parseInt(y) });
+      }
     });
-  } catch(e) {}
+  } catch(e) { console.error('Parse stats247 err', e); }
   return draws;
+}
+
+async function fetchWithProxy(targetUrl) {
+  // Dodavanje t=Timestamp sprečava pretraživač i proksi servere da keširaju staru stranicu!
+  const urlWithCacheBust = targetUrl + (targetUrl.includes('?') ? '&' : '?') + 'nocache=' + Date.now();
+  
+  // 1. Pokušaj sa allorigins.win
+  try {
+    const u = `https://api.allorigins.win/get?url=${encodeURIComponent(urlWithCacheBust)}`;
+    const r = await fetch(u, { signal: AbortSignal.timeout(10000) });
+    if (r.ok) {
+       const json = await r.json();
+       if (json.contents) return json.contents;
+    }
+  } catch(e) {}
+  
+  // 2. Pokušaj sa corsproxy.io (ukoliko allorigins zataji)
+  try {
+    const u = `https://corsproxy.io/?${encodeURIComponent(urlWithCacheBust)}`;
+    const r = await fetch(u, { signal: AbortSignal.timeout(10000) });
+    if (r.ok) return await r.text();
+  } catch(e) {}
+  
+  return null;
 }
 
 async function fetchLiveData() {
   document.getElementById('fetch-status').textContent = '⟳ Ажурирање...';
   let totalNew = 0;
 
-  // === SOURCE 1: naslovi.net (fastest, updates within hours) ===
-  try {
-    const resp = await fetch('https://naslovi.net/vesti/loto-brojevi', {
-      signal: AbortSignal.timeout(8000)
-    });
-    if (resp.ok) {
-      const html = await resp.text();
-      const doc = new DOMParser().parseFromString(html, 'text/html');
-      const draws = parseNaslovi(doc);
-      totalNew += mergeDraws(draws);
-    }
-  } catch(e) { /* naslovi failed, continue to fallback */ }
+  // === SOURCE 1: naslovi.net ===
+  const nasloviHTML = await fetchWithProxy('https://naslovi.net/vesti/loto-brojevi');
+  if (nasloviHTML) {
+    const doc = new DOMParser().parseFromString(nasloviHTML, 'text/html');
+    totalNew += mergeDraws(parseNaslovi(doc));
+  }
 
-  // === SOURCE 2: stats247.com (broader history, last 100 draws) ===
-  try {
-    const resp = await fetch('https://stats247.com/lotto/serbia-loto', {
-      signal: AbortSignal.timeout(8000)
-    });
-    if (resp.ok) {
-      const html = await resp.text();
-      const doc = new DOMParser().parseFromString(html, 'text/html');
-      const draws = parseStats247(doc);
-      totalNew += mergeDraws(draws);
-    }
-  } catch(e) { /* stats247 failed, silent */ }
+  // === SOURCE 2: stats247.com ===
+  const statsHTML = await fetchWithProxy('https://stats247.com/lotto/serbia-loto');
+  if (statsHTML) {
+    const doc = new DOMParser().parseFromString(statsHTML, 'text/html');
+    totalNew += mergeDraws(parseStats247(doc));
+  }
 
   // === Update app if anything new was found ===
   if (totalNew > 0) {
@@ -1256,7 +1278,7 @@ async function fetchLiveData() {
       const [db,mb,yb] = b.date.split('.').map(Number);
       return new Date(yb,mb-1,db) - new Date(ya,ma-1,da);
     });
-    showToast(`✓ ${totalNew} нових кола учитано`);
+    showToast(`✓ Ажурирано кола: ${totalNew}`);
     localStorage.setItem('milloto_last_update', new Date().toISOString());
     localStorage.setItem('milloto_data_extra', JSON.stringify(allData.filter(d => d.kolo === 0 || d._fetched)));
     renderHero(); renderTabs(); renderChart(); renderArchive(); renderStats();
@@ -1323,13 +1345,12 @@ window.addEventListener('beforeinstallprompt', e => {
   e.preventDefault();
   deferredInstallPrompt = e;
 
-  // Show popup only if not dismissed before and not already installed
   const dismissed = localStorage.getItem('milloto_pwa_dismissed');
   const installed = localStorage.getItem('milloto_pwa_installed');
   if (!dismissed && !installed) {
     setTimeout(() => {
       document.getElementById('pwa-popup').classList.add('show');
-    }, 2500); // slight delay so page loads first
+    }, 2500);
   }
 });
 
@@ -1342,7 +1363,6 @@ window.addEventListener('appinstalled', () => {
 
 function triggerPwaInstall() {
   if (!deferredInstallPrompt) {
-    // Fallback for browsers that don't support beforeinstallprompt (iOS Safari etc.)
     showToast('На iOS: Дели → Додај на почетни екран');
     dismissPwaPopup();
     return;
@@ -1378,7 +1398,7 @@ function toggleAlarmDropdown() {
 // =====================================================
 // NEW FEATURE 3: ALARM SYSTEM
 // =====================================================
-const ALARM_OFFSETS = [1440, 720, 360, 60, 15, 10, 5]; // minutes before draw
+const ALARM_OFFSETS = [1440, 720, 360, 60, 15, 10, 5]; 
 
 function updateAlarmUI() {
   const perm = Notification.permission;
@@ -1397,7 +1417,6 @@ function updateAlarmUI() {
     permText.textContent = 'Нису дозвољена — Кликните "Сачувај" да активирате';
   }
 
-  // Update next draw time display and alarm time previews
   const next = getNextDraw();
   const dayName = DAYS_SR[next.getDay()];
   const dateStr = `${next.getDate()}. ${MONTHS_SR[next.getMonth()]} ${next.getFullYear()}. у 20:00`;
@@ -1411,7 +1430,6 @@ function updateAlarmUI() {
     }
   });
 
-  // Restore saved alarm checkboxes
   try {
     const saved = JSON.parse(localStorage.getItem('milloto_alarms') || '[]');
     document.querySelectorAll('#alarm-options input[type="checkbox"]').forEach(cb => {
@@ -1422,7 +1440,6 @@ function updateAlarmUI() {
 }
 
 async function saveAlarms() {
-  // Request permission first if needed
   if (Notification.permission === 'default') {
     const result = await Notification.requestPermission();
     updateAlarmUI();
@@ -1443,7 +1460,6 @@ async function saveAlarms() {
 
   localStorage.setItem('milloto_alarms', JSON.stringify(checked));
 
-  // Build alarm objects for next draw
   const next = getNextDraw();
   const alarms = checked.map(offset => {
     const fireAt = next.getTime() - offset * 60 * 1000;
@@ -1455,7 +1471,6 @@ async function saveAlarms() {
     };
   });
 
-  // Send to Service Worker
   if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
     navigator.serviceWorker.controller.postMessage({
       type: 'SCHEDULE_ALARMS',
@@ -1463,10 +1478,7 @@ async function saveAlarms() {
     });
   }
 
-  // Also persist alarms in localStorage for SW to re-read on restart
   localStorage.setItem('milloto_alarms_scheduled', JSON.stringify(alarms));
-
-  // Update button dot
   document.getElementById('btn-alarm-toggle').classList.toggle('has-alarms', checked.length > 0);
 
   const notice = document.getElementById('alarm-saved-notice');
@@ -1496,12 +1508,10 @@ function cancelAlarms() {
   setTimeout(() => notice.classList.remove('show'), 3000);
 }
 
-// Re-schedule alarms after SW registration (so they survive page reloads)
 function rescheduleAlarmsFromStorage() {
   try {
     const alarms = JSON.parse(localStorage.getItem('milloto_alarms_scheduled') || '[]');
     if (alarms.length === 0) return;
-    // Filter out already-passed alarms and reschedule
     const future = alarms.filter(a => a.fireAt > Date.now());
     if (future.length > 0 && navigator.serviceWorker.controller) {
       navigator.serviceWorker.controller.postMessage({ type: 'SCHEDULE_ALARMS', alarms: future });
@@ -1509,32 +1519,11 @@ function rescheduleAlarmsFromStorage() {
   } catch(e) {}
 }
 
-// Listen for messages from SW (REQUEST_ALARMS)
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.addEventListener('message', event => {
     if (event.data?.type === 'REQUEST_ALARMS') {
       rescheduleAlarmsFromStorage();
     }
-  });
-}
-
-// =====================================================
-// SERVICE WORKER
-// =====================================================
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js')
-      .then(reg => {
-        console.log('SW registered:', reg.scope);
-        // Once SW is active, reschedule alarms
-        if (reg.active) rescheduleAlarmsFromStorage();
-        reg.addEventListener('updatefound', () => {
-          reg.installing?.addEventListener('statechange', e => {
-            if (e.target.state === 'activated') rescheduleAlarmsFromStorage();
-          });
-        });
-      })
-      .catch(err => console.log('SW failed:', err));
   });
 }
 
@@ -1551,7 +1540,6 @@ document.addEventListener('DOMContentLoaded', () => {
   updateCountdown(); setInterval(updateCountdown, 1000);
   updateOnlineStatus();
 
-  // Alarm UI
   if ('Notification' in window) {
     updateAlarmUI();
   } else {
