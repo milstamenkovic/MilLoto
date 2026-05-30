@@ -1,10 +1,10 @@
 <!-- MilLoto -->
 <!-- Статистика и архива -- Лото 7/39 - Народна лутрија Србије -->
-<!-- Version G -->
+<!-- Version H -->
 <!-- © 2026 Mil Stamenković -->
 <!-- Created with help of Free Claude AI -->
 <!-- Created: 14.03.2026. - Ćuprija, Serbia -->
-<!-- Revised: 08.04.2026. - Ćuprija, Serbia -->
+<!-- Revised: 30.05.2026. - Ćuprija, Serbia -->
 <!-- Published: 14.03.2026. - Ćuprija, Serbia --> 
 
 
@@ -19,7 +19,6 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="MilLoto">
-<base href="/MilLoto/">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="./Media/Icons/icon192.png">
 <link rel="icon" type="image/png" href="./Media/Icons/icon192.png">
@@ -1140,130 +1139,61 @@ function mergeDraws(newDraws) {
   return count;
 }
 
-// Parse naslovi.net — reads article snippets which contain draw results
-// Articles contain text like: "kombinacija koja je izvučena glasi: 34, 28, 33, 35, 24, 13 i 16"
-// or: "Izvučeni su brojevi 34, 28, 33, 35, 24, 13, 16"
-function parseNaslovi(doc) {
-  const draws = [];
-  const existingDates = new Set(allData.map(d => d.date));
-
-  try {
-    // Get all text-containing elements
-    const elements = doc.querySelectorAll('h2, p, div');
-
-    elements.forEach(el => {
-      const text = el.textContent || '';
-
-      // Skip Loto 5+ and Loto plus articles
-      if (/loto\s*5\+|loto\s+5\s+plus|loto\s+plus/i.test(text)) return;
-      // Skip if text is very short (nav items etc)
-      if (text.trim().length < 40) return;
-
-      // Find 7 numbers between 1-39 separated by commas/spaces/i
-      // Handles: "13, 16, 23, 6, 29, 37 i 28" and "22 34 7 31 30 23 38"
-      const numPattern = /\b([1-9]|[1-2]\d|3[0-9])\b[\s,]+\b([1-9]|[1-2]\d|3[0-9])\b[\s,]+\b([1-9]|[1-2]\d|3[0-9])\b[\s,]+\b([1-9]|[1-2]\d|3[0-9])\b[\s,]+\b([1-9]|[1-2]\d|3[0-9])\b[\s,]+\b([1-9]|[1-2]\d|3[0-9])\b(?:[\s,]+i[\s,]+|[\s,]+)\b([1-9]|[1-2]\d|3[0-9])\b/;
-      const match = text.match(numPattern);
-      if (!match) return;
-
-      const nums = [match[1],match[2],match[3],match[4],match[5],match[6],match[7]]
-        .map(Number)
-        .filter(n => n >= 1 && n <= 39);
-      if (nums.length !== 7) return;
-      // All 7 must be unique
-      if (new Set(nums).size !== 7) return;
-
-      // Extract date from parent URL /YYYY-MM-DD/
-      const parentHTML = el.closest('div, article, li, section')?.innerHTML || '';
-      const urlDateMatch = parentHTML.match(/\/(\d{4})-(\d{2})-(\d{2})\//);
-      if (!urlDateMatch) return;
-      const dateSr = `${urlDateMatch[3]}.${urlDateMatch[2]}.${urlDateMatch[1]}`;
-      if (existingDates.has(dateSr)) return;
-
-      // Extract kolo number
-      const koloMatch = text.match(/\b(\d+)\.\s*kolu?\b/i);
-      const koloNum = koloMatch ? parseInt(koloMatch[1]) : 0;
-      // Sanity check — kolo number should be reasonable
-      if (koloNum > 200) return;
-
-      nums.sort((a, b) => a - b);
-      draws.push({ kolo: koloNum, date: dateSr, nums, year: parseInt(urlDateMatch[1]) });
-      existingDates.add(dateSr);
-    });
-  } catch(e) {}
-
-  return draws;
-}
-
-// Parse stats247.com — reads the HTML results table
-function parseStats247(doc) {
-  const draws = [];
-  try {
-    const rows = doc.querySelectorAll('table tr');
-    rows.forEach(row => {
-      const cells = row.querySelectorAll('td');
-      if (cells.length < 2) return;
-      const dateText = cells[0]?.textContent?.trim();
-      if (!dateText || !dateText.match(/\d{2}-\d{2}-\d{4}/)) return;
-      const [d, m, y] = dateText.split('-');
-      const dateSr = `${d}.${m}.${y}`;
-      const nums = [];
-      row.querySelectorAll('li').forEach(li => {
-        const n = parseInt(li.textContent.trim());
-        if (n >= 1 && n <= 39) nums.push(n);
-      });
-      if (nums.length !== 7) return;
-      nums.sort((a, b) => a - b);
-      draws.push({ kolo: 0, date: dateSr, nums, year: parseInt(y) });
-    });
-  } catch(e) {}
-  return draws;
-}
-
+const WORKER_URL = 'https://milloto-fetch.milstamenkovic.workers.dev/';
+ 
 async function fetchLiveData() {
   document.getElementById('fetch-status').textContent = '⟳ Ажурирање...';
-  let totalNew = 0;
-
-  // === SOURCE 1: naslovi.net (fastest, updates within hours) ===
+ 
   try {
-    const resp = await fetch('https://naslovi.net/vesti/loto-brojevi', {
-      signal: AbortSignal.timeout(8000)
+    const resp = await fetch(WORKER_URL, {
+      signal: AbortSignal.timeout(10000),
     });
-    if (resp.ok) {
-      const html = await resp.text();
-      const doc = new DOMParser().parseFromString(html, 'text/html');
-      const draws = parseNaslovi(doc);
-      totalNew += mergeDraws(draws);
+ 
+    if (!resp.ok) throw new Error(`Worker returned ${resp.status}`);
+ 
+    const draw = await resp.json();
+    if (draw.error) throw new Error(draw.error);
+ 
+    // Validate response shape
+    if (!draw.date || !Array.isArray(draw.nums) || draw.nums.length !== 7) {
+      throw new Error('Invalid draw data from worker');
     }
-  } catch(e) { /* naslovi failed, continue to fallback */ }
-
-  // === SOURCE 2: stats247.com (broader history, last 100 draws) ===
-  try {
-    const resp = await fetch('https://stats247.com/lotto/serbia-loto', {
-      signal: AbortSignal.timeout(8000)
-    });
-    if (resp.ok) {
-      const html = await resp.text();
-      const doc = new DOMParser().parseFromString(html, 'text/html');
-      const draws = parseStats247(doc);
-      totalNew += mergeDraws(draws);
+ 
+    // Check if this draw is already in our data (by date)
+    const existingDates = new Set(allData.map(d => d.date));
+    if (!existingDates.has(draw.date)) {
+      const yr = parseInt(draw.date.split('.')[2]);
+      allData.push({ kolo: draw.kolo, date: draw.date, nums: draw.nums, year: yr });
+ 
+      // Re-sort descending by date
+      allData.sort((a, b) => {
+        const [da,ma,ya] = a.date.split('.').map(Number);
+        const [db,mb,yb] = b.date.split('.').map(Number);
+        return new Date(yb,mb-1,db) - new Date(ya,ma-1,da);
+      });
+ 
+      // Cache the new entry
+      localStorage.setItem('milloto_last_update', new Date().toISOString());
+      try {
+        const cached = JSON.parse(localStorage.getItem('milloto_data_extra') || '[]');
+        cached.push({ kolo: draw.kolo, date: draw.date, nums: draw.nums, year: yr });
+        localStorage.setItem('milloto_data_extra', JSON.stringify(cached));
+      } catch(e) {}
+ 
+      showToast(`✓ Ново коло учитано (${draw.date})`);
+      renderHero(); renderTabs(); renderChart(); renderArchive(); renderStats();
     }
-  } catch(e) { /* stats247 failed, silent */ }
-
-  // === Update app if anything new was found ===
-  if (totalNew > 0) {
-    allData.sort((a, b) => {
-      const [da,ma,ya] = a.date.split('.').map(Number);
-      const [db,mb,yb] = b.date.split('.').map(Number);
-      return new Date(yb,mb-1,db) - new Date(ya,ma-1,da);
-    });
-    showToast(`✓ ${totalNew} нових кола учитано`);
-    localStorage.setItem('milloto_last_update', new Date().toISOString());
-    localStorage.setItem('milloto_data_extra', JSON.stringify(allData.filter(d => d.kolo === 0 || d._fetched)));
-    renderHero(); renderTabs(); renderChart(); renderArchive(); renderStats();
+ 
+    document.getElementById('fetch-status').textContent = '✓ Ажурирано';
+ 
+  } catch (e) {
+    console.warn('MilLoto fetch failed:', e.message);
+    document.getElementById('fetch-status').textContent = '⚠ Нема новог извлачења';
   }
-
-  document.getElementById('fetch-status').textContent = '✓ Ажурирано';
-  setTimeout(() => { document.getElementById('fetch-status').textContent = ''; }, 3000);
+ 
+  setTimeout(() => {
+    document.getElementById('fetch-status').textContent = '';
+  }, 4000);
 }
 
 // =====================================================
