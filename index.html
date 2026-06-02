@@ -1,11 +1,15 @@
-<!-- MilLoto -->
-<!-- Статистика и архива -- Лото 7/39 - Народна лутрија Србије -->
-<!-- Version H -->
+<!-- MilLoto - МилЛото -->
+<!-- Статистика и архива -- Лото 7/39 - Државна лутрија Србије -->
 <!-- © 2026 Mil Stamenković -->
-<!-- Created with help of Free Claude AI -->
-<!-- Created: 14.03.2026. - Ćuprija, Serbia -->
-<!-- Revised: 30.05.2026. - Ćuprija, Serbia -->
-<!-- Published: 14.03.2026. - Ćuprija, Serbia --> 
+<!-- Верзија "H" -->
+<!-- Направљено уз помоћ бесплатне "Claude AI" -->
+<!-- Пројекат направљен: 23.02.2026. - Ћуприја, Србија -->
+<!-- Пројекат оригинално објављен: 23.02.2026. - Ћуприја, Србија -->
+<!-- Пројекат преправљен: 02.06.2026. - Ћуприја, Србија -->
+<!-- Тренутна верзија објављена: 30.05.2026. - Ћуприја, Србија -->
+
+
+
 
 
 
@@ -144,6 +148,7 @@ a { color: var(--gold); }
   max-height: 0;
   transition: max-height 0.4s ease;
 }
+
 #info-panel.open { max-height: 500px; }
 .info-inner {
   max-width: 1100px;
@@ -153,6 +158,7 @@ a { color: var(--gold); }
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 12px;
 }
+
 .info-card {
   background: var(--bg2);
   border: 1px solid var(--border);
@@ -177,7 +183,11 @@ a { color: var(--gold); }
   overflow-x: hidden;
 }
 
-.hero-inner { max-width: 1100px; margin: 0 auto; }
+.hero-inner {
+	max-width: 1100px;
+	margin: 0 auto;
+}
+
 .hero-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text3); margin-bottom: 6px; }
 .hero-kolo-info { display: flex; align-items: baseline; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
 .hero-kolo-num { font-size: 1.5rem; font-weight: 700; color: var(--gold); }
@@ -555,7 +565,7 @@ footer a { color: var(--gold-dim); text-decoration: none; }
 /* ===== ALARM DROPDOWN ===== */
 #alarm-dropdown {
   max-height: 0;
-  overflow: hidden;
+	overflow: hidden;
   transition: max-height 0.4s ease;
 }
 
@@ -569,7 +579,9 @@ footer a { color: var(--gold-dim); text-decoration: none; }
 
 .alarm-dropdown-title { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--gold); }
 
-.alarm-dropdown-body { padding: 12px 14px; }
+.alarm-dropdown-body {
+	padding: 12px 14px;
+}
 
 /* ===== ALARM PANEL STYLES ===== */
 .alarm-panel { padding: 16px; }
@@ -697,7 +709,7 @@ footer a { color: var(--gold-dim); text-decoration: none; }
       </div> -->
       <img src="./Media/Icons/icon192.png" alt="MilLoto Logo" style="width:55px">
       <div>
-        <div class="app-title"><a href="index.html">MilLoto</a></div>
+        <div class="app-title"><a href="/">MilLoto</a></div>
         <div class="app-subtitle">Статистика и архива</div>
         <div class="app-subtitle">Лото 7/39 - Државна лутрија Србије</div>
       </div>
@@ -956,7 +968,7 @@ footer a { color: var(--gold-dim); text-decoration: none; }
 </div>
 
 <!-- BAKED DATA -->
-<script src="./loto-arhiva.js"></script>
+<script src="./milloto-archive.js"></script>
 
 <script>
 
