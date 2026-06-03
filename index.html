@@ -108,12 +108,30 @@ a { color: var(--gold); }
   margin: 0 auto;
 }
 
-.app-logo { display: flex; align-items: center; gap: 10px; }
-.logo-balls { display: flex; gap: 3px; }
-.logo-ball { width: 14px; height: 14px; border-radius: 50%; display: inline-block; }
-.app-title { font-size: 1.4rem; font-weight: 700; color: var(--gold); letter-spacing: 1px; }
-.app-subtitle { font-size: 0.7rem; color: var(--text3); letter-spacing: 2px; text-transform: uppercase; }
-.titlebar-controls { display: flex; align-items: center; gap: 8px; }
+.app-logo {
+	display: flex; align-items: center; gap: 10px;
+}
+
+.logo-balls {
+	display: flex; gap: 3px; 
+}
+
+.logo-ball {
+	width: 14px; height: 14px; border-radius: 50%; display: inline-block;
+}
+
+.app-title {
+	font-size: 1.4rem; font-weight: 700; color: var(--gold); letter-spacing: 1px;
+}
+
+.app-subtitle {
+	font-size: 0.7rem; color: var(--text3); letter-spacing: 2px; text-transform: uppercase;
+}
+
+.titlebar-controls {
+	display: flex; align-items: center; gap: 8px;
+}
+
 .btn-icon {
   background: var(--bg3);
   border: 1px solid var(--border);
@@ -564,13 +582,23 @@ footer a { color: var(--gold-dim); text-decoration: none; }
 
 /* ===== ALARM DROPDOWN ===== */
 #alarm-dropdown {
-  max-height: 0;
-	overflow: hidden;
-  transition: max-height 0.4s ease;
+  display: none;
+  position: fixed;
+  top: auto;
+  left: 16px;
+  right: 16px;
+  max-width: 700px;
+  margin: 0 auto;
+  max-height: 80vh;
+  overflow-y: auto;
+  z-index: 200;
+  border-radius: var(--radius);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+	scrollbar-width: none;
 }
 
 #alarm-dropdown.open {
-  max-height: 100%;
+  display: block;
 }
 
 .alarm-dropdown-inner { margin-top: 12px; background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
@@ -783,70 +811,6 @@ footer a { color: var(--gold-dim); text-decoration: none; }
       </button>
     </div>
 
-    <!-- ALARM DROPDOWN -->
-    <div id="alarm-dropdown">
-      <div class="alarm-dropdown-inner">
-        <div class="alarm-dropdown-header">
-          <span class="alarm-dropdown-title">🔔 Подсетник за извлачење</span>
-        </div>
-        <div class="alarm-dropdown-body">
-          <p class="alarm-intro">
-            Подесите <strong>када желите да добијете обавештење</strong> пре следећег извлачења.
-            Ради када су и апликација (PWA) и страница затворени, али прегледач ("browser") мора бити отворен.
-          </p>
-          <div class="alarm-status default" id="alarm-status-bar">
-            ⚪ Статус: <strong id="alarm-perm-text">проверавање...</strong>
-          </div>
-          <div class="alarm-next-draw">
-            Следеће извлачење: <strong id="alarm-next-draw-time">—</strong>
-          </div>
-          <div class="alarm-options" id="alarm-options">
-            <label class="alarm-option">
-              <input type="checkbox" value="1440" data-label="24 сата пре">
-              <span class="alarm-option-label">24 сата пре извлачења</span>
-              <span class="alarm-option-time" id="alarm-time-1440">—</span>
-            </label>
-            <label class="alarm-option">
-              <input type="checkbox" value="720" data-label="12 сати пре">
-              <span class="alarm-option-label">12 сати пре извлачења</span>
-              <span class="alarm-option-time" id="alarm-time-720">—</span>
-            </label>
-            <label class="alarm-option">
-              <input type="checkbox" value="360" data-label="6 сати пре">
-              <span class="alarm-option-label">6 сати пре извлачења</span>
-              <span class="alarm-option-time" id="alarm-time-360">—</span>
-            </label>
-            <label class="alarm-option">
-              <input type="checkbox" value="60" data-label="1 сат пре">
-              <span class="alarm-option-label">1 сат пре извлачења</span>
-              <span class="alarm-option-time" id="alarm-time-60">—</span>
-            </label>
-            <label class="alarm-option">
-              <input type="checkbox" value="15" data-label="15 минута пре">
-              <span class="alarm-option-label">15 минута пре извлачења</span>
-              <span class="alarm-option-time" id="alarm-time-15">—</span>
-            </label>
-            <label class="alarm-option">
-              <input type="checkbox" value="10" data-label="10 минута пре">
-              <span class="alarm-option-label">10 минута пре извлачења</span>
-              <span class="alarm-option-time" id="alarm-time-10">—</span>
-            </label>
-            <label class="alarm-option">
-              <input type="checkbox" value="5" data-label="5 минута пре">
-              <span class="alarm-option-label">5 минута пре извлачења</span>
-              <span class="alarm-option-time" id="alarm-time-5">—</span>
-            </label>
-          </div>
-          <div class="alarm-actions">
-            <button class="btn-alarm-set" onclick="saveAlarms()">💾 Сачувај подсетнике</button>
-            <button class="btn-alarm-cancel" onclick="cancelAlarms()">✕ Откажи све</button>
-          </div>
-          <div class="alarm-saved-notice" id="alarm-saved-notice"></div>
-        </div>
-      </div>
-    </div>
-    <!-- END ALARM DROPDOWN -->
-
   </div>
 </section>
 
@@ -966,6 +930,70 @@ footer a { color: var(--gold-dim); text-decoration: none; }
     </div>
   </div>
 </div>
+
+    <!-- ALARM DROPDOWN -->
+    <div id="alarm-dropdown">
+      <div class="alarm-dropdown-inner">
+        <div class="alarm-dropdown-header">
+          <span class="alarm-dropdown-title">🔔 Подсетник за извлачење</span>
+        </div>
+        <div class="alarm-dropdown-body">
+          <p class="alarm-intro">
+            Подесите <strong>када желите да добијете обавештење</strong> пре следећег извлачења.
+            Ради када су и апликација (PWA) и страница затворени, али прегледач ("browser") мора бити отворен.
+          </p>
+          <div class="alarm-status default" id="alarm-status-bar">
+            ⚪ Статус: <strong id="alarm-perm-text">проверавање...</strong>
+          </div>
+          <div class="alarm-next-draw">
+            Следеће извлачење: <strong id="alarm-next-draw-time">—</strong>
+          </div>
+          <div class="alarm-options" id="alarm-options">
+            <label class="alarm-option">
+              <input type="checkbox" value="1440" data-label="24 сата пре">
+              <span class="alarm-option-label">24 сата пре извлачења</span>
+              <span class="alarm-option-time" id="alarm-time-1440">—</span>
+            </label>
+            <label class="alarm-option">
+              <input type="checkbox" value="720" data-label="12 сати пре">
+              <span class="alarm-option-label">12 сати пре извлачења</span>
+              <span class="alarm-option-time" id="alarm-time-720">—</span>
+            </label>
+            <label class="alarm-option">
+              <input type="checkbox" value="360" data-label="6 сати пре">
+              <span class="alarm-option-label">6 сати пре извлачења</span>
+              <span class="alarm-option-time" id="alarm-time-360">—</span>
+            </label>
+            <label class="alarm-option">
+              <input type="checkbox" value="60" data-label="1 сат пре">
+              <span class="alarm-option-label">1 сат пре извлачења</span>
+              <span class="alarm-option-time" id="alarm-time-60">—</span>
+            </label>
+            <label class="alarm-option">
+              <input type="checkbox" value="15" data-label="15 минута пре">
+              <span class="alarm-option-label">15 минута пре извлачења</span>
+              <span class="alarm-option-time" id="alarm-time-15">—</span>
+            </label>
+            <label class="alarm-option">
+              <input type="checkbox" value="10" data-label="10 минута пре">
+              <span class="alarm-option-label">10 минута пре извлачења</span>
+              <span class="alarm-option-time" id="alarm-time-10">—</span>
+            </label>
+            <label class="alarm-option">
+              <input type="checkbox" value="5" data-label="5 минута пре">
+              <span class="alarm-option-label">5 минута пре извлачења</span>
+              <span class="alarm-option-time" id="alarm-time-5">—</span>
+            </label>
+          </div>
+          <div class="alarm-actions">
+            <button class="btn-alarm-set" onclick="saveAlarms()">💾 Сачувај подсетнике</button>
+            <button class="btn-alarm-cancel" onclick="cancelAlarms()">✕ Откажи све</button>
+          </div>
+          <div class="alarm-saved-notice" id="alarm-saved-notice"></div>
+        </div>
+      </div>
+    </div>
+    <!-- END ALARM DROPDOWN -->
 
 <!-- BAKED DATA -->
 <script src="./milloto-archive.js"></script>
@@ -1313,9 +1341,28 @@ function toggleAlarmDropdown() {
   const btn = document.getElementById('btn-alarm-toggle');
   const arrow = document.getElementById('alarm-toggle-arrow');
   const isOpen = dropdown.classList.toggle('open');
-  btn.classList.toggle('active', isOpen);
+
+	if (isOpen) {
+	  const rect = btn.getBoundingClientRect();
+	  const topPos = rect.bottom + 8;
+	  dropdown.style.top = topPos + 'px';
+	  dropdown.style.maxHeight = (window.innerHeight - topPos - 16) + 'px';
+	}
+  
+	document.getElementById('btn-alarm-toggle').classList.toggle('active', isOpen);
   arrow.style.transform = isOpen ? 'rotate(180deg)' : 'rotate(0deg)';
 }
+
+// Close dropdown if user scrolls or clicks outside
+document.addEventListener('click', e => {
+  const dropdown = document.getElementById('alarm-dropdown');
+  const btn = document.getElementById('btn-alarm-toggle');
+  if (dropdown.classList.contains('open') && !dropdown.contains(e.target) && !btn.contains(e.target)) {
+    dropdown.classList.remove('open');
+    btn.classList.remove('active');
+    document.getElementById('alarm-toggle-arrow').style.transform = 'rotate(0deg)';
+  }
+});
 
 // =====================================================
 // NEW FEATURE 3: ALARM SYSTEM
