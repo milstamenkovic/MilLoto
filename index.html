@@ -5,7 +5,7 @@
 <!-- Направљено уз помоћ бесплатне "Claude AI" -->
 <!-- Пројекат направљен: 23.02.2026. - Ћуприја, Србија -->
 <!-- Пројекат оригинално објављен: 23.02.2026. - Ћуприја, Србија -->
-<!-- Пројекат преправљен: 02.06.2026. - Ћуприја, Србија -->
+<!-- Пројекат преправљен: 04.06.2026. - Ћуприја, Србија -->
 <!-- Тренутна верзија објављена: 30.05.2026. - Ћуприја, Србија -->
 
 
@@ -219,16 +219,33 @@ a { color: var(--gold); }
   box-shadow: var(--ball-shadow);
   position: relative; flex-shrink: 0;
 }
+
 .ball::after {
   content: ''; position: absolute; top: 6px; left: 10px;
   width: 12px; height: 6px; border-radius: 50%;
   background: rgba(255,255,255,0.35); transform: rotate(-30deg);
 }
+
 .ball-sm { width: 34px; height: 34px; font-size: 0.78rem; }
 .ball-sm::after { width: 8px; height: 4px; top: 4px; left: 7px; }
 .hero-next { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
-.next-draw-label { font-size: 0.78rem; color: var(--text3); }
-.next-draw-info { font-size: 0.9rem; color: var(--text2); }
+
+.next-draw-div {
+	border-style: solid;
+	border-width: 1px;
+	border-radius: 4px;
+	padding: 1em;
+	border-color: var(--gold);
+}
+
+.next-draw-label {
+	font-size: 0.78rem; color: var(--text3);
+}
+
+.next-draw-info {
+	font-size: 0.9rem; color: var(--text2);
+}
+
 #countdown { font-size: 1.1rem; font-weight: 700; color: var(--gold); font-variant-numeric: tabular-nums; min-width: 120px; }
 #fetch-status { font-size: 0.75rem; color: var(--text3); margin-left: auto; }
 
@@ -611,6 +628,247 @@ footer a { color: var(--gold-dim); text-decoration: none; }
 	padding: 12px 14px;
 }
 
+/* ===== SEARCH DROPDOWN ===== */
+#search-dropdown {
+  display: none;
+  position: fixed;
+  left: 16px;
+  right: 16px;
+  max-width: 700px;
+  margin: 0 auto;
+  z-index: 200;
+  border-radius: var(--radius);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+}
+#search-dropdown.open {
+	display: block;
+}
+
+.search-dropdown-inner {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.search-dropdown-header {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.search-dropdown-title {
+	font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--gold);
+}
+.search-dropdown-close {
+	background: none; border: none; color: var(--text3); cursor: pointer; font-size: 1.1rem; padding: 2px 6px; transition: color var(--transition);
+}
+.search-dropdown-close:hover {
+	color: var(--text);
+}
+
+.search-mode-picker {
+  display: flex;
+  gap: 8px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+}
+.search-mode-btn {
+  flex: 1;
+  background: var(--bg4);
+  border: 1px solid var(--border);
+  color: var(--text2);
+  border-radius: 8px;
+  padding: 8px 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+  text-align: center;
+}
+.search-mode-btn:hover {
+	background: var(--bg3); color: var(--text); border-color: var(--gold-dim);
+}
+.search-mode-btn.active {
+	background: var(--gold); color: #0f1923; border-color: var(--gold);
+}
+
+.search-inputs {
+	padding: 12px 14px; border-bottom: 1px solid var(--border); display: none;
+}
+.search-inputs.active {
+	display: block;
+}
+
+.search-inputs-label {
+	font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text3); margin-bottom: 8px;
+}
+
+/* 7 mini fields for combination */
+.combo-fields {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.combo-field {
+  width: 42px;
+  height: 42px;
+  text-align: center;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 0.95rem;
+  font-weight: 700;
+  transition: border-color var(--transition);
+}
+.combo-field:focus {
+	outline: none; border-color: var(--gold);
+}
+.combo-field.filled {
+	border-color: var(--gold-dim);
+}
+
+/* Date fields */
+.date-fields {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+  align-items: center;
+}
+.date-field-wrap {
+	display: flex; flex-direction: column; gap: 3px;
+}
+.date-field-wrap label {
+	font-size: 0.68rem; color: var(--text3); text-transform: uppercase; letter-spacing: 1px;
+}
+.date-field {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 0.88rem;
+  font-weight: 600;
+  padding: 7px 10px;
+  transition: border-color var(--transition);
+}
+.date-field:focus {
+	outline: none; border-color: var(--gold);
+}
+.date-field-day {
+	width: 58px;
+}
+.date-field-month {
+	width: 58px;
+}
+.date-field-year {
+	width: 74px;
+}
+
+/* Kolo field */
+.kolo-field-wrap {
+	margin-bottom: 10px;
+}
+.kolo-field {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 0.95rem;
+  font-weight: 700;
+  padding: 8px 12px;
+  width: 120px;
+  transition: border-color var(--transition);
+}
+.kolo-field:focus {
+	outline: none; border-color: var(--gold);
+}
+
+.btn-search-go {
+  background: var(--gold);
+  border: none;
+  color: #0f1923;
+  border-radius: 8px;
+  padding: 9px 20px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background var(--transition);
+}
+.btn-search-go:hover {
+	background: var(--gold-light);
+}
+
+/* Results */
+.search-results {
+  max-height: 300px;
+  overflow-y: auto;
+}
+.search-result-empty {
+  padding: 16px;
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--text3);
+}
+.search-result-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 14px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background var(--transition);
+  flex-wrap: wrap;
+}
+.search-result-row:last-child {
+	border-bottom: none;
+}
+.search-result-row:hover {
+	background: var(--bg4);
+}
+.search-result-meta {
+	display: flex; flex-direction: column; gap: 2px; min-width: 100px;
+}
+.search-result-kolo	{
+	font-size: 0.72rem; font-weight: 700; color: var(--text3);
+}
+.search-result-date {
+	font-size: 0.78rem; color: var(--text2);
+}
+.search-result-balls {
+	display: flex; gap: 3px; flex-wrap: wrap; flex: 1;
+}
+.search-result-match {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 5px;
+  white-space: nowrap;
+}
+
+.match-7 {
+	background: #e74c3c; color: #fff;
+}
+.match-6 {
+	background: #e67e22; color: #fff;
+}
+.match-5 {
+	background: #f1c40f; color: #1a1a00;
+}
+.match-4 {
+	background: #2ecc71; color: #fff;
+}
+.match-3 {
+	background: #3498db; color: #fff;
+}
+
+/* Highlight in archive */
+.kolo-row.search-highlight {
+  background: rgba(200, 151, 42, 0.15) !important;
+  border-left: 3px solid var(--gold);
+}
+
 /* ===== ALARM PANEL STYLES ===== */
 .alarm-panel { padding: 16px; }
 .alarm-intro {
@@ -717,6 +975,30 @@ footer a { color: var(--gold-dim); text-decoration: none; }
   cursor: pointer;
   margin-top: 8px;
 }
+
+#btn-search-toggle {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--text2);
+  border-radius: 8px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 600;
+  transition: all var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+#btn-search-toggle:hover {
+	background: var(--bg4); color: var(--text); border-color: var(--gold-dim);
+}
+#btn-search-toggle.active {
+	background: var(--bg4); border-color: var(--gold-dim); color: var(--gold);
+}
+
 </style>
 </head>
 <body>
@@ -799,7 +1081,7 @@ footer a { color: var(--gold-dim); text-decoration: none; }
       <div class="ball bc-1">—</div>
     </div>
     <div class="hero-next">
-      <div>
+      <div class="next-draw-div">
         <div class="next-draw-label">Следеће извлачење:</div>
         <div class="next-draw-info" id="next-draw-date">—</div>
       </div>
@@ -809,6 +1091,7 @@ footer a { color: var(--gold-dim); text-decoration: none; }
         🔔 Подсетник
         <span id="alarm-toggle-arrow" style="font-size:0.65rem;transition:transform 0.25s ease">▼</span>
       </button>
+			<button id="btn-search-toggle" onclick="toggleSearchDropdown()" title="Претрага">🔍 Претрага</button>
     </div>
 
   </div>
@@ -995,6 +1278,71 @@ footer a { color: var(--gold-dim); text-decoration: none; }
     </div>
     <!-- END ALARM DROPDOWN -->
 
+		<!-- SEARCH DROPDOWN -->
+		<div id="search-dropdown">
+		  <div class="search-dropdown-inner">
+		    <div class="search-dropdown-header">
+		      <span class="search-dropdown-title">🔍 Претрага</span>
+		      <button class="search-dropdown-close" onclick="closeSearchDropdown()">✕</button>
+		    </div>
+		
+		    <!-- Mode picker -->
+		    <div class="search-mode-picker">
+		      <button class="search-mode-btn" onclick="setSearchMode('combo')">🎱 Комбинација</button>
+		      <button class="search-mode-btn" onclick="setSearchMode('date')">📅 Датум</button>
+		      <button class="search-mode-btn" onclick="setSearchMode('kolo')">🔢 Коло</button>
+		    </div>
+		
+		    <!-- Combination inputs -->
+		    <div class="search-inputs" id="search-inputs-combo">
+		      <div class="search-inputs-label">Унесите 7 бројева (1–39)</div>
+		      <div class="combo-fields">
+		        <input class="combo-field" id="cb1" type="number" min="1" max="39" placeholder="—">
+		        <input class="combo-field" id="cb2" type="number" min="1" max="39" placeholder="—">
+		        <input class="combo-field" id="cb3" type="number" min="1" max="39" placeholder="—">
+		        <input class="combo-field" id="cb4" type="number" min="1" max="39" placeholder="—">
+		        <input class="combo-field" id="cb5" type="number" min="1" max="39" placeholder="—">
+		        <input class="combo-field" id="cb6" type="number" min="1" max="39" placeholder="—">
+		        <input class="combo-field" id="cb7" type="number" min="1" max="39" placeholder="—">
+		      </div>
+		      <button class="btn-search-go" onclick="runSearch()">Претражи</button>
+		    </div>
+		
+		    <!-- Date inputs -->
+		    <div class="search-inputs" id="search-inputs-date">
+		      <div class="search-inputs-label">Унесите датум извлачења</div>
+		      <div class="date-fields">
+		        <div class="date-field-wrap">
+		          <label>Дан</label>
+		          <input class="date-field date-field-day" id="sd-day" type="number" min="1" max="31" placeholder="нпр. 29">
+		        </div>
+		        <div class="date-field-wrap">
+		          <label>Месец</label>
+		          <input class="date-field date-field-month" id="sd-month" type="number" min="1" max="12" placeholder="нпр. 5">
+		        </div>
+		        <div class="date-field-wrap">
+		          <label>Година</label>
+		          <input class="date-field date-field-year" id="sd-year" type="number" min="2013" max="2099" placeholder="нпр. 2026">
+		        </div>
+		      </div>
+		      <button class="btn-search-go" onclick="runSearch()">Претражи</button>
+		    </div>
+		
+		    <!-- Kolo input -->
+		    <div class="search-inputs" id="search-inputs-kolo">
+		      <div class="search-inputs-label">Унесите број кола</div>
+		      <div class="kolo-field-wrap">
+		        <input class="kolo-field" id="sk-kolo" type="number" min="1" placeholder="нпр. 43">
+		      </div>
+		      <button class="btn-search-go" onclick="runSearch()">Претражи</button>
+		    </div>
+		
+		    <!-- Results -->
+		    <div class="search-results" id="search-results"></div>
+		  </div>
+		</div>
+		<!-- END SEARCH DROPDOWN -->
+
 <!-- BAKED DATA -->
 <script src="./milloto-archive.js"></script>
 
@@ -1055,7 +1403,7 @@ function formatCountdown(ms) {
   const s=Math.floor(ms/1000);
   return `${String(Math.floor(s/3600)).padStart(2,'0')}:${String(Math.floor((s%3600)/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
 }
-const DAYS_SR=['недеља','понедељак','уторак','среда','четвртак','петак','субота'];
+const DAYS_SR=['Недеља','Понедељак','Уторак','Среда','Четвртак','Петак','Субота'];
 const MONTHS_SR=['јануар','фебруар','март','април','мај','јун','јул','август','септембар','октобар','новембар','децембар'];
 
 // =====================================================
@@ -1362,6 +1710,11 @@ document.addEventListener('click', e => {
     btn.classList.remove('active');
     document.getElementById('alarm-toggle-arrow').style.transform = 'rotate(0deg)';
   }
+	const searchDropdown = document.getElementById('search-dropdown');
+  const searchBtn = document.getElementById('btn-search-toggle');
+  if (searchDropdown.classList.contains('open') && !searchDropdown.contains(e.target) && !searchBtn.contains(e.target)) {
+    closeSearchDropdown();
+  }
 });
 
 // =====================================================
@@ -1483,6 +1836,184 @@ function cancelAlarms() {
   notice.textContent = '✓ Сви подсетници су откажани';
   notice.classList.add('show');
   setTimeout(() => notice.classList.remove('show'), 3000);
+}
+
+// =====================================================
+// SEARCH
+// =====================================================
+let currentSearchMode = null;
+
+function toggleSearchDropdown() {
+  const dropdown = document.getElementById('search-dropdown');
+  const btn = document.getElementById('btn-search-toggle');
+  const isOpen = dropdown.classList.toggle('open');
+  btn.classList.toggle('active', isOpen);
+
+  if (isOpen) {
+    const rect = btn.getBoundingClientRect();
+    const topPos = rect.bottom + 8;
+    dropdown.style.top = topPos + 'px';
+    dropdown.style.maxHeight = (window.innerHeight - topPos - 16) + 'px';
+    // Close alarm dropdown if open
+    document.getElementById('alarm-dropdown').classList.remove('open');
+    document.getElementById('btn-alarm-toggle').classList.remove('active');
+    document.getElementById('alarm-toggle-arrow').style.transform = 'rotate(0deg)';
+  }
+}
+
+function closeSearchDropdown() {
+  document.getElementById('search-dropdown').classList.remove('open');
+  document.getElementById('btn-search-toggle').classList.remove('active');
+}
+
+function setSearchMode(mode) {
+  currentSearchMode = mode;
+  // Update mode buttons
+  document.querySelectorAll('.search-mode-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  // Show correct inputs
+  document.querySelectorAll('.search-inputs').forEach(el => el.classList.remove('active'));
+  document.getElementById(`search-inputs-${mode}`).classList.add('active');
+  // Clear results
+  document.getElementById('search-results').innerHTML = '';
+}
+
+function runSearch() {
+  const resultsEl = document.getElementById('search-results');
+  resultsEl.innerHTML = '';
+  // Remove previous highlights
+  document.querySelectorAll('.kolo-row.search-highlight').forEach(el => el.classList.remove('search-highlight'));
+
+  if (currentSearchMode === 'combo') searchCombo(resultsEl);
+  else if (currentSearchMode === 'date') searchDate(resultsEl);
+  else if (currentSearchMode === 'kolo') searchKolo(resultsEl);
+}
+
+function searchCombo(resultsEl) {
+  const ids = ['cb1','cb2','cb3','cb4','cb5','cb6','cb7'];
+  const vals = ids.map(id => parseInt(document.getElementById(id).value));
+  if (vals.some(v => isNaN(v) || v < 1 || v > 39)) {
+    resultsEl.innerHTML = `<div class="search-result-empty">Унесите свих 7 бројева (1–39)</div>`;
+    return;
+  }
+  if (new Set(vals).size !== 7) {
+    resultsEl.innerHTML = `<div class="search-result-empty">Сви бројеви морају бити различити</div>`;
+    return;
+  }
+  const userSet = new Set(vals);
+  const matches = [];
+  allData.forEach(d => {
+    const hits = d.nums.filter(n => userSet.has(n)).length;
+    if (hits >= 3) matches.push({ ...d, hits });
+  });
+  matches.sort((a, b) => b.hits - a.hits);
+  if (matches.length === 0) {
+    resultsEl.innerHTML = `<div class="search-result-empty">Нема кола са 3 или више поклапања</div>`;
+    return;
+  }
+  matches.forEach(d => {
+    resultsEl.appendChild(makeResultRow(d, vals, d.hits));
+  });
+}
+
+function searchDate(resultsEl) {
+  const d = document.getElementById('sd-day').value.padStart(2,'0');
+  const m = document.getElementById('sd-month').value.padStart(2,'0');
+  const y = document.getElementById('sd-year').value;
+  if (!d || !m || !y) {
+    resultsEl.innerHTML = `<div class="search-result-empty">Унесите дан, месец и годину</div>`;
+    return;
+  }
+  const dateStr = `${d}.${m}.${y}`;
+  const found = allData.filter(entry => entry.date === dateStr);
+  if (found.length === 0) {
+    resultsEl.innerHTML = `<div class="search-result-empty">Није пронађено коло за датум ${dateStr}</div>`;
+    return;
+  }
+  found.forEach(d => resultsEl.appendChild(makeResultRow(d, [], 0)));
+}
+
+function searchKolo(resultsEl) {
+  const num = parseInt(document.getElementById('sk-kolo').value);
+  if (isNaN(num) || num < 1) {
+    resultsEl.innerHTML = `<div class="search-result-empty">Унесите број кола</div>`;
+    return;
+  }
+  // For kolo search, match the most recent occurrence of that kolo number
+  const found = allData.filter(d => d.kolo === num);
+  if (found.length === 0) {
+    resultsEl.innerHTML = `<div class="search-result-empty">Коло ${num} није пронађено у бази</div>`;
+    return;
+  }
+  found.forEach(d => resultsEl.appendChild(makeResultRow(d, [], 0)));
+}
+
+function makeResultRow(d, userNums, hits) {
+  const row = document.createElement('div');
+  row.className = 'search-result-row';
+
+  const userSet = new Set(userNums);
+  const ballsHTML = d.nums.map(n => {
+    const highlight = userSet.has(n) ? 'outline: 2px solid #fff; outline-offset: 1px;' : 'opacity:0.5;';
+    return `<div class="ball ball-sm bc-${n}" style="${hits > 0 ? highlight : ''}">${n}</div>`;
+  }).join('');
+
+  const matchBadge = hits >= 3 ? `<span class="search-result-match match-${hits}">${hits} од 7</span>` : '';
+
+  row.innerHTML = `
+    <div class="search-result-meta">
+      <span class="search-result-kolo">Коло ${d.kolo || '—'}</span>
+      <span class="search-result-date">${formatDateSr(d.date)}</span>
+    </div>
+    <div class="search-result-balls">${ballsHTML}</div>
+    ${matchBadge}
+  `;
+
+  // Click to scroll to and highlight in archive
+  row.addEventListener('click', () => {
+    scrollToKoloInArchive(d.date);
+    closeSearchDropdown();
+  });
+
+  return row;
+}
+
+function scrollToKoloInArchive(date) {
+  // Make sure "Све" tab is active so all kola are visible
+  if (selectedYear !== 'all') selectYear('all');
+
+  // Open the relevant year group and parent collapse
+  const yr = parseInt(date.split('.')[2]);
+
+  // Open top-level "Сва кола" collapse
+  const topHeader = document.querySelector('#archive-body .collapse-header');
+  if (topHeader && !topHeader.classList.contains('open')) toggleCollapse(topHeader);
+
+  // Open the year group
+  setTimeout(() => {
+    const yearHeaders = document.querySelectorAll('.year-group-header');
+    yearHeaders.forEach(h => {
+      if (h.querySelector('.year-group-title')?.textContent.includes(yr)) {
+        if (!h.classList.contains('open')) toggleYearGroup(h);
+      }
+    });
+
+    // Find and highlight the kolo row
+    setTimeout(() => {
+      const rows = document.querySelectorAll('.kolo-row');
+      rows.forEach(row => {
+        const dateEl = row.querySelector('.kolo-date');
+        if (dateEl && dateEl.textContent.includes(date.split('.')[0])) {
+          // Match by kolo date
+          const fullDate = formatDateSr(date);
+          if (dateEl.textContent.trim() === fullDate.trim()) {
+            row.classList.add('search-highlight');
+            row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        }
+      });
+    }, 150);
+  }, 150);
 }
 
 // Re-schedule alarms after SW registration (so they survive page reloads)
