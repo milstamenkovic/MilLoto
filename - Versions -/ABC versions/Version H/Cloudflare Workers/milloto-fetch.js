@@ -1,9 +1,9 @@
 // MilLoto — Cloudflare Worker
 // Fetches the latest Loto 7/39 draw from naslovi.net (primary)
 // and stats247.com (fallback), returns clean JSON.
+// © 2026 Mil Stamenković
 // Created: 22h36'30'' - 30.05.2026.
 // Revised: 23h16'21'' - 30.05.2026.
-// © 2026 Mil Stamenković
 
 
 

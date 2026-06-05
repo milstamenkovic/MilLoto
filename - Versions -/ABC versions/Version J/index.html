@@ -5,7 +5,7 @@
 <!-- Направљено уз помоћ бесплатне "Claude AI" -->
 <!-- Пројекат направљен: 23.02.2026. - Ћуприја, Србија -->
 <!-- Пројекат оригинално објављен: 23.02.2026. - Ћуприја, Србија -->
-<!-- Пројекат преправљен: 04.06.2026. - Ћуприја, Србија -->
+<!-- Пројекат преправљен: 05.06.2026. - Ћуприја, Србија -->
 <!-- Тренутна верзија објављена: 04.06.2026. - Ћуприја, Србија -->
 
 
@@ -1539,36 +1539,35 @@ async function fetchLiveData() {
  
     if (!resp.ok) throw new Error(`Worker returned ${resp.status}`);
  
-    const draw = await resp.json();
-    if (draw.error) throw new Error(draw.error);
+    const data = await resp.json();
+    if (data.error) throw new Error(data.error);
  
-    // Validate response shape
-    if (!draw.date || !Array.isArray(draw.nums) || draw.nums.length !== 7) {
-      throw new Error('Invalid draw data from worker');
-    }
+    const draws = Array.isArray(data.draws) ? data.draws : [];
+    if (draws.length === 0) throw new Error('No draws in archive');
  
-    // Check if this draw is already in our data (by date)
+    // Merge KV archive with BAKED_DATA
+    // BAKED_DATA is the historical baseline — KV covers everything recent
+    const bakedDates = new Set(BAKED_DATA.map(d => d[1]));
     const existingDates = new Set(allData.map(d => d.date));
-    if (!existingDates.has(draw.date)) {
+    let newCount = 0;
+ 
+    draws.forEach(draw => {
+      if (!draw.date || !Array.isArray(draw.nums) || draw.nums.length !== 7) return;
+      if (existingDates.has(draw.date)) return;
       const yr = parseInt(draw.date.split('.')[2]);
       allData.push({ kolo: draw.kolo, date: draw.date, nums: draw.nums, year: yr });
+      existingDates.add(draw.date);
+      if (!bakedDates.has(draw.date)) newCount++;
+    });
  
-      // Re-sort descending by date
+    if (newCount > 0 || data.new > 0) {
       allData.sort((a, b) => {
         const [da,ma,ya] = a.date.split('.').map(Number);
         const [db,mb,yb] = b.date.split('.').map(Number);
         return new Date(yb,mb-1,db) - new Date(ya,ma-1,da);
       });
- 
-      // Cache the new entry
       localStorage.setItem('milloto_last_update', new Date().toISOString());
-      try {
-        const cached = JSON.parse(localStorage.getItem('milloto_data_extra') || '[]');
-        cached.push({ kolo: draw.kolo, date: draw.date, nums: draw.nums, year: yr });
-        localStorage.setItem('milloto_data_extra', JSON.stringify(cached));
-      } catch(e) {}
- 
-      showToast(`✓ Ново коло учитано (${draw.date})`);
+      if (data.new > 0) showToast(`✓ ${data.new} нових кола учитано`);
       renderHero(); renderTabs(); renderChart(); renderArchive(); renderStats();
     }
  
@@ -1582,26 +1581,6 @@ async function fetchLiveData() {
   setTimeout(() => {
     document.getElementById('fetch-status').textContent = '';
   }, 4000);
-}
-
-// =====================================================
-// LOAD CACHED EXTRA
-// =====================================================
-function loadCachedExtra() {
-  try {
-    const extra=localStorage.getItem('milloto_data_extra');
-    if(extra){
-      const parsed=JSON.parse(extra);
-      const existingDates=new Set(allData.map(d=>d.date));
-      parsed.forEach(d=>{if(!existingDates.has(d.date)){allData.push(d);existingDates.add(d.date);}});
-      allData.sort((a,b)=>{const[da,ma,ya]=a.date.split('.').map(Number),[db,mb,yb]=b.date.split('.').map(Number);return new Date(yb,mb-1,db)-new Date(ya,ma-1,da);});
-    }
-    const lastUpdate=localStorage.getItem('milloto_last_update');
-    if(lastUpdate){
-      const d=new Date(lastUpdate);
-      document.getElementById('last-update-time').textContent=`${d.getDate()}.${d.getMonth()+1}.${d.getFullYear()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
-    }
-  } catch(e){}
 }
 
 // =====================================================
@@ -2065,11 +2044,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const savedTheme = localStorage.getItem('milloto_theme') || 'dark';
   document.documentElement.setAttribute('data-theme', savedTheme);
   document.querySelector('.theme-toggle').textContent = savedTheme==='dark' ? 'Активирајте светлу тему' : 'Активирајте тамну тему';
-
-  loadCachedExtra();
-  renderHero(); renderTabs(); renderChart(); renderArchive(); renderStats();
-  updateCountdown(); setInterval(updateCountdown, 1000);
-  updateOnlineStatus();
 
   // Alarm UI
   if ('Notification' in window) {
