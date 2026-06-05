@@ -1584,6 +1584,26 @@ async function fetchLiveData() {
 }
 
 // =====================================================
+// LOAD CACHED EXTRA
+// =====================================================
+function loadCachedExtra() {
+  try {
+    const extra=localStorage.getItem('milloto_data_extra');
+    if(extra){
+      const parsed=JSON.parse(extra);
+      const existingDates=new Set(allData.map(d=>d.date));
+      parsed.forEach(d=>{if(!existingDates.has(d.date)){allData.push(d);existingDates.add(d.date);}});
+      allData.sort((a,b)=>{const[da,ma,ya]=a.date.split('.').map(Number),[db,mb,yb]=b.date.split('.').map(Number);return new Date(yb,mb-1,db)-new Date(ya,ma-1,da);});
+    }
+    const lastUpdate=localStorage.getItem('milloto_last_update');
+    if(lastUpdate){
+      const d=new Date(lastUpdate);
+      document.getElementById('last-update-time').textContent=`${d.getDate()}.${d.getMonth()+1}.${d.getFullYear()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+    }
+  } catch(e){}
+}
+
+// =====================================================
 // UI HELPERS
 // =====================================================
 function toggleTheme() {
@@ -2044,6 +2064,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const savedTheme = localStorage.getItem('milloto_theme') || 'dark';
   document.documentElement.setAttribute('data-theme', savedTheme);
   document.querySelector('.theme-toggle').textContent = savedTheme==='dark' ? 'Активирајте светлу тему' : 'Активирајте тамну тему';
+
+loadCachedExtra();
+renderHero(); renderTabs(); renderChart(); renderArchive(); renderStats();
+updateCountdown(); setInterval(updateCountdown, 1000);
+updateOnlineStatus();
 
   // Alarm UI
   if ('Notification' in window) {
