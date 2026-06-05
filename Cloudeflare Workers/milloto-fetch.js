@@ -27,7 +27,7 @@ async function handleRequest(request) {
 
   try {
     // 1. Load existing archive from KV
-    const stored = await milloto-KV.get(KV_KEY, { type: 'json' });
+    const stored = await millotoKV.get(KV_KEY, { type: 'json' });
     const archive = Array.isArray(stored) ? stored : [];
     const existingDates = new Set(archive.map(d => d.date));
 
@@ -59,7 +59,7 @@ async function handleRequest(request) {
         return new Date(yb,mb-1,db) - new Date(ya,ma-1,da);
       });
       // Save to KV (no expiry — permanent storage)
-      await milloto-KV.put(KV_KEY, JSON.stringify(updated));
+      await millotoKV.put(KV_KEY, JSON.stringify(updated));
       return new Response(JSON.stringify({ draws: updated, new: newDraws.length }), { headers: CORS_HEADERS });
     }
 
